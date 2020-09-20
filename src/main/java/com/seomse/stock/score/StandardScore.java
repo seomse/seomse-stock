@@ -12,9 +12,9 @@
  * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
  */
 
-package com.seomse.stock.util;
+package com.seomse.stock.score;
 
-public class PointUtil {
+public class StandardScore {
 	/**
 	 * 기준점수 뒤에 점수는 점수가중치를 낮춤
 	 * @param standard

@@ -1,26 +1,31 @@
+/*
+ * Copyright (C) 2020 Seomse Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.seomse.stock;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <pre>
- *  파 일 명 : StockItemStore.java
- *  설    명 : 주식 데이터 저장소
- *             기준시점을 다르게 하여 생성하여 그때 당시의 퀀트 및 다른 정보를 확인할 수 있음 ( 리뮬레이터용)
- *  작 성 자 : macle
- *  작 성 일 : 2020.04.18
- *  버    전 : 1.0
- *  수정이력 :
- *  기타사항 :
- * </pre>
- * @author Copyrights 2020 by ㈜섬세한사람들. All right reserved.
+ * 종목 저장소
+ * @author macle
  */
 public class StockItemStore {
 
-    private String standardYmd;
-
-    private Map<String, StockItem> itemMap = new HashMap<>();
+    private final String standardYmd;
+    private final Map<String, StockItem> itemMap = new HashMap<>();
 
     /**
      * 생성자

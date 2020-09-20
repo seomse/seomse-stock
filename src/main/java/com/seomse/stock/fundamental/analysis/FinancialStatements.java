@@ -1,21 +1,26 @@
+/*
+ * Copyright (C) 2020 Seomse Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.seomse.stock.fundamental.analysis;
 
 
 import com.seomse.jdbc.annotation.*;
 
 /**
- * <pre>
- *  파 일 명 : FinancialStatements.java
- *  설    명 : 재무 제표
- *             - 해외주식은 가격이 소수점이 있어서 double 로 처리함
- *             - 정보가 비어있을 수 있어서 null 을 담을 수 있는 객체형 변수
- *  작 성 자 : macle
- *  작 성 일 : 2019.08.21
- *  버    전 : 1.0
- *  수정이력 : 2020.07.07
- *  기타사항 :
- * </pre>
- * @author Copyrights 2020 by ㈜섬세한사람들. All right reserved.
+ * 재무제표
+ * @author macle
  */
 @Table(name="T_STOCK_FSMT")
 public class FinancialStatements {
@@ -181,11 +186,11 @@ public class FinancialStatements {
 
     @DateTime(isNullable = false)
     @Column(name = "UPT_LAST_DT")
-    private Long updateTime;
+    private long updateTime;
 
     /**
      * 결산년월 얻기
-     * @return ym 결산년월 ex->201912
+     * @return String ym 결산년월 ex->201912
      */
     public String getYm() {
         return ym;
@@ -193,7 +198,7 @@ public class FinancialStatements {
 
     /**
      * 결산년월 설정
-     * @param ym ym 결산년월 ex->201912
+     * @param ym String ym 결산년월 ex->201912
      */
     public void setYm(String ym) {
         this.ym = ym;
@@ -201,7 +206,7 @@ public class FinancialStatements {
 
     /**
      * 결산유형 얻기
-     * @return type 결산유형 년,분기 YEAR, QUARTER
+     * @return Type 결산유형 년,분기 YEAR, QUARTER
      */
     public Type getType() {
         return type;
@@ -209,7 +214,7 @@ public class FinancialStatements {
 
     /**
      * 결산유형 설정
-     * @param type type 결산유형 년,분기 YEAR, QUARTER
+     * @param type Type 결산유형 년,분기 YEAR, QUARTER
      */
     public void setType(Type type) {
         this.type = type;
@@ -218,7 +223,7 @@ public class FinancialStatements {
     /**
      * 추정여부
      * 예상 실적인지 아닌지
-     * @return flag isEstimation
+     * @return boolean flag isEstimation
      */
     public boolean isEstimation() {
         return isEstimation;
@@ -227,7 +232,7 @@ public class FinancialStatements {
     /**
      * 추정여부 설정
      * 예상 실적인지 아닌지
-     * @param estimation flag isEstimation
+     * @param estimation boolean flag isEstimation
      */
     public void setEstimation(boolean estimation) {
         isEstimation = estimation;
@@ -236,7 +241,7 @@ public class FinancialStatements {
 
     /**
      * 매출액 얻기
-     * @return sales price 매출액 설정
+     * @return Double sales price 매출액 설정
      */
     public Double getSales() {
         return sales;
@@ -244,7 +249,7 @@ public class FinancialStatements {
 
     /**
      * 매출액 설정
-     * @param sales price sales 매출액
+     * @param sales Double price sales 매출액
      */
     public void setSales(Double sales) {
         this.sales = sales;
@@ -252,7 +257,7 @@ public class FinancialStatements {
 
     /**
      * 영업어익 얻기
-     * @return price operatingProfit 영업이익
+     * @return price Double operatingProfit 영업이익
      */
     public Double getOperatingProfit() {
         return operatingProfit;
@@ -260,7 +265,7 @@ public class FinancialStatements {
 
     /**
      * 영업이익 설정
-     * @param operatingProfit price operatingProfit 영업이익
+     * @param operatingProfit Double price operatingProfit 영업이익
      */
     public void setOperatingProfit(Double operatingProfit) {
         this.operatingProfit = operatingProfit;
@@ -269,7 +274,7 @@ public class FinancialStatements {
     /**
      * 세전계속 사업이익 얻기
      * Continuing business profit before taxes
-     * @return price Continuing business profit before taxes
+     * @return Double price Continuing business profit before taxes
      */
     public Double getCbpf() {
         return cbpf;
@@ -278,7 +283,7 @@ public class FinancialStatements {
     /**
      * 세전계속 사업이익 설정
      * Continuing business profit before taxes
-     * @param cbpf price Continuing business profit before taxes
+     * @param cbpf Double price Continuing business profit before taxes
      */
     public void setCbpf(Double cbpf) {
         this.cbpf = cbpf;
@@ -287,7 +292,7 @@ public class FinancialStatements {
     /**
      * 당기순이익 얻기
      * net profit during the term
-     * @return price net profit during the term
+     * @return Double price net profit during the term
      */
     public Double getNetProfit() {
         return netProfit;
@@ -295,7 +300,7 @@ public class FinancialStatements {
 
     /**
      * 당기순이익 설정
-     * @param netProfit price net profit during the term
+     * @param netProfit Double price net profit during the term
      */
     public void setNetProfit(Double netProfit) {
         this.netProfit = netProfit;
@@ -304,7 +309,7 @@ public class FinancialStatements {
     /**
      * 지배 당기순이익 얻기
      * net profit during the term domination
-     * @return price net profit during the term domination
+     * @return Double price net profit during the term domination
      */
     public Double getNetProfitDomination() {
         return netProfitDomination;
@@ -312,7 +317,7 @@ public class FinancialStatements {
 
     /**
      * 지배 당기순이익 설정
-     * @param netProfitDomination price net profit during the term domination
+     * @param netProfitDomination Double price net profit during the term domination
      */
     public void setNetProfitDomination(Double netProfitDomination) {
         this.netProfitDomination = netProfitDomination;
@@ -320,7 +325,7 @@ public class FinancialStatements {
 
     /**
      * 비지배 당기 순이익 얻기
-     * @return price net profit during the term not domination
+     * @return Double price net profit during the term not domination
      */
     public Double getNetProfitNotDomination() {
         return netProfitNotDomination;
@@ -328,7 +333,7 @@ public class FinancialStatements {
 
     /**
      * 비지배 당기 순이익 설정
-     * @param netProfitNotDomination price net profit during the term not domination
+     * @param netProfitNotDomination Double price net profit during the term not domination
      */
     public void setNetProfitNotDomination(Double netProfitNotDomination) {
         this.netProfitNotDomination = netProfitNotDomination;
@@ -336,7 +341,7 @@ public class FinancialStatements {
 
     /**
      * 자산 총계 얻기
-      * @return price asset total
+      * @return Double price asset total
      */
     public Double getAssetTotal() {
         return assetTotal;
@@ -344,7 +349,7 @@ public class FinancialStatements {
 
     /**
      * 자산총계 설정
-     * @param assetTotal price asset total
+     * @param assetTotal Double price asset total
      */
     public void setAssetTotal(Double assetTotal) {
         this.assetTotal = assetTotal;
@@ -352,7 +357,7 @@ public class FinancialStatements {
 
     /**
      * 부채총계 얻기
-     * @return price dept total
+     * @return Double price dept total
      */
     public Double getDeptTotal() {
         return deptTotal;
@@ -360,7 +365,7 @@ public class FinancialStatements {
 
     /**
      * 부채총계 설정
-     * @param deptTotal price dept total
+     * @param deptTotal Double price dept total
      */
     public void setDeptTotal(Double deptTotal) {
         this.deptTotal = deptTotal;
@@ -368,7 +373,7 @@ public class FinancialStatements {
 
     /**
      * 자본총계 얻기
-     * @return price capital total
+     * @return Double price capital total
      */
     public Double getCapitalTotal() {
         return capitalTotal;
@@ -376,7 +381,7 @@ public class FinancialStatements {
 
     /**
      * 자본총계 설정
-     * @param capitalTotal price capital total
+     * @param capitalTotal Double price capital total
      */
     public void setCapitalTotal(Double capitalTotal) {
         this.capitalTotal = capitalTotal;
@@ -384,7 +389,7 @@ public class FinancialStatements {
 
     /**
      * 지배자본총계 얻기
-     * @return price capital total domination
+     * @return Double price capital total domination
      */
     public Double getCapitalTotalDomination() {
         return capitalTotalDomination;
@@ -392,7 +397,7 @@ public class FinancialStatements {
 
     /**
      * 지배자본총계 설정
-     * @param capitalTotalDomination price capital total domination
+     * @param capitalTotalDomination Double price capital total domination
      */
     public void setCapitalTotalDomination(Double capitalTotalDomination) {
         this.capitalTotalDomination = capitalTotalDomination;
@@ -400,7 +405,7 @@ public class FinancialStatements {
 
     /**
      * 비지배 자본총계 얻기
-     * @return price capital total not domination
+     * @return Double price capital total not domination
      */
     public Double getCapitalTotalNotDomination() {
         return capitalTotalNotDomination;
@@ -408,7 +413,7 @@ public class FinancialStatements {
 
     /**
      * 비지배 자본총게 설정
-     * @param capitalTotalNotDomination price capital total not domination
+     * @param capitalTotalNotDomination Double price capital total not domination
      */
     public void setCapitalTotalNotDomination(Double capitalTotalNotDomination) {
         this.capitalTotalNotDomination = capitalTotalNotDomination;
@@ -416,7 +421,7 @@ public class FinancialStatements {
 
     /**
      * 자본금 얻기
-     * @return price capital
+     * @return Double price capital
      */
     public Double getCapital() {
         return capital;
@@ -424,7 +429,7 @@ public class FinancialStatements {
 
     /**
      * 자본금 설정
-     * @param capital , price capital
+     * @param capital Double price capital
      */
     public void setCapital(Double capital) {
         this.capital = capital;
@@ -432,7 +437,7 @@ public class FinancialStatements {
 
     /**
      * 영업활동 현금흐름 얻기
-     * @return price operating cash flow
+     * @return Double price operating cash flow
      */
     public Double getOperatingCashFlow() {
         return operatingCashFlow;
@@ -440,7 +445,7 @@ public class FinancialStatements {
 
     /**
      * 영업활도 현금흐름 설정
-     * @param operatingCashFlow price operating cash flow
+     * @param operatingCashFlow Double price operating cash flow
      */
     public void setOperatingCashFlow(Double operatingCashFlow) {
         this.operatingCashFlow = operatingCashFlow;
@@ -448,7 +453,7 @@ public class FinancialStatements {
 
     /**
      * 투자활동 현금흐름 얻기
-     * @return investing cash flow
+     * @return Double investing cash flow
      */
     public Double getInvestingCashFlow() {
         return investingCashFlow;
@@ -456,7 +461,7 @@ public class FinancialStatements {
 
     /**
      * 투자활동 현금흐름 설정
-     * @param investingCashFlow price investing cash flow
+     * @param investingCashFlow Double price investing cash flow
      */
     public void setInvestingCashFlow(Double investingCashFlow) {
         this.investingCashFlow = investingCashFlow;
@@ -464,7 +469,7 @@ public class FinancialStatements {
 
     /**
      * 재무활동 현금흐름 얻기
-     * @return price financing cash flow
+     * @return Double price financing cash flow
      */
     public Double getFinancingCashFlow() {
         return financingCashFlow;
@@ -472,7 +477,7 @@ public class FinancialStatements {
 
     /**
      * 재무활동 현금흐름 설정
-     * @param financingCashFlow price financing cash flow
+     * @param financingCashFlow Double price financing cash flow
      */
     public void setFinancingCashFlow(Double financingCashFlow) {
         this.financingCashFlow = financingCashFlow;
@@ -480,7 +485,7 @@ public class FinancialStatements {
 
     /**
      * 미래 현금흐름 얻기
-     * @return price future cash flow
+     * @return Double price future cash flow
      */
     public Double getFutureCashFlow() {
         return futureCashFlow;
@@ -488,7 +493,7 @@ public class FinancialStatements {
 
     /**
      * 미래 현금흐름 설정
-     * @param futureCashFlow price future cash flow
+     * @param futureCashFlow Double price future cash flow
      */
     public void setFutureCashFlow(Double futureCashFlow) {
         this.futureCashFlow = futureCashFlow;
@@ -498,7 +503,7 @@ public class FinancialStatements {
      * capex 얻기
      * 미래의 이윤을 창출하기 위해 지출된 비용
      *  capital expenditures
-     * @return price capital expenditures
+     * @return Double price capital expenditures
      */
     public Double getCapex() {
         return capex;
@@ -508,7 +513,7 @@ public class FinancialStatements {
      * capex 설정
      * 미래의 이윤을 창출하기 위해 지출된 비용
      *  capital expenditures
-     * @param capex price capital expenditures
+     * @param capex Double price capital expenditures
      */
     public void setCapex(Double capex) {
         this.capex = capex;
@@ -516,7 +521,7 @@ public class FinancialStatements {
 
     /**
      * 이자발생부채 얻기
-     * @return price interest debt
+     * @return Double price interest debt
      */
     public Double getInterestDebt() {
         return interestDebt;
@@ -524,7 +529,7 @@ public class FinancialStatements {
 
     /**
      * 이자발생부채 설정
-     * @param interestDebt price interest debt
+     * @param interestDebt Double price interest debt
      */
     public void setInterestDebt(Double interestDebt) {
         this.interestDebt = interestDebt;
@@ -532,7 +537,7 @@ public class FinancialStatements {
 
     /**
      * 영업이익률 얻기
-     * @return operating profit ratio
+     * @return Double operating profit ratio
      */
     public Double getOperatingProfitRatio() {
         return operatingProfitRatio;
@@ -540,7 +545,7 @@ public class FinancialStatements {
 
     /**
      * 영업이익률 설정
-     * @param operatingProfitRatio operating profit ratio
+     * @param operatingProfitRatio Double operating profit ratio
      */
     public void setOperatingProfitRatio(Double operatingProfitRatio) {
         this.operatingProfitRatio = operatingProfitRatio;
@@ -548,7 +553,7 @@ public class FinancialStatements {
 
     /**
      * 순이익률 얻기
-     * @return net profit ratio
+     * @return Double net profit ratio
      */
     public Double getNetProfitRatio() {
         return netProfitRatio;
@@ -556,7 +561,7 @@ public class FinancialStatements {
 
     /**
      * 순이익률 설정
-     * @param netProfitRatio net profit ratio
+     * @param netProfitRatio Double net profit ratio
      */
     public void setNetProfitRatio(Double netProfitRatio) {
         this.netProfitRatio = netProfitRatio;
@@ -565,7 +570,7 @@ public class FinancialStatements {
     /**
      * roe 얻기
      * 자기자본이익률
-     * @return  return on equity
+     * @return Double return on equity
      */
     public Double getRoe() {
         return roe;
@@ -574,7 +579,7 @@ public class FinancialStatements {
     /**
      * roe 설정
      * 자기자본이익률
-     * @param roe return on equity
+     * @param roe Double return on equity
      */
     public void setRoe(Double roe) {
         this.roe = roe;
@@ -583,7 +588,7 @@ public class FinancialStatements {
     /**
      * roa 얻기
      * 총 자산 순이익률
-     * @return return on assets
+     * @return Double return on assets
      */
     public Double getRoa() {
         return roa;
@@ -592,7 +597,7 @@ public class FinancialStatements {
     /**
      * roa 설정
      * 총 자산 순이익률
-     * @param roa return on assets
+     * @param roa Double return on assets
      */
     public void setRoa(Double roa) {
         this.roa = roa;
@@ -600,7 +605,7 @@ public class FinancialStatements {
 
     /**
      * 부채비율 얻기
-     * @return debt ratio
+     * @return Double debt ratio
      */
     public Double getDebtRatio() {
         return debtRatio;
@@ -608,7 +613,7 @@ public class FinancialStatements {
 
     /**
      * 부채비율 설정
-     * @param debtRatio debt ratio
+     * @param debtRatio Double debt ratio
      */
     public void setDebtRatio(Double debtRatio) {
         this.debtRatio = debtRatio;
@@ -616,7 +621,7 @@ public class FinancialStatements {
 
     /**
      * 자본유보율 얻기
-     * @return reserve ratio
+     * @return Double reserve ratio
      */
     public Double getReserveRatio() {
         return reserveRatio;
@@ -624,7 +629,7 @@ public class FinancialStatements {
 
     /**
      * 자분유보율 설정
-     * @param reserveRatio reserve ratio
+     * @param reserveRatio Double reserve ratio
      */
     public void setReserveRatio(Double reserveRatio) {
         this.reserveRatio = reserveRatio;
@@ -634,7 +639,7 @@ public class FinancialStatements {
      * eps 얻기
      * 주당순이익
      * earning per shara
-     * @return (price) earning per shara
+     * @return Double (price) earning per shara
      */
     public Double getEps() {
         return eps;
@@ -643,7 +648,7 @@ public class FinancialStatements {
     /**
      * eps 설정
      * 주당 순이익
-     * @param eps (price) earning per shara
+     * @param eps Double (price) earning per shara
      */
     public void setEps(Double eps) {
         this.eps = eps;
@@ -653,7 +658,7 @@ public class FinancialStatements {
      * per 얻기
      * 주가수익 비율
      * price earning ratio
-     * @return price earning ratio
+     * @return Double price earning ratio
      */
     public Double getPer() {
         return per;
@@ -663,7 +668,7 @@ public class FinancialStatements {
      * per 설정
      * 주가시욱 비율
      * price earning ratio
-     * @param per price earning ratio
+     * @param per Double price earning ratio
      */
     public void setPer(Double per) {
         this.per = per;
@@ -674,7 +679,7 @@ public class FinancialStatements {
      * 주당순 자산가치
      * bookvalue per share
      *
-     * @return bookvalue per share
+     * @return Double bookvalue per share
      */
     public Double getBps() {
         return bps;
@@ -684,7 +689,7 @@ public class FinancialStatements {
      * bps 설정
      * 주당순 자산가치
      * bookvalue per share
-     * @param bps bookvalue per share
+     * @param bps Double bookvalue per share
      */
     public void setBps(Double bps) {
         this.bps = bps;
@@ -694,7 +699,7 @@ public class FinancialStatements {
      * pbr 얻기
      * 주가와 1주당 순자산을 비교하여 나타낸 비율(PBR = 주가 / 주당 순자산가치). 즉 주가가 순자산(자본금과 자본잉여금, 이익잉여금의 합계)에 비해 1주당 몇 배로 거래되고 있는지를 측정하는 지표
      * price bookvalue ratio
-     * @return price bookvalue ratio
+     * @return Double price bookvalue ratio
      */
     public Double getPbr() {
         return pbr;
@@ -704,7 +709,7 @@ public class FinancialStatements {
      * pbr 설정
      * 주가와 1주당 순자산을 비교하여 나타낸 비율(PBR = 주가 / 주당 순자산가치). 즉 주가가 순자산(자본금과 자본잉여금, 이익잉여금의 합계)에 비해 1주당 몇 배로 거래되고 있는지를 측정하는 지표
      * price bookvalue ratio
-     * @param pbr price bookvalue ratio
+     * @param pbr Double price bookvalue ratio
      */
     public void setPbr(Double pbr) {
         this.pbr = pbr;
@@ -713,7 +718,7 @@ public class FinancialStatements {
     /**
      * dps 얻기
      * 주당배당액
-     * @return dps
+     * @return Double dps
      */
     public Double getDps() {
         return dps;
@@ -722,7 +727,7 @@ public class FinancialStatements {
     /**
      * dps 설정
      * 주당바댕액
-     * @param dps dps
+     * @param dps Double dps
      */
     public void setDps(Double dps) {
         this.dps = dps;
@@ -730,7 +735,7 @@ public class FinancialStatements {
 
     /**
      * 배당 수익률 얻기
-     * @return dividend yield ratio
+     * @return Double dividend yield ratio
      */
     public Double getDividendYieldRatio() {
         return dividendYieldRatio;
@@ -738,7 +743,7 @@ public class FinancialStatements {
 
     /**
      * 배당 수익률 설정
-     * @param dividendYieldRatio dividend yield ratio
+     * @param dividendYieldRatio Double dividend yield ratio
      */
     public void setDividendYieldRatio(Double dividendYieldRatio) {
         this.dividendYieldRatio = dividendYieldRatio;
@@ -746,7 +751,7 @@ public class FinancialStatements {
 
     /**
      * 배당 성향 얻기
-     * @return (ratio) propensity to dividend
+     * @return Double (ratio) propensity to dividend
      */
     public Double getPropensityToDividend() {
         return propensityToDividend;
@@ -754,7 +759,7 @@ public class FinancialStatements {
 
     /**
      * 배당성항 설정
-     * @param propensityToDividend (ratio) propensity to dividend
+     * @param propensityToDividend Double (ratio) propensity to dividend
      */
     public void setPropensityToDividend(Double propensityToDividend) {
         this.propensityToDividend = propensityToDividend;
@@ -763,7 +768,7 @@ public class FinancialStatements {
     /**
      * 발행주식 건수 얻기
      * 기업이 발행하여 일반 투자자가 소유하고 있는 주식수, 회사의 정관에 의하여 규정된 발행가능한 총 주식 중에서 이미 발행된 주식과 설립후 발행된 주식수는 합하고 발행기업이 금고주의 재매입하여 보유하거나 소각한 주식은 차감하여 계산한다
-     * @return issued stock count
+     * @return Long issued stock count
      */
     public Long getIssueStockCount() {
         return issueStockCount;
@@ -772,25 +777,42 @@ public class FinancialStatements {
     /**
      * 발행주식 건수 설정
      * 기업이 발행하여 일반 투자자가 소유하고 있는 주식수, 회사의 정관에 의하여 규정된 발행가능한 총 주식 중에서 이미 발행된 주식과 설립후 발행된 주식수는 합하고 발행기업이 금고주의 재매입하여 보유하거나 소각한 주식은 차감하여 계산한다
-     * @param issueStockCount issue stock count
+     * @param issueStockCount Long issue stock count
      */
     public void setIssueStockCount(Long issueStockCount) {
         this.issueStockCount = issueStockCount;
     }
 
+    /**
+     * 종목 코드 얻기
+     * @return String
+     */
     public String getCode() {
         return code;
     }
 
+    /**
+     * 종목 코드설정
+     * @param code String
+     */
     public void setCode(String code) {
         this.code = code;
     }
 
-    public Long getUpdateTime() {
+
+    /**
+     * 업데이트 시간 얻기
+     * @return long
+     */
+    public long getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Long updateTime) {
+    /**
+     * 업데이트 시간 설정
+     * @param updateTime long
+     */
+    public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
     }
 }
