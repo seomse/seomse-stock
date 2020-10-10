@@ -18,8 +18,8 @@ package com.seomse.stock;
 
 import com.seomse.api.server.ApiServer;
 import com.seomse.commons.config.Config;
-import com.seomse.commons.utils.date.RunningTime;
-import com.seomse.commons.utils.date.TimeUtil;
+import com.seomse.commons.utils.time.RunningTime;
+import com.seomse.commons.utils.time.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
