@@ -1,34 +1,42 @@
-/** 
- * <pre>
- *  파 일 명 : PointUtil.java
- *  설    명 : 점수관련 유틸성 클래스
- *                    
- *  작 성 자 : macle
- *  작 성 일 : 2017.11
- *  버    전 : 1.0
- *  수정이력 : 
- *  기타사항 :
- * </pre>
- * @author Copyrights 2017 by ㈜섬세한사람들. All right reserved.
+/*
+ * Copyright (C) 2020 Seomse Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package com.seomse.stock.score;
 
+/**
+ * 기준점수 보다 큰 점수를 어떻게 활용할지에 대한 정의
+ * @author macle
+ */
 public class StandardScore {
 	/**
 	 * 기준점수 뒤에 점수는 점수가중치를 낮춤
-	 * @param standard
-	 * @param point
-	 * @return
+	 * 기준좀서보다 높은점수는 가산점이 줄어든다
+	 * 기준점수의 10%가 최대점수
+	 * @param standard 기준점수
+	 * @param score 점수
+	 * @return 감소 된 점수
 	 */
-	public static double reduce(double standard, double point) {
+	public static double reduce(double standard, double score) {
 		
-		if(standard >=  point) {
-			return point;
+		if(standard >=  score) {
+			return score;
 		}
 		
-		double remainder = point - standard;
-		return Math.log(Math.E + remainder) -1.0 + standard;
+		double weight = (score - standard)/score * standard/10.0;
+		return weight + standard;
 		
 	}
 	
@@ -36,6 +44,6 @@ public class StandardScore {
 	
 	
 	public static void main(String [] args) {
-		System.out.println(reduce(2.0, 4.5));
+		System.out.println(reduce(0.5, 1000000));
 	}
 }
