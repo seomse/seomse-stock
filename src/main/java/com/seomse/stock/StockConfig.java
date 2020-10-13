@@ -13,33 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.seomse.stock;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * 종목 저장소
+ * 주식에서 사용하는 설정정보
  * @author macle
  */
-public class StockItemStore {
+public enum StockConfig {
 
-    private final String standardYmd;
-    private final Map<String, StockItem> itemMap = new HashMap<>();
+    
+    //주식 분석에 사용하는 기본 캔들 건수
+    CANDLE_COUNT("stock.candle.count", 1000)
+    ;
+
+    private final String key;
+    private final Object defaultValue;
 
     /**
      * 생성자
-     * @param standardYmd string yyyyMMdd 기준 년월일
+     * @param key String
+     * @param defaultValue Object, null enable
      */
-    public StockItemStore(String standardYmd){
-        this.standardYmd = standardYmd;
+    StockConfig(String key, Object defaultValue){
+        this.key = key;
+        this.defaultValue = defaultValue;
     }
+    /**
+     * @return String
+     */
+    public String key(){return key;}
 
-
-    public void loadData(){
-
-
-    }
-
+    /**
+     * @return Object
+     */
+    public Object defaultValue(){return defaultValue;}
 
 }

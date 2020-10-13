@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Wigo Inc.
+ * Copyright (C) 2020 Seomse Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,6 @@
  */
 
 package com.seomse.stock.fundamental.analysis;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * 퀀트에서 사용하는 ymd 관련 유틸성 메소드 년월일
@@ -61,12 +58,5 @@ public class QuantYmd {
         }
     }
 
-    /**
-     * 오늘기준의 YMD 얻기
-     * @return String yyyyMMdd
-     */
-    public String getNowYmd() {
-        return  new SimpleDateFormat("yyyyMMdd").format(new Date());
-    }
 
 }

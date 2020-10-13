@@ -13,17 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.seomse.stock;
+package com.seomse.stock.store.item;
 
-import com.seomse.jdbc.annotation.*;
+import com.seomse.jdbc.annotation.Column;
+import com.seomse.jdbc.annotation.DateTime;
+import com.seomse.jdbc.annotation.PrimaryKey;
+import com.seomse.jdbc.annotation.Table;
+import com.seomse.stock.MarketType;
 import com.seomse.stock.fundamental.analysis.FinancialStatements;
+import com.seomse.trading.technical.analysis.candle.candles.TradeCandles;
+
+import java.util.Map;
 
 /**
- * 주식 종목
+ * 주식 종목 ( 개별정목))
  * @author macle
  */
 @Table(name="T_STOCK_ITEM")
-public class StockItem {
+public class Item {
     @PrimaryKey(seq = 1)
     @Column(name = "ITEM_CD")
     private String code;
@@ -45,6 +52,9 @@ public class StockItem {
     @Column(name = "LISTING_CNT")
     private Long listingCount;
 
+    //캔들정보
+    Map<Long, TradeCandles> timeCandlesMap;
+    
     FinancialStatements[] yearFinancialStatementsArray = null;
     FinancialStatements[] quarterFinancialStatementsArray = null;
 

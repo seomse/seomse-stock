@@ -22,7 +22,7 @@ import com.seomse.jdbc.annotation.*;
  * 재무제표
  * @author macle
  */
-@Table(name="T_STOCK_FSMT")
+@Table(name="T_STOCK_FSMT", orderBy = "SETTLEMENT_YM DESC")
 public class FinancialStatements {
 
     public enum Type{

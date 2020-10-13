@@ -39,11 +39,5 @@ public class StandardScore {
 		return weight + standard;
 		
 	}
-	
-	
-	
-	
-	public static void main(String [] args) {
-		System.out.println(reduce(0.5, 1000000));
-	}
+
 }
