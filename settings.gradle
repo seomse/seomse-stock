@@ -1,2 +1,4 @@
 rootProject.name = 'seomse-stock'
+include 'item'
+include 'etf'
 
