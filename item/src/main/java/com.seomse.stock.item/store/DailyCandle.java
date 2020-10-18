@@ -16,7 +16,8 @@
 
 package com.seomse.stock.item.store;
 
-import com.seomse.trading.technical.analysis.candle.TradeCandle;
+
+import com.seomse.trading.candle.TradeCandle;
 
 /**
  * 주식 일봉

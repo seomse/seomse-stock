@@ -24,8 +24,8 @@ import com.seomse.jdbc.naming.JdbcNaming;
 import com.seomse.jdbc.objects.JdbcObjects;
 import com.seomse.stock.item.ItemConfig;
 import com.seomse.stock.item.fundamental.analysis.QuantYmd;
-import com.seomse.trading.technical.analysis.candle.TradeCandle;
-import com.seomse.trading.technical.analysis.candle.candles.TradeCandles;
+import com.seomse.trading.candle.TradeCandle;
+import com.seomse.trading.candle.candles.TradeCandles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

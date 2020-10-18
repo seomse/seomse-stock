@@ -20,7 +20,7 @@ import com.seomse.jdbc.annotation.DateTime;
 import com.seomse.jdbc.annotation.PrimaryKey;
 import com.seomse.jdbc.annotation.Table;
 import com.seomse.stock.item.MarketType;
-import com.seomse.trading.technical.analysis.candle.candles.TradeCandles;
+import com.seomse.trading.candle.candles.TradeCandles;
 
 import java.util.Map;
 
