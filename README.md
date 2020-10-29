@@ -14,6 +14,8 @@
 - 개별 종목 분석 모듈
 - ETF 분석 모듈
 
+# 용어사전
+https://docs.google.com/spreadsheets/d/1ECaUMUoZkb-jMGUS7-9FRQtiiP-Zfa4gvpLZ4WKiHXg/edit#gid=0
 
 # gradle
 - 정릴 릴리즈 버젼을 지원하기전에 모듈분리작업 이후에 진행될것 같습니다. 초기개발에는 모듈은 나누지 않고 개발합니다.
