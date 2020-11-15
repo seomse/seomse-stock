@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group 'com.seomse.stock'
+version '0.1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //poi 일회용 기능에서만 사용
+    testImplementation group: 'com.seomse.poi', name: 'seomse-poi', version: '0.1.2'
+}

@@ -1,4 +1,3 @@
 rootProject.name = 'seomse-stock'
-include 'item'
-include 'etf'
-
+include 'analysis'
+include 'data'
