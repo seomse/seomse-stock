@@ -3,4 +3,4 @@
  * in memory stock item data store
  * @author macle
  */
-package seomse.stock.analysis.store;
+package seomse.stock.analysis.item.store;

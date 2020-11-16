@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package seomse.stock.analysis.fundamental;
+package seomse.stock.analysis.item.fundamental;
 
 /**
  * 퀀트에서 사용하는 ymd 관련 유틸성 메소드 년월일

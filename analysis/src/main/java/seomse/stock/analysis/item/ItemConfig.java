@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package seomse.stock.analysis;
+package seomse.stock.analysis.item;
 
 /**
  * 주식에서 사용하는 설정정보

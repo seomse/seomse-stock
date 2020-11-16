@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package seomse.stock.analysis.fundamental;
+package seomse.stock.analysis.item.fundamental;
 
-import seomse.stock.analysis.store.ItemStore;
+import seomse.stock.analysis.item.store.ItemStore;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

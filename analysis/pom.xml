@@ -2,6 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- 양식 아직 정리되지 않음 빌트 버젼이 완성되는 형태가 나오면 정리 예정-->
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.seomse.stock</groupId>
@@ -23,8 +25,10 @@
 
     <developers>
         <developer>
-            <name>macle86</name>
+            <name>macle</name>
             <email>ysys86a@gmail.com</email>
+            <id>macle86</id>
+            <organization>seomse</organization>
         </developer>
     </developers>
 

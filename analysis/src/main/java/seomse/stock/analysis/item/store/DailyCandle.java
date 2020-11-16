@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package seomse.stock.analysis.store;
+package seomse.stock.analysis.item.store;
 
 
-import com.seomse.trading.candle.TradeCandle;
+import com.seomse.trading.technical.analysis.candle.TradeCandle;
 
 /**
  * 주식 일봉

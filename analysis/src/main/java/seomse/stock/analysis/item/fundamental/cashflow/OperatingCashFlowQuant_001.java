@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package seomse.stock.analysis.fundamental.cashflow;
+package seomse.stock.analysis.item.fundamental.cashflow;
 
-import seomse.stock.analysis.fundamental.QuantScore;
-import seomse.stock.analysis.fundamental.QuantYmd;
-import seomse.stock.analysis.store.FinancialStatements;
-import seomse.stock.analysis.store.Item;
-import seomse.stock.analysis.store.ItemStore;
+import seomse.stock.analysis.item.fundamental.QuantScore;
+import seomse.stock.analysis.item.fundamental.QuantYmd;
+import seomse.stock.analysis.item.store.FinancialStatements;
+import seomse.stock.analysis.item.store.Item;
+import seomse.stock.analysis.item.store.ItemStore;
 
 /**
  * 영업활동 현금흐름 quant

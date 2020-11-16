@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package seomse.stock.analysis.store;
+package seomse.stock.analysis.item.store;
 
 import com.seomse.jdbc.annotation.Table;
 

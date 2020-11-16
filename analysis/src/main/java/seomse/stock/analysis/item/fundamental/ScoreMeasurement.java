@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package seomse.stock.analysis.fundamental;
+package seomse.stock.analysis.item.fundamental;
 
 /**
  * 점수 측정 관련 유틸
