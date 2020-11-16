@@ -13,11 +13,13 @@
 
 
 - 아래와 같이 2가지 프로젝트로 진행합니다
-    - 분석 모듈
+    - 분석 모듈 (analysis)
         - 증권 시장 분석
-    - 데이터 모듈
+    - 데이터 모듈 (data)
         - 관리중인 증시 데이터 업데이트 / 빠진데이터가 없는지 검증 / 백업
-    
+
+
+- 관련 프로젝트가 진행되면서 seomse-trading 도 연관해서 같이 많은 업데이트가 진행되고 있습니다.
 
 # 용어사전
 https://docs.google.com/spreadsheets/d/1ECaUMUoZkb-jMGUS7-9FRQtiiP-Zfa4gvpLZ4WKiHXg/edit#gid=0

@@ -2,15 +2,17 @@ plugins {
     id 'java'
 }
 
-group 'com.seomse.stock'
-version '0.1.0-SNAPSHOT'
 
-repositories
-        {
-    mavenCentral()
+description = "stock auto trading build"
+
+allprojects {
+    group 'com.seomse.stock'
+    repositories
+            {
+                mavenCentral()
+            }
 }
-
 dependencies {
 
-
+    testImplementation 'com.seomse.jdbc:seomse-jdbc:0.9.3'
 }

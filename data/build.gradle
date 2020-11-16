@@ -2,14 +2,14 @@ plugins {
     id 'java'
 }
 
-group 'com.seomse.stock'
 version '0.1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    //poi 일회용 기능에서만 사용
-    testImplementation group: 'com.seomse.poi', name: 'seomse-poi', version: '0.1.2'
+
+    implementation 'com.seomse.commons:seomse-commons:1.1.9'
+
+    //jdbc
+    implementation 'com.seomse.jdbc:seomse-jdbc:0.9.3'
+    implementation group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
+
 }

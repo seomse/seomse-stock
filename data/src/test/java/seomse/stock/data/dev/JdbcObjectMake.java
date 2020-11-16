@@ -14,32 +14,19 @@
  * limitations under the License.
  */
 
-package seomse.stock.analysis.store;
+package seomse.stock.data.dev;
 
-import com.seomse.jdbc.annotation.Table;
+import com.seomse.jdbc.objects.JdbcObjects;
 
 /**
- * 일별 데이터베이스 네이밍 객체
  * @author macle
  */
-@Table(name="T_STOCK_ITEM_DAILY")
-public class DailyNo {
-    String YMD;
-    Double CLOSE_PRC;
-    Double PREVIOUS_PRC;
-    Double OPEN_PRC;
-    Double HIGH_PRC;
-    Double LOW_PRC;
-    Double TRADE_VOL;
-    Double STRENGTH_RT;
-    Double INSTITUTION_TRADE_VOL;
-    Double FOREIGN_TRADE_VOL;
-    Double INDIVIDUAL_TRADE_VOL;
-    Double SLB_VOL;
-    Double SLB_REPAY_VOL;
-    Double SLB_BALANCE_VOL;
-    Double SHORT_SELLING_VOL;
-    Double SHORT_SELLING_BALANCE_VOL;
-    Double CREDIT_RT;
+public class JdbcObjectMake {
+    public static void main(String[] args) {
 
+
+        String tableName = "T_STOCK_MARKET_INDEX";
+        System.out.println(JdbcObjects.makeObjectValue(tableName));
+
+    }
 }
