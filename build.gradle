@@ -12,6 +12,7 @@ allprojects {
                 mavenCentral()
             }
 }
+
 dependencies {
 
     //개발 환경에서만 사용됩니다.
