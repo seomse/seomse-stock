@@ -14,20 +14,23 @@
  * limitations under the License.
  */
 
-package seomse.stock.data.dev;
+package com.seomse.stock.data.once;
 
-import com.seomse.jdbc.naming.JdbcNaming;
+import com.seomse.jdbc.annotation.PrimaryKey;
+import com.seomse.jdbc.annotation.Table;
 
 /**
  * @author macle
  */
-public class NamingObjectMake {
+@Table(name="T_STOCK_MARKET_INDEX_DAILY")
+public class MarketIndexNo {
 
-	public static void main(String [] args){
-		String tableName = "T_STOCK_MARKET_INDEX_DAILY";
-		System.out.println("@Table(name=\"" +  tableName+ "\")\n");
-		System.out.println(JdbcNaming.makeObjectValue(tableName));
-
-	}
-	
+    @PrimaryKey(seq = 1)
+    String INDEX_CD;
+    @PrimaryKey(seq = 2)
+    String YMD;
+    Double CLOSE_PRC;
+    Double CHANGE_RT;
+    Double CHANGE_PRC;
+    Double PREVIOUS_PRC;
 }

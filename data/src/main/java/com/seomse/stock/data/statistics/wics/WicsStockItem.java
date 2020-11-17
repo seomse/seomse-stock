@@ -14,23 +14,27 @@
  * limitations under the License.
  */
 
-package seomse.stock.data.once;
+package com.seomse.stock.data.statistics.wics;
 
+import com.seomse.jdbc.annotation.Column;
 import com.seomse.jdbc.annotation.PrimaryKey;
 import com.seomse.jdbc.annotation.Table;
 
 /**
  * @author macle
  */
-@Table(name="T_STOCK_MARKET_INDEX_DAILY")
-public class MarketIndexNo {
-
+@Table(name="T_STOCK_ITEM")
+public class WicsStockItem {
     @PrimaryKey(seq = 1)
-    String INDEX_CD;
-    @PrimaryKey(seq = 2)
-    String YMD;
-    Double CLOSE_PRC;
-    Double CHANGE_RT;
-    Double CHANGE_PRC;
-    Double PREVIOUS_PRC;
+    @Column(name = "ITEM_CD")
+    String code;
+
+
+    @Column(name = "WICS_NM")
+    String wics;
+
+
+
+    double price;
+
 }

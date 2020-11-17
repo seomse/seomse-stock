@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package seomse.stock.data.once;
+package com.seomse.stock.data.once;
 
 import com.seomse.commons.utils.FileUtil;
 import com.seomse.jdbc.naming.JdbcNaming;

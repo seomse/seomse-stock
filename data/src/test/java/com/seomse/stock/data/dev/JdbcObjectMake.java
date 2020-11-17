@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package seomse.stock.data.dev;
+package com.seomse.stock.data.dev;
 
 import com.seomse.jdbc.objects.JdbcObjects;
 
@@ -25,7 +25,7 @@ public class JdbcObjectMake {
     public static void main(String[] args) {
 
 
-        String tableName = "T_STOCK_MARKET_INDEX";
+        String tableName = "T_STOCK_ITEM";
         System.out.println(JdbcObjects.makeObjectValue(tableName));
 
     }

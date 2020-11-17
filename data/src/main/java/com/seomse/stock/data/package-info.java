@@ -6,4 +6,4 @@
  * 데이터 검증
  * @author macle
  */
-package seomse.stock.data;
+package com.seomse.stock.data;
