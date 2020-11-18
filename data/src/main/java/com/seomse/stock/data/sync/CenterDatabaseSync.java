@@ -43,24 +43,31 @@ public class CenterDatabaseSync {
 
 
 
-    public static String [] analysisTables = """
+    public static String [] INFO_TABLES = """
             T_STOCK_ETF
-            T_STOCK_ETF_DAILY
             T_STOCK_FSMT
             T_STOCK_ITEM
-            T_STOCK_ITEM_DAILY
             T_STOCK_ITEM_HOLDER
             T_STOCK_ITEM_PREFERRED
             T_STOCK_MARKET
-            T_STOCK_MARKET_DAILY
             T_STOCK_MARKET_INDEX
-            T_STOCK_MARKET_INDEX_DAILY
-            T_STOCK_WICS_DAILY
-            T_STOCK_ETF_5M
-            T_STOCK_ITEM_5M
-            T_STOCK_MARKET_5M
             """.split("\n");
 
+
+    public static String [] DAILY_TABLES = """
+            T_STOCK_ETF_DAILY
+            T_STOCK_ITEM_DAILY
+            T_STOCK_MARKET_DAILY
+            T_STOCK_MARKET_INDEX_DAILY
+            T_STOCK_WICS_DAILY   
+            """.split("\n");
+
+
+    public static String [] MINUTE_TABLES = """
+            T_STOCK_ETF_5M
+            T_STOCK_MARKET_5M
+            T_STOCK_ITEM_5M
+            """.split("\n");
 
 
     private final String centerDatabaseType;
@@ -99,17 +106,43 @@ public class CenterDatabaseSync {
     }
 
     /**
-     * 전체 데이터 싱크
+     * 전체 데이터 테이블 동기화
      */
     public void sync(){
 
-        RowDataInOut dataInOut = new RowDataInOut();
+
 
         try(
                 Connection selectConn = ConnectionFactory.newConnection(centerDatabaseType, centerUrl, centerId, centerPassword);
                 Connection insertConn = ConnectionFactory.newConnection(syncDatabaseType, syncUrl, syncId, syncPassword)
         ){
-            dataInOut.tableSync(selectConn, insertConn, analysisTables);
+            RowDataInOut dataInOut = new RowDataInOut();
+            dataInOut.tableSync(selectConn, insertConn, INFO_TABLES);
+            logger.info("info table sync complete");
+
+            dataInOut.tableSync(selectConn, insertConn, DAILY_TABLES);
+            logger.info("daily table sync complete");
+
+            dataInOut.tableSync(selectConn, insertConn, MINUTE_TABLES);
+            logger.info("5 minute table sync complete");
+
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 지정한 테이블 동기화
+     * @param tableNames String [] 테이블 목록
+     */
+    public void sync(String [] tableNames){
+        try(
+                Connection selectConn = ConnectionFactory.newConnection(centerDatabaseType, centerUrl, centerId, centerPassword);
+                Connection insertConn = ConnectionFactory.newConnection(syncDatabaseType, syncUrl, syncId, syncPassword)
+        ) {
+            RowDataInOut dataInOut = new RowDataInOut();
+            dataInOut.tableSync(selectConn, insertConn, tableNames);
+            logger.info("table sync complete");
         }catch (Exception e){
             throw new RuntimeException(e);
         }
@@ -117,10 +150,30 @@ public class CenterDatabaseSync {
 
     /**
      * 변경분만 업데이트
+     * 일을 기준으로 데이터를 가져와서 업데이트
      * (제공 여정)
      */
     public void update(){
-        
+
+        try(
+                Connection selectConn = ConnectionFactory.newConnection(centerDatabaseType, centerUrl, centerId, centerPassword);
+                Connection insertConn = ConnectionFactory.newConnection(syncDatabaseType, syncUrl, syncId, syncPassword)
+        ){
+            RowDataInOut dataInOut = new RowDataInOut();
+            dataInOut.tableSync(selectConn, insertConn, INFO_TABLES);
+            logger.info("info table sync complete");
+
+            //일봉과 분봉은 업데이트 할것
+
+//            dataInOut.tableSync(selectConn, insertConn, DAILY_TABLES);
+//            logger.info("daily table update complete");
+//
+//            dataInOut.tableSync(selectConn, insertConn, MINUTE_TABLES);
+//            logger.info("5 minute table update complete");
+
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
 
