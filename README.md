@@ -5,6 +5,7 @@
 - ewin 파일은 7.3 기준으로 제작 되었습니다.
 
 # 개요
+- 분석을 위한 데이터 확보가 완료되어 본격적인 분석 프로젝트를 시작 합니다.
 - 주식 시장 자동 매매를 위한 프로젝트 입니다.
 - 다양한 분석 기법을 공유하고 발전시키기 위해 오픈화 합니다
 - 데이터 구조는 doc/erd 디렉토리에 erwin 파일로 공유되어 있습니다
@@ -40,6 +41,7 @@ implementation 'com.seomse.stock:data:0.1.0'
 # communication
 ### blog, homepage
 - www.seomse.com
+- github.com/seomse/
 - seomse.tistory.com
 - seomse.github.io
 - seomse.com
@@ -52,3 +54,8 @@ implementation 'com.seomse.stock:data:0.1.0'
 
 ### email (협업, 외주)
  - comseomse@gmail.com
+ 
+ 
+# dev
+ - macle
+    -  github.com/macle86/
