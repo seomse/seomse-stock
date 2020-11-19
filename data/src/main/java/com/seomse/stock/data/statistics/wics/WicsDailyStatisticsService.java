@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * wics daily 통계 서비스 3시간에 한번실행
+ * 일주일 데이터씩 다시 통계함
  * @author macle
  */
 public class WicsDailyStatisticsService extends Service {

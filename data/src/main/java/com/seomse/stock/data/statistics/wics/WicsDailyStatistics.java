@@ -36,7 +36,6 @@ public class WicsDailyStatistics {
      * 업데이트
      * @param startYmd yyyyMMdd 시작 년원일
      * @param endYmd yyyyMMdd 종료 년원일
-     *
      */
     public static void update(String startYmd, String endYmd){
 

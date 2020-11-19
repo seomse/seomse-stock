@@ -17,13 +17,17 @@
 package com.seomse.stock.data.sync;
 
 import com.seomse.jdbc.admin.RowDataInOut;
+import com.seomse.jdbc.annotation.Table;
 import com.seomse.jdbc.connection.ConnectionFactory;
+import com.seomse.jdbc.naming.JdbcNaming;
+import com.seomse.stock.data.sync.tables.daily.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -39,10 +43,6 @@ public class CenterDatabaseSync {
 
     private static final Logger logger = LoggerFactory.getLogger(CenterDatabaseSync.class);
 
-//    5분봉은 데이터가 너무 많아서 다른방식으로 인관 고민중..
-
-
-
     public static String [] INFO_TABLES = """
             T_STOCK_ETF
             T_STOCK_FSMT
@@ -56,10 +56,10 @@ public class CenterDatabaseSync {
 
     public static String [] DAILY_TABLES = """
             T_STOCK_ETF_DAILY
-            T_STOCK_ITEM_DAILY
             T_STOCK_MARKET_DAILY
             T_STOCK_MARKET_INDEX_DAILY
-            T_STOCK_WICS_DAILY   
+            T_STOCK_WICS_DAILY
+            T_STOCK_ITEM_DAILY
             """.split("\n");
 
 
@@ -99,6 +99,7 @@ public class CenterDatabaseSync {
             syncUrl = props.getProperty("sync.jdbc.url");
             syncId = props.getProperty("sync.jdbc.user.id");
             syncPassword = props.getProperty("sync.jdbc.user.password");
+
 
         }catch(Exception e){
             throw new RuntimeException(e);
@@ -162,7 +163,14 @@ public class CenterDatabaseSync {
             logger.info("info table sync complete");
 
 
-            //일봉과 분봉은 업데이트 할것
+            //일봉
+            update(insertConn, JdbcNaming.getObjList(selectConn, EtfDailyNo.class, "YMD >= '" + ymd + "'"));
+            update(insertConn, JdbcNaming.getObjList(selectConn, ItemDailyNo.class, "YMD >= '" + ymd + "'"));
+            update(insertConn, JdbcNaming.getObjList(selectConn, MarketDailyNo.class, "YMD >= '" + ymd + "'"));
+            update(insertConn, JdbcNaming.getObjList(selectConn, MarketIndexDailyNo.class, "YMD >= '" + ymd + "'"));
+            update(insertConn, JdbcNaming.getObjList(selectConn, WicsDailyNo.class, "YMD >= '" + ymd + "'"));
+            logger.info("daily update complete");
+            //분봉
 
 //            dataInOut.tableSync(selectConn, insertConn, DAILY_TABLES, "");
 //            logger.info("daily table update complete");
@@ -175,10 +183,61 @@ public class CenterDatabaseSync {
         }
     }
 
+    /**
+     * update
+     * @param list database naming object list
+     */
+    public static void update(Connection insertConn, @SuppressWarnings("rawtypes") List list){
+        if(list.size() == 0){
+            return;
+        }
+
+        logger.info(list.get(0).getClass().getAnnotation(Table.class).name());
+
+        for (Object o : list) {
+            JdbcNaming.insertOrUpdate(insertConn, o, true);
+        }
+        list.clear();
+    }
+
+
 
     public static void main(String[] args) {
 
         CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
-        centerDatabaseSync.sync(MINUTE_TABLES);
+        centerDatabaseSync.sync();
+//        centerDatabaseSync.update("20201118");
+
+//        try(InputStream inputStream  = new FileInputStream("config/database_center_sync.xml")){
+//
+//            Properties props  = new Properties();
+//            props.loadFromXML(inputStream);
+//
+//            String centerDatabaseType = props.getProperty("center.jdbc.type");
+//            String centerUrl = props.getProperty("center.jdbc.url");
+//            String centerId = props.getProperty("center.jdbc.user.id");
+//            String centerPassword = props.getProperty("center.jdbc.user.password");
+//
+//            String syncDatabaseType = props.getProperty("sync.jdbc.type");
+//            String syncUrl = props.getProperty("sync.jdbc.url");
+//            String syncId = props.getProperty("sync.jdbc.user.id");
+//            String syncPassword = props.getProperty("sync.jdbc.user.password");
+//            try(
+//                    Connection selectConn = ConnectionFactory.newConnection(centerDatabaseType, centerUrl, centerId, centerPassword);
+//                    Connection insertConn = ConnectionFactory.newConnection(syncDatabaseType, syncUrl, syncId, syncPassword)
+//            ) {
+//
+//
+//                RowDataInOut dataInOut = new RowDataInOut();
+//                dataInOut.tableCopy(selectConn, insertConn, "T_STOCK_ITEM_DAILY");
+//            }catch (Exception e){
+//                e.printStackTrace();
+//            }
+//
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+
+
     }
 }
