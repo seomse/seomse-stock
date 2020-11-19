@@ -52,7 +52,7 @@ implementation 'com.seomse.stock:data:0.1.0'
 ### 슬랙 slack
 - https://seomse.slack.com/
 
-### email (협업, 외주)
+### email
  - comseomse@gmail.com
  
  
