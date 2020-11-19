@@ -16,25 +16,18 @@
 
 package com.seomse.stock.data.statistics.wics;
 
-import com.seomse.jdbc.annotation.Column;
-import com.seomse.jdbc.annotation.PrimaryKey;
-import com.seomse.jdbc.annotation.Table;
+import com.seomse.commons.config.Config;
+import com.seomse.system.engine.EngineInitializer;
 
 /**
- * wics 일별
  * @author macle
  */
-@Table(name="T_STOCK_WICS_DAILY")
-public class WicsDaily {
-    @PrimaryKey(seq = 1)
-    @Column(name = "WICS_NM")
-    String wics;
-    @PrimaryKey(seq = 2)
-    @Column(name = "YMD")
-    String ymd;
-    @Column(name = "AVG_RT")
-    double avg;
-    @Column(name = "MID_80_AVG_RT")
-    double avg80;
-
+public class WicsDailyStatisticsInitializer implements EngineInitializer {
+    @Override
+    public void init() {
+        if(Config.getBoolean("wics.daily.service.flag", false)){
+            WicsDailyStatisticsService wicsDailyStatisticsService = new WicsDailyStatisticsService();
+            wicsDailyStatisticsService.start();
+        }
+    }
 }

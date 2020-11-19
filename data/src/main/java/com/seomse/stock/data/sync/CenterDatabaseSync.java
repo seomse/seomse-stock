@@ -110,8 +110,6 @@ public class CenterDatabaseSync {
      */
     public void sync(){
 
-
-
         try(
                 Connection selectConn = ConnectionFactory.newConnection(centerDatabaseType, centerUrl, centerId, centerPassword);
                 Connection insertConn = ConnectionFactory.newConnection(syncDatabaseType, syncUrl, syncId, syncPassword)
@@ -153,7 +151,7 @@ public class CenterDatabaseSync {
      * 일을 기준으로 데이터를 가져와서 업데이트
      * (제공 여정)
      */
-    public void update(){
+    public void update(String ymd){
 
         try(
                 Connection selectConn = ConnectionFactory.newConnection(centerDatabaseType, centerUrl, centerId, centerPassword);
@@ -163,9 +161,10 @@ public class CenterDatabaseSync {
             dataInOut.tableSync(selectConn, insertConn, INFO_TABLES);
             logger.info("info table sync complete");
 
+
             //일봉과 분봉은 업데이트 할것
 
-//            dataInOut.tableSync(selectConn, insertConn, DAILY_TABLES);
+//            dataInOut.tableSync(selectConn, insertConn, DAILY_TABLES, "");
 //            logger.info("daily table update complete");
 //
 //            dataInOut.tableSync(selectConn, insertConn, MINUTE_TABLES);
@@ -180,6 +179,6 @@ public class CenterDatabaseSync {
     public static void main(String[] args) {
 
         CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
-        centerDatabaseSync.sync();
+        centerDatabaseSync.sync(MINUTE_TABLES);
     }
 }

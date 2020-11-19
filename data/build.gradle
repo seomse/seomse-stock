@@ -6,10 +6,10 @@ version '0.1.0-SNAPSHOT'
 
 dependencies {
 
-    implementation 'com.seomse.commons:seomse-commons:1.1.9'
+    implementation 'com.seomse.system:seomse-system:0.9.7'
 
     //jdbc
-    implementation 'com.seomse.jdbc:seomse-jdbc:0.9.3'
+    implementation 'com.seomse.jdbc:seomse-jdbc:0.9.4'
     implementation group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
 
 }

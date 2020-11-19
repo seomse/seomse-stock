@@ -21,6 +21,7 @@ import com.seomse.jdbc.annotation.PrimaryKey;
 import com.seomse.jdbc.annotation.Table;
 
 /**
+ *
  * @author macle
  */
 @Table(name="T_STOCK_ITEM")
@@ -29,12 +30,7 @@ public class WicsStockItem {
     @Column(name = "ITEM_CD")
     String code;
 
-
     @Column(name = "WICS_NM")
     String wics;
-
-
-
-    double price;
 
 }

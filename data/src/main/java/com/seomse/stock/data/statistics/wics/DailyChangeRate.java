@@ -17,24 +17,18 @@
 package com.seomse.stock.data.statistics.wics;
 
 import com.seomse.jdbc.annotation.Column;
-import com.seomse.jdbc.annotation.PrimaryKey;
 import com.seomse.jdbc.annotation.Table;
 
 /**
- * wics 일별
+ * 가격정보
  * @author macle
  */
-@Table(name="T_STOCK_WICS_DAILY")
-public class WicsDaily {
-    @PrimaryKey(seq = 1)
-    @Column(name = "WICS_NM")
-    String wics;
-    @PrimaryKey(seq = 2)
-    @Column(name = "YMD")
-    String ymd;
-    @Column(name = "AVG_RT")
-    double avg;
-    @Column(name = "MID_80_AVG_RT")
-    double avg80;
-
+@Table(name="T_STOCK_ITEM_DAILY")
+public class DailyChangeRate {
+ 
+    @Column(name = "ITEM_CD")
+    String code;
+    
+    @Column(name = "CHANGE_RT")
+    double rate;
 }

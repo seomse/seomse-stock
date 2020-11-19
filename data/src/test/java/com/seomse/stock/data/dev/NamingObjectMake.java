@@ -19,12 +19,13 @@ package com.seomse.stock.data.dev;
 import com.seomse.jdbc.naming.JdbcNaming;
 
 /**
+ * jdbc 네이밍 객체 생성기
  * @author macle
  */
 public class NamingObjectMake {
 
 	public static void main(String [] args){
-		String tableName = "T_STOCK_MARKET_INDEX_DAILY";
+		String tableName = "T_STOCK_ITEM_DAILY";
 		System.out.println("@Table(name=\"" +  tableName+ "\")\n");
 		System.out.println(JdbcNaming.makeObjectValue(tableName));
 

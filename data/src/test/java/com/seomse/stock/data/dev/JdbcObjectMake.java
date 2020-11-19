@@ -19,13 +19,14 @@ package com.seomse.stock.data.dev;
 import com.seomse.jdbc.objects.JdbcObjects;
 
 /**
+ * Jdbc 연동 객체 생성 도움
  * @author macle
  */
 public class JdbcObjectMake {
     public static void main(String[] args) {
 
 
-        String tableName = "T_STOCK_ITEM";
+        String tableName = "T_STOCK_WICS_DAILY";
         System.out.println(JdbcObjects.makeObjectValue(tableName));
 
     }
