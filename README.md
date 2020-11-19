@@ -28,7 +28,14 @@
 https://docs.google.com/spreadsheets/d/1ECaUMUoZkb-jMGUS7-9FRQtiiP-Zfa4gvpLZ4WKiHXg/edit#gid=0
 
 # gradle
-- 지원예정
+### analysis
+지원예정
+
+### data
+implementation 'com.seomse.stock:data:0.1.0'
+
+- etc 
+    - https://mvnrepository.com/artifact/com.seomse.stock/data/0.1.0
 
 # communication
 ### blog, homepage
