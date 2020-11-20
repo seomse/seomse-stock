@@ -14,21 +14,29 @@
  * limitations under the License.
  */
 
-package com.seomse.stock.data.dev;
+package com.seomse.stock.data.sync.tables.minute;
 
-import com.seomse.jdbc.naming.JdbcNaming;
+import com.seomse.jdbc.annotation.PrimaryKey;
+import com.seomse.jdbc.annotation.Table;
 
 /**
- * jdbc 네이밍 객체 생성기
+ * 증시 5분봉
  * @author macle
  */
-public class NamingObjectMake {
+@Table(name="T_STOCK_MARKET_5M")
+public class Market5mNo {
+    @PrimaryKey(seq = 1)
+    private String MARKET_CD;
+    @PrimaryKey(seq = 2)
+    private String YMDHM;
+    private Double CLOSE_PRC;
+    private Double PREVIOUS_PRC;
+    private Double DAILY_PREVIOUS_PRC;
+    private Double OPEN_PRC;
+    private Double HIGH_PRC;
+    private Double LOW_PRC;
+    private Double TRADE_VOL;
+    private Double TRADE_PRC_VOL;
 
-	public static void main(String [] args){
-		String tableName = "T_STOCK_ITEM_5M";
-		System.out.println("@Table(name=\"" +  tableName+ "\")\n");
-		System.out.println(JdbcNaming.makeObjectValue(tableName));
 
-	}
-	
 }

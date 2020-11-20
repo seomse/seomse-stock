@@ -21,6 +21,9 @@ import com.seomse.jdbc.annotation.Table;
 import com.seomse.jdbc.connection.ConnectionFactory;
 import com.seomse.jdbc.naming.JdbcNaming;
 import com.seomse.stock.data.sync.tables.daily.*;
+import com.seomse.stock.data.sync.tables.minute.Etf5mNo;
+import com.seomse.stock.data.sync.tables.minute.Item5mNo;
+import com.seomse.stock.data.sync.tables.minute.Market5mNo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,12 +38,12 @@ import java.util.Properties;
  * 용량이 너무커서 통신속도를 줄이기 위한
  * local 처리를 위한 용도
  *
- * DB는 혀용된 아이피에서만 접근가능하므로 데이터 사용을 원할경우 README 에 있는 정보를 이용하여 연락 바람람 *
+ * DB는 혀용된 아이피에서만 접근가능하므로 데이터 사용을 원할경우 README 에 있는 정보를 이용하여 연락 바람람 
+ * 데이터만 복사함 스키마는 생성되어 있어야 함
  * @author macle
  */
 public class CenterDatabaseSync {
-
-
+    
     private static final Logger logger = LoggerFactory.getLogger(CenterDatabaseSync.class);
 
     public static String [] INFO_TABLES = """
@@ -117,13 +120,13 @@ public class CenterDatabaseSync {
         ){
             RowDataInOut dataInOut = new RowDataInOut();
             dataInOut.tableSync(selectConn, insertConn, INFO_TABLES);
-            logger.info("info table sync complete");
+            logger.info("info tables sync complete");
 
             dataInOut.tableSync(selectConn, insertConn, DAILY_TABLES);
-            logger.info("daily table sync complete");
+            logger.info("daily tables sync complete");
 
             dataInOut.tableSync(selectConn, insertConn, MINUTE_TABLES);
-            logger.info("5 minute table sync complete");
+            logger.info("5 minute tables sync complete");
 
         }catch (Exception e){
             throw new RuntimeException(e);
@@ -141,7 +144,7 @@ public class CenterDatabaseSync {
         ) {
             RowDataInOut dataInOut = new RowDataInOut();
             dataInOut.tableSync(selectConn, insertConn, tableNames);
-            logger.info("table sync complete");
+            logger.info("tables sync complete");
         }catch (Exception e){
             throw new RuntimeException(e);
         }
@@ -160,7 +163,7 @@ public class CenterDatabaseSync {
         ){
             RowDataInOut dataInOut = new RowDataInOut();
             dataInOut.tableSync(selectConn, insertConn, INFO_TABLES);
-            logger.info("info table sync complete");
+            logger.info("info tables sync complete");
 
 
             //일봉
@@ -169,14 +172,14 @@ public class CenterDatabaseSync {
             update(insertConn, JdbcNaming.getObjList(selectConn, MarketDailyNo.class, "YMD >= '" + ymd + "'"));
             update(insertConn, JdbcNaming.getObjList(selectConn, MarketIndexDailyNo.class, "YMD >= '" + ymd + "'"));
             update(insertConn, JdbcNaming.getObjList(selectConn, WicsDailyNo.class, "YMD >= '" + ymd + "'"));
-            logger.info("daily update complete");
-            //분봉
+            logger.info("daily tables update complete");
 
-//            dataInOut.tableSync(selectConn, insertConn, DAILY_TABLES, "");
-//            logger.info("daily table update complete");
-//
-//            dataInOut.tableSync(selectConn, insertConn, MINUTE_TABLES);
-//            logger.info("5 minute table update complete");
+            //분봉
+            String ymdhm = ymd +"0000";
+            update(insertConn, JdbcNaming.getObjList(selectConn, Market5mNo.class, "YMDHM >= '" + ymdhm + "'"));
+            update(insertConn, JdbcNaming.getObjList(selectConn, Etf5mNo.class, "YMDHM >= '" + ymdhm + "'"));
+            update(insertConn, JdbcNaming.getObjList(selectConn, Item5mNo.class, "YMDHM >= '" + ymdhm + "'"));
+            logger.info("5 minute tables update complete");
 
         }catch (Exception e){
             throw new RuntimeException(e);
@@ -199,45 +202,9 @@ public class CenterDatabaseSync {
         }
         list.clear();
     }
-
-
-
+    
     public static void main(String[] args) {
-
         CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
         centerDatabaseSync.sync();
-//        centerDatabaseSync.update("20201118");
-
-//        try(InputStream inputStream  = new FileInputStream("config/database_center_sync.xml")){
-//
-//            Properties props  = new Properties();
-//            props.loadFromXML(inputStream);
-//
-//            String centerDatabaseType = props.getProperty("center.jdbc.type");
-//            String centerUrl = props.getProperty("center.jdbc.url");
-//            String centerId = props.getProperty("center.jdbc.user.id");
-//            String centerPassword = props.getProperty("center.jdbc.user.password");
-//
-//            String syncDatabaseType = props.getProperty("sync.jdbc.type");
-//            String syncUrl = props.getProperty("sync.jdbc.url");
-//            String syncId = props.getProperty("sync.jdbc.user.id");
-//            String syncPassword = props.getProperty("sync.jdbc.user.password");
-//            try(
-//                    Connection selectConn = ConnectionFactory.newConnection(centerDatabaseType, centerUrl, centerId, centerPassword);
-//                    Connection insertConn = ConnectionFactory.newConnection(syncDatabaseType, syncUrl, syncId, syncPassword)
-//            ) {
-//
-//
-//                RowDataInOut dataInOut = new RowDataInOut();
-//                dataInOut.tableCopy(selectConn, insertConn, "T_STOCK_ITEM_DAILY");
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-
-
     }
 }
