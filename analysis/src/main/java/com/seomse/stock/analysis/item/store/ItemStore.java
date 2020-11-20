@@ -88,7 +88,7 @@ public class ItemStore {
             item.yearFinancialStatementsArray = yearFinancialStatementsList.toArray(new FinancialStatements[0]);
 
             List<FinancialStatements> quarterFinancialStatementsList = JdbcObjects.getObjList(FinancialStatements.class, "ITEM_CD ='"+item.getCode() +"'  AND SETTLEMENT_YM <= '" + minYm + "' AND SETTLEMENT_TP='QUARTER' AND ESTIMATE_FG='N'" );
-            item.quarterFinancialStatementsArray = yearFinancialStatementsList.toArray(new FinancialStatements[0]);
+            item.quarterFinancialStatementsArray = quarterFinancialStatementsList.toArray(new FinancialStatements[0]);
 
             TradeCandles tradeCandles = new TradeCandles(Times.DAY_1);
             //short 0.003(0.3%) // 0.001(0.1%)
@@ -105,13 +105,20 @@ public class ItemStore {
 
             for (int i = dailyNoList.size()-1; i > -1; i--) {
                 DailyNo dailyNo = dailyNoList.get(i);
-                DailyCandle dailyCandle = new DailyCandle();
+                ItemDailyCandle dailyCandle = new ItemDailyCandle();
                 dailyCandle.setClose(dailyNo.CLOSE_PRC);
                 dailyCandle.setOpen(dailyNo.OPEN_PRC);
                 dailyCandle.setHigh(dailyNo.HIGH_PRC);
                 dailyCandle.setLow(dailyNo.LOW_PRC);
+                dailyCandle.setChange(dailyNo.CHANGE_PRC);
+                dailyCandle.setPrevious(dailyNo.PREVIOUS_PRC);
                 dailyCandle.setVolume(dailyNo.TRADE_VOL);
+                dailyCandle.setStrength(dailyNo.STRENGTH_RT);
+                dailyCandle.setChangeRate(dailyNo.CHANGE_RT);
+
                 long ymdTime = YmdUtil.getTime(dailyNo.YMD);
+                
+                // 9부터 15시 30분이므로 시간값 맞추기
                 //9시간 더하기
                 dailyCandle.setStartTime(ymdTime + Times.HOUR_3*3);
                 //15시간 30분 더하기
@@ -123,13 +130,26 @@ public class ItemStore {
                 dailyCandle.ymd = dailyNo.YMD;
                 dailyCandle.institution = dailyNo.INSTITUTION_TRADE_VOL;
                 dailyCandle.foreign = dailyNo.FOREIGN_TRADE_VOL;
+                dailyCandle.foreignRate = dailyNo.FOREIGN_RT;
+                dailyCandle.foreignBalanceVolume = dailyNo.FOREIGN_BALANCE_VOL;
                 dailyCandle.individual = dailyNo.INDIVIDUAL_TRADE_VOL;
+
                 dailyCandle.slb = dailyNo.SLB_VOL;
                 dailyCandle.slbRepay = dailyNo.SLB_REPAY_VOL;
                 dailyCandle.slbBalance = dailyNo.SLB_BALANCE_VOL;
-                dailyCandle.shortSelling = dailyNo.SHORT_SELLING_BALANCE_VOL;
+
+                dailyCandle.shortSelling = dailyNo.SHORT_SELLING_VOL;
                 dailyCandle.shortSellingBalance = dailyNo.SHORT_SELLING_BALANCE_VOL;
-                dailyCandle.creditRatio = dailyNo.CREDIT_RT;
+
+                dailyCandle.creditBalanceRate = dailyNo.CREDIT_BALANCE_RT;
+                dailyCandle.creditTotalVolume = dailyNo.CREDIT_TOTAL_VOL;
+                dailyCandle.creditNewVolume = dailyNo.CREDIT_NEW_VOL;
+                dailyCandle.creditRepayVolume = dailyNo.CREDIT_REPAY_VOL;
+                dailyCandle.creditBalanceVolume = dailyNo.CREDIT_BALANCE_VOL;
+                dailyCandle.creditPriceVolume = dailyNo.CREDIT_PRC_VOL;
+                dailyCandle.creditChangeVolume = dailyNo.CREDIT_CHANGE_VOL;
+                dailyCandle.creditExposureRate = dailyNo.CREDIT_EXPOSURE_RT;
+
                 tradeCandleArray[index++] = dailyCandle;
             }
 
@@ -138,8 +158,8 @@ public class ItemStore {
             tradeCandles.addCandle(tradeCandleArray);
         }
 
-        System.out.println(itemMap.size());
 
+        logger.info("itemMap size: " + itemMap.size());
     }
 
     /**
@@ -160,6 +180,6 @@ public class ItemStore {
     }
 
     public static void main(String[] args) {
-        new ItemStore("20201015");
+        new ItemStore("20201118");
     }
 }

@@ -23,7 +23,7 @@ import com.seomse.trading.technical.analysis.candle.TradeCandle;
  * 주식 일봉
  * @author macle
  */
-public class DailyCandle extends TradeCandle {
+public class ItemDailyCandle extends TradeCandle {
 
     //아래 항목은 없을수도 있으니 null을 허용하는 객체형으로 변수화 함
     String ymd;
@@ -32,12 +32,12 @@ public class DailyCandle extends TradeCandle {
     Double institution;
     //외국계 매매량
     Double foreign;
-    //외국인 매매량
-    Double foreigner;
+    Double foreignBalanceVolume;
+    Double foreignRate;
+
     //개인 매매량
     Double individual;
-    //프로그램 매매량
-    Double program;
+
     //대차 체결량
     Double slb;
     //대차 상환
@@ -48,8 +48,16 @@ public class DailyCandle extends TradeCandle {
     Double shortSelling;
     //공매도 잔고
     Double shortSellingBalance;
-    //신용 비율
-    Double creditRatio;
+
+    Double creditBalanceRate;
+    Double creditTotalVolume;
+    Double creditNewVolume;
+    Double creditRepayVolume;
+    Double creditBalanceVolume;
+    Double creditPriceVolume;
+    Double creditChangeVolume;
+    Double creditExposureRate;
+
 
     public String getYmd() {
         return ymd;
@@ -63,12 +71,16 @@ public class DailyCandle extends TradeCandle {
         return foreign;
     }
 
-    public Double getIndividual() {
-        return individual;
+    public Double getForeignBalanceVolume() {
+        return foreignBalanceVolume;
     }
 
-    public Double getProgram() {
-        return program;
+    public Double getForeignRate() {
+        return foreignRate;
+    }
+
+    public Double getIndividual() {
+        return individual;
     }
 
     public Double getSlb() {
@@ -91,7 +103,35 @@ public class DailyCandle extends TradeCandle {
         return shortSellingBalance;
     }
 
-    public Double getCreditRatio() {
-        return creditRatio;
+    public Double getCreditBalanceRate() {
+        return creditBalanceRate;
+    }
+
+    public Double getCreditTotalVolume() {
+        return creditTotalVolume;
+    }
+
+    public Double getCreditNewVolume() {
+        return creditNewVolume;
+    }
+
+    public Double getCreditRepayVolume() {
+        return creditRepayVolume;
+    }
+
+    public Double getCreditBalanceVolume() {
+        return creditBalanceVolume;
+    }
+
+    public Double getCreditPriceVolume() {
+        return creditPriceVolume;
+    }
+
+    public Double getCreditChangeVolume() {
+        return creditChangeVolume;
+    }
+
+    public Double getCreditExposureRate() {
+        return creditExposureRate;
     }
 }

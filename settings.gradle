@@ -1,3 +1,5 @@
 rootProject.name = 'seomse-stock'
 include 'analysis'
 include 'data'
+include 'trade'
+

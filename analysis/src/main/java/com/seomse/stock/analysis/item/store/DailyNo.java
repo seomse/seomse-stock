@@ -24,22 +24,34 @@ import com.seomse.jdbc.annotation.Table;
  */
 @Table(name="T_STOCK_ITEM_DAILY")
 public class DailyNo {
-    String YMD;
-    Double CLOSE_PRC;
-    Double PREVIOUS_PRC;
-    Double OPEN_PRC;
-    Double HIGH_PRC;
-    Double LOW_PRC;
-    Double TRADE_VOL;
-    Double STRENGTH_RT;
-    Double INSTITUTION_TRADE_VOL;
-    Double FOREIGN_TRADE_VOL;
-    Double INDIVIDUAL_TRADE_VOL;
-    Double SLB_VOL;
-    Double SLB_REPAY_VOL;
-    Double SLB_BALANCE_VOL;
-    Double SHORT_SELLING_VOL;
-    Double SHORT_SELLING_BALANCE_VOL;
-    Double CREDIT_RT;
+   String YMD;
+   Double CLOSE_PRC;
+   Double CHANGE_RT;
+   Double CHANGE_PRC;
+   Double PREVIOUS_PRC;
+   Double OPEN_PRC;
+   Double HIGH_PRC;
+   Double LOW_PRC;
+   Double TRADE_VOL;
+   Double STRENGTH_RT;
+   Double INSTITUTION_TRADE_VOL;
+   Double FOREIGN_TRADE_VOL;
+   Double INDIVIDUAL_TRADE_VOL;
+   Double FOREIGN_BALANCE_VOL;
+   Double FOREIGN_RT;
+   Double SLB_VOL;
+   Double SLB_REPAY_VOL;
+   Double SLB_BALANCE_VOL;
+   Double SHORT_SELLING_VOL;
+   Double SHORT_SELLING_BALANCE_VOL;
+   Double CREDIT_BALANCE_RT;
+   Double CREDIT_TOTAL_VOL;
+   Double CREDIT_NEW_VOL;
+   Double CREDIT_REPAY_VOL;
+   Double CREDIT_BALANCE_VOL;
+   Double CREDIT_PRC_VOL;
+   Double CREDIT_CHANGE_VOL;
+   Double CREDIT_EXPOSURE_RT;
+
 
 }
