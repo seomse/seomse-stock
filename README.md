@@ -1,8 +1,9 @@
 # seomse-stock
-
+- Team 섬세한 사람들의 주식시장 자동 투자 프로젝트
+- [github.com/seomse](https://github.com/seomse)
 # 개발환경
 - open jdk 15
-- ewin 파일은 7.3 기준으로 제작 되었습니다.
+- erwin 파일은 7.3 기준으로 제작 되었습니다.
 
 # 개요
 - 분석을 위한 데이터 확보가 완료되어 본격적인 분석 프로젝트를 시작 합니다.
@@ -65,4 +66,4 @@ implementation 'com.seomse.stock:data:0.1.0'
  
 # dev
  - macle
-    -  github.com/macle86/
+    -  [github.com/macle86](https://github.com/macle86)
