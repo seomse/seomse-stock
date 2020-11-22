@@ -17,13 +17,14 @@
 package com.seomse.stock.analysis.store.item;
 
 
+import com.seomse.stock.analysis.store.TradingTrend;
 import com.seomse.trading.technical.analysis.candle.TradeCandle;
 
 /**
  * 주식 일봉
  * @author macle
  */
-public class ItemDailyCandle extends TradeCandle {
+public class ItemDailyCandle extends TradeCandle implements TradingTrend {
 
     //아래 항목은 없을수도 있으니 null을 허용하는 객체형으로 변수화 함
     String ymd;
@@ -63,10 +64,11 @@ public class ItemDailyCandle extends TradeCandle {
         return ymd;
     }
 
+    @Override
     public Double getInstitution() {
         return institution;
     }
-
+    @Override
     public Double getForeign() {
         return foreign;
     }
@@ -78,7 +80,7 @@ public class ItemDailyCandle extends TradeCandle {
     public Double getForeignRate() {
         return foreignRate;
     }
-
+    @Override
     public Double getIndividual() {
         return individual;
     }

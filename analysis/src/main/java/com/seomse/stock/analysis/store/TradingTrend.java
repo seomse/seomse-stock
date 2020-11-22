@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Seomse Inc.
+ * Copyright (C) 2020 Wigo Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,27 @@
 package com.seomse.stock.analysis.store;
 
 /**
+ * 매매동향
  * @author macle
  */
-public class StockStore {
+public interface TradingTrend {
+
+    /**
+     * 기관 매매동향
+     * @return 기관매매동향 정보가 없으면 null;
+     */
+    Double getInstitution();
+
+    /**
+     * 외국인 맴동향
+     * @return 외국인 매매동향 정보가 없으면 null
+     */
+    Double getForeign();
+
+    /**
+     * 개인 매매동향
+     * @return 개인매매동향 종보가 없으면 null
+     */
+    Double getIndividual();
+
 }

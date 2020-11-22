@@ -61,7 +61,6 @@ public class Item {
         return yearFinancialStatementsArray;
     }
 
-
     public FinancialStatements[] getQuarterFinancialStatementsArray() {
         return quarterFinancialStatementsArray;
     }
@@ -70,43 +69,82 @@ public class Item {
     @Column(name = "UPT_DT")
     private long lastUpdateTime;
 
-
+    /**
+     *
+     * @return 종목코드
+     */
     public String getCode() {
         return code;
     }
 
+    /**
+     *
+     * @return 종목명
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @return 종목명 (영어))
+     */
     public String getEnglishName() {
         return englishName;
     }
 
+    /**
+     * 
+     * @return 증시유형 (KOSPI, KOSDAQ)
+     */
     public MarketType getMarketType() {
         return marketType;
     }
 
+    /**
+     * 
+     * @return 업종분류
+     */
     public String getCategory() {
         return category;
     }
 
+    /**
+     * 
+     * @return wics
+     */
     public String getWics() {
         return wics;
     }
 
+    /**
+     * 
+     * @return 종목 요약 설명
+     */
     public String getSummary() {
         return summary;
     }
 
+    /**
+     * 
+     * @return 상장년원일
+     */
     public String getListingYmd() {
         return listingYmd;
     }
 
+    /**
+     * 
+     * @return 상장주식수 (보통주))
+     */
     public Long getListingCount() {
         return listingCount;
     }
 
+    /**
+     * 
+     * @return 정보갱신 시간
+     */
     public long getLastUpdateTime() {
         return lastUpdateTime;
     }
