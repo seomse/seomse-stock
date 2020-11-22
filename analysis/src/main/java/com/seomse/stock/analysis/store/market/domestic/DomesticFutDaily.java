@@ -16,19 +16,19 @@
 
 package com.seomse.stock.analysis.store.market.domestic;
 
-import com.seomse.stock.analysis.store.PriceChange;
 import com.seomse.stock.analysis.store.TradingTrend;
-import com.seomse.trading.technical.analysis.candle.TradeCandle;
 
 /**
- * KOSPI, KOSDAQ 에서 사용할 수 있는 속성
- * 2014년부터 분석한다 2013년 7월 부터 모든 데이터가 있음
- *
+ * 국내 선물 일별정보
+ * KOSPI 200 을 따르는것으로 판단됨
+ * 한동향은 매매동향ㅁ
  * @author macle
  */
-public class DomesticMarketDailyCandle extends TradeCandle implements  TradingTrend, PriceChange {
+public class DomesticFutDaily implements TradingTrend {
 
     String ymd;
+
+
 
     //기관 매매량
     double institution;
@@ -51,4 +51,5 @@ public class DomesticMarketDailyCandle extends TradeCandle implements  TradingTr
     public Double getIndividual() {
         return individual;
     }
+
 }

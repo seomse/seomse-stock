@@ -14,10 +14,38 @@
  * limitations under the License.
  */
 
-package com.seomse.stock.analysis.store.market.domestic;
+
+package com.seomse.stock.analysis.store;
 
 /**
+ * 가격과 가격 변화
  * @author macle
  */
-public class DomesticMarketDaily {
+public interface PriceChange {
+
+
+    /**
+     * @return 종가
+     */
+    double getClose();
+
+    /**
+     * previous 기준
+     * (일별이면 전 거래일, 분봉이면 전봉))
+     * @return 변동가격
+     */
+    double getChange();
+
+    /**
+     * previous 기준
+     * (일별이면 전 거래일, 분봉이면 전봉))
+     * @return 변동율
+     */
+    double getChangeRate();
+
+    /**
+     * (일별이면 전 거래일, 분봉이면 전봉)
+     * @return 전 거래 가격
+     */
+    double getPrevious();
 }

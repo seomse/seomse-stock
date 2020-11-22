@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package com.seomse.stock.analysis.store.market.domestic;
-
-import com.seomse.stock.analysis.store.PriceChange;
-import com.seomse.stock.analysis.store.TradingTrend;
-import com.seomse.trading.technical.analysis.candle.TradeCandle;
+package com.seomse.stock.analysis.store;
 
 /**
- * KOSPI, KOSDAQ 에서 사용할 수 있는 속성
- * 2014년부터 분석한다 2013년 7월 부터 모든 데이터가 있음
- *
+ * 일별 매매동향
  * @author macle
  */
-public class DomesticMarketDailyCandle extends TradeCandle implements  TradingTrend, PriceChange {
+public class TradingTrendDaily implements TradingTrend {
 
-    String ymd;
+
+    protected final String ymd;
+
 
     //기관 매매량
     double institution;
@@ -36,6 +32,10 @@ public class DomesticMarketDailyCandle extends TradeCandle implements  TradingTr
     double foreign;
     //개인 매매량
     double individual;
+
+    public TradingTrendDaily(String ymd){
+        this.ymd = ymd;
+    }
 
     @Override
     public Double getInstitution() {
@@ -50,5 +50,13 @@ public class DomesticMarketDailyCandle extends TradeCandle implements  TradingTr
     @Override
     public Double getIndividual() {
         return individual;
+    }
+
+    /**
+     * 년월일
+     * @return yyyyMMdd
+     */
+    public String getYmd() {
+        return ymd;
     }
 }

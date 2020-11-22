@@ -16,23 +16,49 @@
 
 package com.seomse.stock.analysis.store.market.domestic;
 
-import com.seomse.jdbc.annotation.Column;
-import com.seomse.jdbc.annotation.PrimaryKey;
-import com.seomse.jdbc.annotation.Table;
+import com.seomse.stock.analysis.store.market.StockMarket;
 
 /**
  * 국내증시
  * @author macle
  */
-@Table(name="T_STOCK_MARKET")
-public class DomesticMarket {
-
-    @PrimaryKey(seq = 1)
-    @Column(name = "MARKET_CD")
-    String code;
-    @Column(name = "MARKET_NM")
-    String name;
+public class DomesticMarket extends StockMarket{
 
 
+    private DomesticMarketDailyCandle [] candles;
 
+
+    /**
+     * 생성자
+     * @param stockMarket 증시정보 (코드, 이름)
+     */
+    public DomesticMarket(StockMarket stockMarket){
+        super(stockMarket.getCode(), stockMarket.getName());
+    }
+
+
+    /**
+     * 생성자
+     * @param code 증시코드
+     * @param name 증시이름
+     */
+    public DomesticMarket(String code, String name){
+        super(code,name);
+    }
+
+    /**
+     * 증시 일별 캔들 배열 얻기
+     * @return 증시 일별 캔들 (YMD DESC)
+     */
+    public DomesticMarketDailyCandle[] getCandles() {
+        return candles;
+    }
+
+    /**
+     * 증시 일별 캔들배열 설정 (YMD DESC)
+     * @param candles 증시 일별 캔들
+     */
+    void setCandles(DomesticMarketDailyCandle[] candles) {
+        this.candles = candles;
+    }
 }

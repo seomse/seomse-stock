@@ -17,10 +17,11 @@
 package com.seomse.stock.analysis.store.market.domestic;
 
 import com.seomse.commons.config.Config;
+import com.seomse.jdbc.naming.JdbcNaming;
 import com.seomse.stock.analysis.AnalysisConfig;
+import com.seomse.stock.analysis.store.market.MarketDailyNo;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * 국내증시
@@ -29,11 +30,24 @@ import java.util.Map;
 public class DomesticMarketStore {
 
 
+
     private final String ymd;
 
     private final int candleCount;
 
-    private final Map<String, DomesticMarket> marketMap = new HashMap<>();
+
+    //코스피 코스닥
+    private DomesticMarket kospiMarket, kosdaqMarket;
+    //코스피 200
+
+
+    //선물 (선물은 종가가 너무적어서 한동안은 매매동향만 사용 함
+
+    //코스닥100
+    //데이터가 잘 안만들어진 문제로 나중에 사용함
+
+
+
 
     /**
      * 생성자
@@ -58,9 +72,22 @@ public class DomesticMarketStore {
 
     
     private void init(){
+        //코스피, 코스닥
+        kospiMarket = new DomesticMarket("KOSPI","코스피");
+       
+
+
+        // KPI200
+
+        // 선물 (FUT)
 
     }
-
+    
+    
+    private void setDailyCandle(DomesticMarket market){
+        List<MarketDailyNo> dailyNoList = JdbcNaming.getObjList(MarketDailyNo.class, "ITEM_CD='" + market.getCode() +"' AND YMD <= '" + ymd + "'",  "YMD DESC", candleCount);
+        DomesticMarketDailyCandle [] candles = new DomesticMarketDailyCandle[dailyNoList.size()];
+    }
 
 
 
