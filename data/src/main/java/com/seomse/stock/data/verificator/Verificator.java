@@ -5,7 +5,10 @@ import com.seomse.jdbc.objects.JdbcObjects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -17,26 +20,42 @@ public class Verificator {
 
     public static void updateAll() {
         List<Item> items = getAllItems();
+        Set<String> invalidItems = new HashSet<>();
 
         for (Item item : items) {
-            update(item.getCode());
-        }
-    }
-
-    public static void update(String itemCode) {
-        List<Daily> dailies = JdbcObjects.getObjList(Daily.class, "ITEM_CD='" + itemCode + "'");
-        String targetDate = "20201120";
-
-        boolean dateFlag = false;
-        for (Daily daily : dailies) {
-            if (daily.getYmd().equals(targetDate) && daily.getClosePrice() != -1) {
-                dateFlag = true;
+            if (update(item.getCode())) {
+                invalidItems.add(item.getCode());
             }
         }
 
-        if (!dateFlag) {
-            System.out.println(itemCode);
+        for (String code : invalidItems) {
+            logger.info("Invalid item : " + code);
         }
+    }
+
+    public static boolean update(String itemCode) {
+        List<Daily> dailies = JdbcObjects.getObjList(Daily.class, "ITEM_CD='" + itemCode + "'");
+
+
+        boolean invalidFlag = false;
+        for (Daily daily : dailies) {
+            if (daily.getYmd().equals("20131231")) {
+                continue;
+            }
+            if (daily.getClosePrice() <= 0) {
+                invalidFlag = true;
+            } else if (daily.getChangeRt() < -30 || daily.getChangeRt() > 30) {
+                invalidFlag = true;
+            }
+
+            if (invalidFlag) {
+                logger.info(daily.toString());
+
+                break;
+            }
+        }
+
+        return invalidFlag;
     }
 
     private static List<Item> getAllItems() {

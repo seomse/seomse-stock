@@ -38,7 +38,7 @@ com/seomse/stock/data/sync/tables/minute/Etf5mNo.java
  com.seomse.stock.data.sync.tables.minute.Etf5mNo
 com/seomse/stock/data/statistics/wics/WicsDaily.java
  com.seomse.stock.data.statistics.wics.WicsDaily
-com/seomse/stock/data/verificator/Daily.java
- com.seomse.stock.data.verificator.Daily
 com/seomse/stock/data/verificator/Verificator.java
  com.seomse.stock.data.verificator.Verificator
+com/seomse/stock/data/verificator/Daily.java
+ com.seomse.stock.data.verificator.Daily

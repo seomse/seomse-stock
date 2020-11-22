@@ -20,6 +20,23 @@ public class Daily {
     @Column(name = "CLOSE_PRC")
     private Double closePrice;
 
+    @Column(name = "CHANGE_RT")
+    private Double changeRt;
+
+    @Override
+    public String toString() {
+        return "Daily{" +
+                "code='" + code + '\'' +
+                ", ymd='" + ymd + '\'' +
+                ", closePrice=" + closePrice +
+                ", changeRt=" + changeRt +
+                '}';
+    }
+
+    public Double getChangeRt() {
+        return changeRt;
+    }
+
     public String getCode() {
         return code;
     }
