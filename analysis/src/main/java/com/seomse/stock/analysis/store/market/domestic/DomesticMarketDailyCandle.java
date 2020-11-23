@@ -30,12 +30,39 @@ public class DomesticMarketDailyCandle extends TradeCandle implements  TradingTr
 
     String ymd;
 
+    double tradeVolume;
+    double tradePriceVolume;
+
     //기관 매매량
     double institution;
     //외국계 매매량
     double foreign;
     //개인 매매량
     double individual;
+
+    /**
+     * 
+     * @return yyyyMMdd
+     */
+    public String getYmd() {
+        return ymd;
+    }
+
+    /**
+     * 
+     * @return 거래량
+     */
+    public double getTradeVolume() {
+        return tradeVolume;
+    }
+
+    /**
+     * 
+     * @return 거래대금
+     */
+    public double getTradePriceVolume() {
+        return tradePriceVolume;
+    }
 
     @Override
     public Double getInstitution() {
@@ -51,4 +78,6 @@ public class DomesticMarketDailyCandle extends TradeCandle implements  TradingTr
     public Double getIndividual() {
         return individual;
     }
+
+
 }

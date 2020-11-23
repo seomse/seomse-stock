@@ -27,14 +27,26 @@ public class TradingTrendDaily implements TradingTrend {
 
 
     //기관 매매량
-    double institution;
+    final double institution;
     //외국계 매매량
-    double foreign;
+    final double foreign;
     //개인 매매량
-    double individual;
+    final double individual;
 
-    public TradingTrendDaily(String ymd){
+    /**
+     * 생성자
+     * @param ymd yyyyMMdd
+     * @param institution 기관 매매량
+     * @param foreign 외국계 매매량
+     * @param individual individual
+     */
+    public TradingTrendDaily(String ymd, double institution, double foreign, double individual
+    ){
         this.ymd = ymd;
+        this.institution = institution;
+        this.foreign = foreign;
+        this.individual = individual;
+
     }
 
     @Override
