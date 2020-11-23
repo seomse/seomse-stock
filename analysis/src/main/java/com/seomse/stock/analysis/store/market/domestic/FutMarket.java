@@ -26,12 +26,32 @@ import com.seomse.stock.analysis.store.market.StockMarket;
  */
 public class FutMarket extends StockMarket {
 
-    TradingTrendDaily[] dailies;
-
+    TradingTrendDaily[] trendDailies;
+    
+    FutDaily [] futDailies;
+    
     /**
      * 생성자
      */
     public FutMarket(){
         super("FUT", "선물");
+    }
+
+    /**
+     * 
+     * @return 일별 매매동향
+     */
+    public TradingTrendDaily[] getTrendDailies() {
+        return trendDailies;
+    }
+
+    /**
+     * 한동안은 매매동향만 사용
+     * 거래정보가 많지않음
+     * 9월 10일부터 있음
+     * @return 선물 일별 매매정보
+     */
+    public FutDaily[] getFutDailies() {
+        return futDailies;
     }
 }

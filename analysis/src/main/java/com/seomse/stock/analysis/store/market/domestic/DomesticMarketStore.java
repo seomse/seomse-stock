@@ -24,6 +24,7 @@ import com.seomse.stock.analysis.AnalysisConfig;
 import com.seomse.stock.analysis.store.TradingTrendDaily;
 import com.seomse.stock.analysis.store.market.MarketDailyNo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -86,12 +87,13 @@ public class DomesticMarketStore {
 
         // KPI200
         kpi200Market = new Kpi200Market();
-        List<MarketDailyNo> dailyNoList = JdbcNaming.getObjList(MarketDailyNo.class, "ITEM_CD='" + kpi200Market.getCode() +"' AND YMD <= '" + ymd + "'  AND CLOSE_PRC IS NOT NULL",  "YMD DESC", candleCount);
+        List<MarketDailyNo> dailyNoList = JdbcNaming.getObjList(MarketDailyNo.class, "MARKET_CD='" + kpi200Market.getCode() +"' AND YMD <= '" + ymd + "'  AND CLOSE_PRC IS NOT NULL",  "YMD DESC", candleCount);
         Kpi200Daily [] dailies = new Kpi200Daily[dailyNoList.size()];
         int index = 0;
         for (int i = dailyNoList.size()-1; i > -1; i--) {
             MarketDailyNo dailyNo = dailyNoList.get(i);
             Kpi200Daily daily = new Kpi200Daily();
+            daily.ymd = dailyNo.getYMD();
             daily.close = dailyNo.getCLOSE_PRC();
             daily.change = dailyNo.getCHANGE_PRC();
             daily.changeRate = dailyNo.getCHANGE_RT();
@@ -106,16 +108,32 @@ public class DomesticMarketStore {
 
         // 선물 (FUT)
         futMarket = new FutMarket();
-        dailyNoList = JdbcNaming.getObjList(MarketDailyNo.class, "ITEM_CD='" + futMarket.getCode() +"' AND YMD <= '" + ymd + "'  AND CLOSE_PRC IS NOT NULL",  "YMD DESC", candleCount);
-
+        dailyNoList = JdbcNaming.getObjList(MarketDailyNo.class, "MARKET_CD='" + futMarket.getCode() +"' AND YMD <= '" + ymd + "'  AND INSTITUTION_TRADE_VOL IS NOT NULL",  "YMD DESC", candleCount);
+        index = 0;
         TradingTrendDaily [] trendDailies = new TradingTrendDaily[dailyNoList.size() ];
+        List<FutDaily> dailyList = new ArrayList<>();
+
         for (int i = dailyNoList.size()-1; i > -1; i--) {
             MarketDailyNo dailyNo = dailyNoList.get(i);
-            TradingTrendDaily tradingTrendDaily = new TradingTrendDaily(dailyNo.getYMD(), dailyNo.getINSTITUTION_TRADE_VOL(), dailyNo.getFOREIGN_TRADE_VOL(), dailyNo.getINDIVIDUAL_TRADE_VOL() );
-
-            trendDailies[i] = tradingTrendDaily;
+            TradingTrendDaily tradingTrendDaily;
+            if(dailyNo.getCLOSE_PRC() != null) {
+                FutDaily futDaily = new FutDaily(dailyNo.getYMD(), dailyNo.getINSTITUTION_TRADE_VOL(), dailyNo.getFOREIGN_TRADE_VOL(), dailyNo.getINDIVIDUAL_TRADE_VOL());
+                futDaily.close = dailyNo.getCLOSE_PRC();
+                futDaily.change = dailyNo.getCHANGE_PRC();
+                futDaily.changeRate = dailyNo.getCHANGE_RT();
+                futDaily.previous = dailyNo.getPREVIOUS_PRC();
+                futDaily.tradeVolume = dailyNo.getTRADE_VOL();
+                futDaily.tradePriceVolume = dailyNo.getTRADE_PRC_VOL();
+                dailyList.add(futDaily);
+                tradingTrendDaily = futDaily;
+            }else{
+                tradingTrendDaily = new TradingTrendDaily(dailyNo.getYMD(), dailyNo.getINSTITUTION_TRADE_VOL(), dailyNo.getFOREIGN_TRADE_VOL(), dailyNo.getINDIVIDUAL_TRADE_VOL());
+            }
+            trendDailies[index++] = tradingTrendDaily;
         }
-        futMarket.dailies = trendDailies;
+        futMarket.trendDailies = trendDailies;
+        futMarket.futDailies = dailyList.toArray(new FutDaily[0]);
+        dailyList.clear();
         dailyNoList.clear();
     }
     
@@ -124,13 +142,14 @@ public class DomesticMarketStore {
 
         //거래정보가 다 있는것만 활용한다.
         //AND OPEN_PRC IS NOT NULL AND CLOSE_PRC IS NOT NULL AND INSTITUTION_TRADE_VOL IS NOT NULL 이정도 정보를 추가로 활용하면 있는데이터만 뽑아올 수 있음
-        List<MarketDailyNo> dailyNoList = JdbcNaming.getObjList(MarketDailyNo.class, "ITEM_CD='" + market.getCode() +"' AND YMD <= '" + ymd + "' AND OPEN_PRC IS NOT NULL AND CLOSE_PRC IS NOT NULL AND INSTITUTION_TRADE_VOL IS NOT NULL",  "YMD DESC", candleCount);
+        List<MarketDailyNo> dailyNoList = JdbcNaming.getObjList(MarketDailyNo.class, "MARKET_CD='" + market.getCode() +"' AND YMD <= '" + ymd + "' AND OPEN_PRC IS NOT NULL AND CLOSE_PRC IS NOT NULL AND CHANGE_PRC IS NOT NULL AND INSTITUTION_TRADE_VOL IS NOT NULL",  "YMD DESC", candleCount);
         DomesticMarketDailyCandle [] candles = new DomesticMarketDailyCandle[dailyNoList.size()];
 
         int index = 0;
         for (int i = dailyNoList.size()-1; i > -1; i--) {
             MarketDailyNo dailyNo = dailyNoList.get(i);
             DomesticMarketDailyCandle dailyCandle = new DomesticMarketDailyCandle();
+            dailyCandle.ymd =dailyNo.getYMD();
             dailyCandle.setClose(dailyNo.getCLOSE_PRC());
             dailyCandle.setOpen(dailyNo.getOPEN_PRC());
             dailyCandle.setHigh(dailyNo.getHIGH_PRC());
@@ -165,6 +184,51 @@ public class DomesticMarketStore {
         dailyNoList.clear();
     }
 
+    /**
+     * 년월일 얻기 yyyyMMdd
+     * @return String (yyyyMMdd)
+     */
+    public String getYmd() {
+        return ymd;
+    }
 
+    /**
+     *
+     * @return kospi 코스피
+     */
+    public DomesticMarket getKospiMarket() {
+        return kospiMarket;
+    }
 
+    /**
+     *
+     * @return kosdaq 코스닥
+     */
+    public DomesticMarket getKosdaqMarket() {
+        return kosdaqMarket;
+    }
+
+    /**
+     *
+     * @return 코스피 200
+     */
+    public Kpi200Market getKpi200Market() {
+        return kpi200Market;
+    }
+
+    /**
+     *
+     * @return 국내 선물 (코스피 200 추종하는거 같음)
+     */
+    public FutMarket getFutMarket() {
+        return futMarket;
+    }
+
+    public static void main(String[] args) {
+        DomesticMarketStore domesticMarketStore = new DomesticMarketStore("20201124");
+        DomesticMarketDailyCandle[]  candles =domesticMarketStore.getKospiMarket().getCandles();
+        for(DomesticMarketDailyCandle c : candles){
+            System.out.println(c.getYmd() +" "  + c.getClose());
+        }
+    }
 }

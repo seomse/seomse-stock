@@ -36,9 +36,9 @@ public class TradingTrendDaily implements TradingTrend {
     /**
      * 생성자
      * @param ymd yyyyMMdd
-     * @param institution 기관 매매량
-     * @param foreign 외국계 매매량
-     * @param individual individual
+     * @param institution 기관 매매동향
+     * @param foreign 외국계 매매동향
+     * @param individual 개인 매매동향
      */
     public TradingTrendDaily(String ymd, double institution, double foreign, double individual
     ){
