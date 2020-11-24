@@ -166,9 +166,9 @@ public class DomesticMarketStore {
 
             // 9부터 15시 30분이므로 시간값 맞추기
             //9시간 더하기
-            dailyCandle.setStartTime(ymdTime + Times.HOUR_3*3);
+            dailyCandle.setOpenTime(ymdTime + Times.HOUR_3*3);
             //15시간 30분 더하기
-            dailyCandle.setEndTime(ymdTime + Times.HOUR_3*5 + Times.MINUTE_30);
+            dailyCandle.setCloseTime(ymdTime + Times.HOUR_3*5 + Times.MINUTE_30);
             dailyCandle.setStandardTime(ymdTime);
             dailyCandle.setEndTrade();
 

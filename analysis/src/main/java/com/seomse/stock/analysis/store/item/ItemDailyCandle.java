@@ -17,6 +17,7 @@
 package com.seomse.stock.analysis.store.item;
 
 
+import com.seomse.stock.analysis.store.PriceChange;
 import com.seomse.stock.analysis.store.TradingTrend;
 import com.seomse.trading.technical.analysis.candle.TradeCandle;
 
@@ -24,7 +25,7 @@ import com.seomse.trading.technical.analysis.candle.TradeCandle;
  * 주식 일봉
  * @author macle
  */
-public class ItemDailyCandle extends TradeCandle implements TradingTrend {
+public class ItemDailyCandle extends TradeCandle implements TradingTrend, PriceChange {
 
     //아래 항목은 없을수도 있으니 null을 허용하는 객체형으로 변수화 함
     String ymd;
@@ -59,7 +60,10 @@ public class ItemDailyCandle extends TradeCandle implements TradingTrend {
     Double creditChangeVolume;
     Double creditExposureRate;
 
-
+    /**
+     *
+     * @return yyyyMMdd
+     */
     public String getYmd() {
         return ymd;
     }
@@ -73,10 +77,18 @@ public class ItemDailyCandle extends TradeCandle implements TradingTrend {
         return foreign;
     }
 
+    /**
+     *
+     * @return 외귝안 보유량
+     */
     public Double getForeignBalanceVolume() {
         return foreignBalanceVolume;
     }
 
+    /**
+     *
+     * @return 외귝안 보유율
+     */
     public Double getForeignRate() {
         return foreignRate;
     }
@@ -85,54 +97,107 @@ public class ItemDailyCandle extends TradeCandle implements TradingTrend {
         return individual;
     }
 
+    /**
+     *
+     * @return 대차체결량
+     */
     public Double getSlb() {
         return slb;
     }
 
+    /**
+     *
+     * @return 대차생환량
+     */
     public Double getSlbRepay() {
         return slbRepay;
     }
 
+    /**
+     *
+     * @return 대차잔고
+     */
     public Double getSlbBalance() {
         return slbBalance;
     }
 
+    /**
+     *
+     * @return 공매도량
+     */
     public Double getShortSelling() {
         return shortSelling;
     }
 
+    /**
+     *
+     * @return 공매도잔고
+     */
     public Double getShortSellingBalance() {
         return shortSellingBalance;
     }
 
+
+    /**
+     *
+     * @return 신용잔고율
+     */
     public Double getCreditBalanceRate() {
         return creditBalanceRate;
     }
 
+    /**
+     *
+     * @return 신용거래량
+     */
     public Double getCreditTotalVolume() {
         return creditTotalVolume;
     }
 
+    /**
+     *
+     * @return 신용 신규량
+     */
     public Double getCreditNewVolume() {
         return creditNewVolume;
     }
 
+    /**
+     *
+     * @return 신용 상환량
+     */
     public Double getCreditRepayVolume() {
         return creditRepayVolume;
     }
 
+    /**
+     *
+     * @return 신용 잔고량
+     */
     public Double getCreditBalanceVolume() {
         return creditBalanceVolume;
     }
 
+    /**
+     *
+     * @return 신용금액
+     */
     public Double getCreditPriceVolume() {
         return creditPriceVolume;
     }
 
+    /**
+     *
+     * @return 신용변동
+     */
     public Double getCreditChangeVolume() {
         return creditChangeVolume;
     }
 
+    /**
+     *
+     * @return 신용 공여
+     */
     public Double getCreditExposureRate() {
         return creditExposureRate;
     }

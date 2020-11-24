@@ -24,18 +24,7 @@ import com.seomse.stock.analysis.store.market.StockMarket;
  */
 public class DomesticMarket extends StockMarket{
 
-
     private DomesticMarketDailyCandle [] candles;
-
-
-    /**
-     * 생성자
-     * @param stockMarket 증시정보 (코드, 이름)
-     */
-    public DomesticMarket(StockMarket stockMarket){
-        super(stockMarket.getCode(), stockMarket.getName());
-    }
-
 
     /**
      * 생성자

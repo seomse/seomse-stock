@@ -23,10 +23,11 @@ import com.seomse.jdbc.PrepareStatements;
 import com.seomse.jdbc.naming.JdbcNaming;
 import com.seomse.jdbc.objects.JdbcObjects;
 import com.seomse.stock.analysis.AnalysisConfig;
-import com.seomse.stock.analysis.store.item.ItemDailyCandle;
-import com.seomse.stock.analysis.store.item.ItemStore;
 import com.seomse.trading.technical.analysis.candle.candles.TradeCandles;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,9 @@ import java.util.Map;
  * @author macle
  */
 public class EtfStore {
+
+    private static final Logger logger = LoggerFactory.getLogger(EtfStore.class);
+
     private final String ymd;
 
     private final int candleCount;
@@ -70,6 +74,8 @@ public class EtfStore {
         List<Etf> etfList = JdbcObjects.getObjList(Etf.class, "DELISTING_DT < ? OR DELISTING_DT IS NULL", PrepareStatements.newTimeMap(time));
 
 
+        List<Etf> addList = new ArrayList<>();
+        int maxYmdInt = -1;
         for(Etf etf : etfList){
 
             TradeCandles tradeCandles = new TradeCandles(Times.DAY_1);
@@ -82,6 +88,12 @@ public class EtfStore {
             int index = 0;
             //jdbc 기능을 이용해서 size로 끊어서 가져오므로 역순정렬을 해야함 (최신것부터 count가 필요하므로)
             List<EtfDailyNo> dailyNoList = JdbcNaming.getObjList(EtfDailyNo.class, "ETF_CD='" + etf.code +"' AND YMD <= '" + ymd + "' AND CLOSE_PRC IS NOT NULL AND INSTITUTION_TRADE_VOL IS NOT NULL",  "YMD DESC", candleCount);
+
+            if(dailyNoList.size() == 0){
+                logger.debug("daily 0 skip: " + etf.getCode() +" " + etf.getName());
+                continue;
+            }
+
             EtfDailyCandle[] dailyCandles = new EtfDailyCandle[dailyNoList.size()];
             for (int i = dailyNoList.size()-1; i > -1; i--) {
                 EtfDailyNo dailyNo = dailyNoList.get(i);
@@ -101,9 +113,9 @@ public class EtfStore {
 
                 // 9부터 15시 30분이므로 시간값 맞추기
                 //9시간 더하기
-                dailyCandle.setStartTime(ymdTime + Times.HOUR_3*3);
+                dailyCandle.setOpenTime(ymdTime + Times.HOUR_3*3);
                 //15시간 30분 더하기
-                dailyCandle.setEndTime(ymdTime + Times.HOUR_3*5 + Times.MINUTE_30);
+                dailyCandle.setCloseTime(ymdTime + Times.HOUR_3*5 + Times.MINUTE_30);
                 dailyCandle.setStandardTime(ymdTime);
                 dailyCandle.setEndTrade();
 
@@ -116,11 +128,36 @@ public class EtfStore {
                 dailyCandle.individual = dailyNo.INDIVIDUAL_TRADE_VOL;
                 dailyCandles[index++] = dailyCandle;
             }
+            int ymdInt = Integer.parseInt(dailyCandles[dailyCandles.length-1].getYmd());
+
+            if( ymdInt > maxYmdInt){
+                maxYmdInt = ymdInt;
+            }
+
             etf.candlesMap = new HashMap<>();
             etf.candlesMap.put(Times.DAY_1, tradeCandles);
             etf.dailyCandles = dailyCandles;
+
+            addList.add(etf);
+
+        }
+
+        String maxYmd = Integer.toString(maxYmdInt);
+
+
+        for(Etf etf : addList){
+            //데이터 적합성 체크
+            if(!etf.dailyCandles[etf.dailyCandles.length-1].getYmd().equals(maxYmd)){
+                logger.debug("skip: " + etf.getCode() +" " + etf.getName()+ " " + etf.dailyCandles[etf.dailyCandles.length-1].getYmd() +" " + maxYmd);
+                continue;
+            }
+
             etfMap.put(etf.code, etf);
         }
+
+
+        etfList.clear();
+
     }
 
     /**
