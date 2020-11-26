@@ -11,9 +11,8 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'ch.qos.logback:logback-access:1.2.3'
 
-    implementation 'com.seomse.commons:seomse-commons:1.2.0'
     implementation 'com.seomse.jdbc:seomse-jdbc:0.9.5'
-    implementation 'com.seomse.trading:seomse-trading:0.1.6'
+    implementation 'com.seomse.trading:seomse-trading:0.1.7'
     implementation 'com.seomse.system:seomse-system:0.9.7'
 
     //jdbc

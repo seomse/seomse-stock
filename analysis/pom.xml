@@ -139,7 +139,7 @@
         <dependency>
             <groupId>com.seomse.commons</groupId>
             <artifactId>seomse-commons</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.1</version>
         </dependency>
 
 
@@ -153,7 +153,7 @@
         <dependency>
             <groupId>com.seomse.trading</groupId>
             <artifactId>seomse-trading</artifactId>
-            <version>0.1.6</version>
+            <version>0.1.7</version>
         </dependency>
 
 
