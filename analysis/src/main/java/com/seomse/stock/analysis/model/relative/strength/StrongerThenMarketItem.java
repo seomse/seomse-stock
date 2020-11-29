@@ -14,21 +14,16 @@
  * limitations under the License.
  */
 
-package com.seomse.stock.analysis.dev;
-
-import com.seomse.jdbc.naming.JdbcNaming;
+package com.seomse.stock.analysis.model.relative.strength;
 
 /**
- * jdbc 네이밍 객체 생성기
+ * 검색될 종목 정보
  * @author macle
  */
-public class NamingObjectMake {
-
-	public static void main(String [] args){
-		String tableName = "T_STOCK_MARKET_INDEX_DAILY";
-		System.out.println("@Table(name=\"" +  tableName+ "\")\n");
-		System.out.println(JdbcNaming.makeObjectValue(tableName));
-
-	}
-	
+public class StrongerThenMarketItem {
+    String code;
+    int upCount ;
+    int marketUpCount;
+    double marketUpPer;
+    double rsi ;
 }

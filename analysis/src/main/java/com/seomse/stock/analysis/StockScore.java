@@ -14,42 +14,36 @@
  * limitations under the License.
  */
 
-package com.seomse.stock.analysis.store;
-
-import com.seomse.trading.PriceChangeImpl;
+package com.seomse.stock.analysis;
 
 /**
+ * 종목과 점수
  * @author macle
  */
-public class DailyPriceChange extends PriceChangeImpl {
-
-
-    String ymd;
+public class StockScore implements AnalysisScore{
+    private final Stock stock;
+    private final double score;
 
     /**
      * 생성자
-     * @param ymd 년월일
-     * @param close 종가
-     * @param change 변화가격
-     * @param changeRate 변화율
-     * @param previous 전일가
+     * @param stock 종목
+     * @param score 점수
      */
-    public DailyPriceChange(
-            String ymd
-            , double close
-            , double change
-            , double changeRate
-            , double previous
-    ) {
-        super(close, change, changeRate, previous);
-        this.ymd = ymd;
+    public StockScore(Stock stock, long score){
+        this.stock = stock;
+        this.score = score;
     }
 
     /**
-     *
-     * @return yyyyMMdd
+     * 주식 종목 얻기
+     * @return 거래 가능한 주식 종목
      */
-    public String getYmd() {
-        return ymd;
+    public Stock getStock() {
+        return stock;
+    }
+
+    @Override
+    public double getScore() {
+        return score;
     }
 }

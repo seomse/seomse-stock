@@ -16,14 +16,13 @@
 
 package com.seomse.stock.analysis.store.etf;
 
-import com.seomse.stock.analysis.store.PriceChange;
 import com.seomse.stock.analysis.store.TradingTrend;
 import com.seomse.trading.technical.analysis.candle.TradeCandle;
 
 /**
  * @author macle
  */
-public class EtfDailyCandle  extends TradeCandle implements TradingTrend, PriceChange {
+public class EtfDailyCandle  extends TradeCandle implements TradingTrend {
 
 
     String ymd;

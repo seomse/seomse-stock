@@ -14,38 +14,28 @@
  * limitations under the License.
  */
 
+package com.seomse.stock.analysis;
 
-package com.seomse.stock.analysis.store;
+import java.util.Comparator;
 
 /**
- * 가격과 가격 변화
+ * 분석 점수
  * @author macle
  */
-public interface PriceChange {
+public interface AnalysisScore {
+    // 재무 점수가 좋을때
+    double MAX_SCORE = 100.0;
+    //재무 점수 측정이 불가능할때
+    double DEFAULT_SCORE = 30.0;
+    //재무 점수가 나쁠대
+    double MIN_SCORE = 0.0;
 
-
-    /**
-     * @return 종가
-     */
-    double getClose();
-
-    /**
-     * previous 기준
-     * (일별이면 전 거래일, 분봉이면 전봉))
-     * @return 변동가격
-     */
-    double getChange();
+    //분석 점수 역순 정렬
+    Comparator<AnalysisScore> SORT_DESC =(s1, s2) -> Double.compare(s2.getScore(), s1.getScore());
 
     /**
-     * previous 기준
-     * (일별이면 전 거래일, 분봉이면 전봉))
-     * @return 변동율
+     * 분석 점수얻기
+     * @return 분석점수
      */
-    double getChangeRate();
-
-    /**
-     * (일별이면 전 거래일, 분봉이면 전봉)
-     * @return 전 거래 가격
-     */
-    double getPrevious();
+    double getScore();
 }

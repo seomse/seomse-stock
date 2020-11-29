@@ -2,11 +2,11 @@ plugins {
     id 'java'
 }
 
-version '0.1.0'
+version '0.1.1'
 
 dependencies {
 
-    implementation 'com.seomse.trading:seomse-trading:0.1.7'
+    implementation 'com.seomse.trading:seomse-trading:0.1.9'
     implementation 'com.seomse.system:seomse-system:0.9.9'
 
     //jdbc

@@ -26,7 +26,7 @@ public class JdbcObjectMake {
     public static void main(String[] args) {
 
 
-        String tableName = "T_STOCK_MARKET_DAILY";
+        String tableName = "T_STOCK_MARKET_INDEX";
         System.out.println(JdbcObjects.makeObjectValue(tableName));
 
     }

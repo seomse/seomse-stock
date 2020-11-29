@@ -14,21 +14,14 @@
  * limitations under the License.
  */
 
-package com.seomse.stock.analysis.dev;
-
-import com.seomse.jdbc.naming.JdbcNaming;
+package com.seomse.stock.analysis;
 
 /**
- * jdbc 네이밍 객체 생성기
+ * 주식 유형 (사고팔 수 있는)
  * @author macle
  */
-public class NamingObjectMake {
+public enum StockType {
 
-	public static void main(String [] args){
-		String tableName = "T_STOCK_MARKET_INDEX_DAILY";
-		System.out.println("@Table(name=\"" +  tableName+ "\")\n");
-		System.out.println(JdbcNaming.makeObjectValue(tableName));
-
-	}
-	
+    ITEM //개별종목
+    , ETF //etf
 }

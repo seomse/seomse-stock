@@ -16,7 +16,8 @@
 
 package com.seomse.stock.analysis.store.market.domestic;
 
-import com.seomse.stock.analysis.store.PriceChange;
+
+import com.seomse.trading.PriceChange;
 
 /**
  * 코스피 200 일별정보

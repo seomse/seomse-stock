@@ -16,7 +16,6 @@
 
 package com.seomse.stock.analysis.store.market.domestic;
 
-import com.seomse.stock.analysis.store.PriceChange;
 import com.seomse.stock.analysis.store.TradingTrend;
 import com.seomse.trading.technical.analysis.candle.TradeCandle;
 
@@ -26,7 +25,7 @@ import com.seomse.trading.technical.analysis.candle.TradeCandle;
  *
  * @author macle
  */
-public class DomesticMarketDailyCandle extends TradeCandle implements  TradingTrend, PriceChange {
+public class DomesticMarketDailyCandle extends TradeCandle implements  TradingTrend {
 
     String ymd;
 

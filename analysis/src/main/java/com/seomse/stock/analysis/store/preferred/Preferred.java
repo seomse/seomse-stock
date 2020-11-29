@@ -16,6 +16,8 @@
 
 package com.seomse.stock.analysis.store.preferred;
 
+import com.seomse.stock.analysis.Stock;
+import com.seomse.stock.analysis.StockType;
 import com.seomse.stock.analysis.store.item.Item;
 import com.seomse.stock.analysis.store.item.ItemCandles;
 
@@ -23,7 +25,7 @@ import com.seomse.stock.analysis.store.item.ItemCandles;
  * 우선주
  * @author macle
  */
-public class Preferred extends ItemCandles {
+public class Preferred extends ItemCandles implements Stock {
 
     String code;
     String name;
@@ -33,6 +35,11 @@ public class Preferred extends ItemCandles {
      * 상장주식수 null 일 수 있음
      */
     Long listingCount;
+
+    @Override
+    public StockType getType() {
+        return StockType.ITEM;
+    }
 
     /**
      *

@@ -16,8 +16,8 @@
 
 package com.seomse.stock.analysis.store.market.domestic;
 
-import com.seomse.stock.analysis.store.PriceChange;
 import com.seomse.stock.analysis.store.TradingTrendDaily;
+import com.seomse.trading.PriceChange;
 
 /**
  * 국내 선물 일별정보

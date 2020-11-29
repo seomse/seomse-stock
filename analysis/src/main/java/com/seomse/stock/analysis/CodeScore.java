@@ -18,24 +18,18 @@ package com.seomse.stock.analysis;
 
 /**
  * 코드와 점수
+ * 시장과 시장지수 등에서의 활용으로 전환 함
+ * 기존의 개별종목과 ETF는 StockScore 를 활용 함
  * @author macle
  */
-public class CodeScore {
-
-    // 재무 점수가 좋을때
-    public static final double MAX_SCORE = 100.0;
-    //재무 점수 측정이 불가능할때
-    public static final double DEFAULT_SCORE = 30.0;
-    //재무 점수가 나쁠대
-    public static final double MIN_SCORE = 0.0;
-
+public class CodeScore implements AnalysisScore{
 
     String code;
     double score;
 
     /**
      * 생성자
-     * @param code 종목코드, 시장코드, 지수코드
+     * @param code 종목코드, ETF코드, 시장코드, 지수코드
      * @param score 점수
      */
     public CodeScore(String code, double score){
@@ -55,6 +49,7 @@ public class CodeScore {
      * 점수얻기
      * @return 퀀트점수, 분석 점수
      */
+    @Override
     public double getScore() {
         return score;
     }

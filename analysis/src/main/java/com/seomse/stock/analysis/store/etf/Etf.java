@@ -19,6 +19,8 @@ package com.seomse.stock.analysis.store.etf;
 import com.seomse.jdbc.annotation.Column;
 import com.seomse.jdbc.annotation.PrimaryKey;
 import com.seomse.jdbc.annotation.Table;
+import com.seomse.stock.analysis.Stock;
+import com.seomse.stock.analysis.StockType;
 import com.seomse.trading.technical.analysis.candle.candles.TradeCandles;
 
 import java.util.Map;
@@ -28,7 +30,7 @@ import java.util.Map;
  * @author macle
  */
 @Table(name="T_STOCK_ETF")
-public class Etf {
+public class Etf implements Stock {
     @PrimaryKey(seq = 1)
     @Column(name = "ETF_CD")
     String code;
@@ -37,6 +39,11 @@ public class Etf {
 
     Map<Long, TradeCandles> candlesMap;
     EtfDailyCandle[] dailyCandles;
+
+    @Override
+    public StockType getType() {
+        return StockType.ETF;
+    }
 
     /**
      *
@@ -62,8 +69,6 @@ public class Etf {
     }
 
     /**
-    /**
-     *
      * @param standardTime 기준시간 5분 15분 읿 등
      * @return TradeCandles
      */
