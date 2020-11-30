@@ -16,6 +16,8 @@
 
 package com.seomse.stock.data.sync;
 
+import com.seomse.commons.utils.time.Times;
+import com.seomse.commons.utils.time.YmdUtil;
 import com.seomse.jdbc.admin.RowDataInOut;
 import com.seomse.jdbc.annotation.Table;
 import com.seomse.jdbc.connection.ConnectionFactory;
@@ -203,9 +205,21 @@ public class CenterDatabaseSync {
         list.clear();
     }
     
-    public static void main(String[] args) {
-        CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
-        centerDatabaseSync.sync();
+    public static void main(String[] args) throws InterruptedException {
+
+        for(;;) {
+
+            long startTime = System.currentTimeMillis();
+
+            CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
+            centerDatabaseSync.update(YmdUtil.getYmd(YmdUtil.now(), -3));
+            long useTime = System.currentTimeMillis() - startTime;
+            if(useTime < Times.DAY_1) {
+
+                Thread.sleep(Times.DAY_1 - useTime);
+            }
+
+        }
 //        centerDatabaseSync.sync(DAILY_TABLES);
     }
 }
