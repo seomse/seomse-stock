@@ -16,14 +16,27 @@
 
 package com.seomse.stock.analysis.model.relative.strength;
 
+import com.seomse.stock.analysis.Stock;
+import com.seomse.stock.analysis.StockScore;
+
 /**
  * 검색될 종목 정보
  * @author macle
  */
-public class StrongerThenMarketItem {
-    String code;
+public class StrongerThenMarketModuleScore extends StockScore {
     int upCount ;
     int marketUpCount;
     double marketUpPer;
     double rsi ;
+
+    /**
+     * 생성자
+     *
+     * @param stock 종목
+     * @param score 점수
+     */
+    public StrongerThenMarketModuleScore(Stock stock, double score) {
+        super(stock, score);
+
+    }
 }
