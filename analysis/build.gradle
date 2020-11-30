@@ -2,19 +2,12 @@ plugins {
     id 'java'
 }
 
-version '0.1.0'
+version '0.1.1'
 
 dependencies {
 
-    //log
-    implementation 'ch.qos.logback:logback-core:1.2.3'
-    implementation 'ch.qos.logback:logback-classic:1.2.3'
-    implementation 'ch.qos.logback:logback-access:1.2.3'
-
-    implementation 'com.seomse.commons:seomse-commons:1.2.0'
-    implementation 'com.seomse.jdbc:seomse-jdbc:0.9.5'
-    implementation 'com.seomse.trading:seomse-trading:0.1.6'
-    implementation 'com.seomse.system:seomse-system:0.9.7'
+    implementation 'com.seomse.trading:seomse-trading:0.1.9'
+    implementation 'com.seomse.system:seomse-system:0.9.9'
 
     //jdbc
     implementation group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'

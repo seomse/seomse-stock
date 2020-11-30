@@ -14,10 +14,18 @@
  * limitations under the License.
  */
 
-package com.seomse.stock.analysis.store.market.domestic;
+package com.seomse.stock.analysis.store.index;
+
+import com.seomse.jdbc.annotation.Table;
 
 /**
  * @author macle
  */
-public class DomesticMarketDaily {
+@Table(name="T_STOCK_MARKET_INDEX_DAILY")
+public class IndexDailyNo {
+    String YMD;
+    Double CLOSE_PRC;
+    Double CHANGE_RT;
+    Double CHANGE_PRC;
+    Double PREVIOUS_PRC;
 }

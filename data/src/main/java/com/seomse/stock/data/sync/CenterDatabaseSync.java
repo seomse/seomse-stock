@@ -206,5 +206,6 @@ public class CenterDatabaseSync {
     public static void main(String[] args) {
         CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
         centerDatabaseSync.sync();
+//        centerDatabaseSync.sync(DAILY_TABLES);
     }
 }

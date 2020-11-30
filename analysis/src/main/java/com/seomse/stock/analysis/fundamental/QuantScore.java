@@ -24,7 +24,7 @@ import java.util.Date;
 
 /**
  * 종목 코드와 점수
- * 
+ * 관련 부분은 code score로 교체될 예정
  * @author macle
  */
 public abstract class QuantScore {

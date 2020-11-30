@@ -16,11 +16,67 @@
 
 package com.seomse.stock.analysis.store.market.domestic;
 
+import com.seomse.stock.analysis.store.TradingTrend;
+import com.seomse.trading.technical.analysis.candle.TradeCandle;
+
 /**
- * 국내증시 일봉
+ * KOSPI, KOSDAQ 에서 사용할 수 있는 속성
+ * 2014년부터 분석한다 2013년 7월 부터 모든 데이터가 있음
+ *
  * @author macle
  */
-public class DomesticMarketDailyCandle {
+public class DomesticMarketDailyCandle extends TradeCandle implements  TradingTrend {
+
+    String ymd;
+
+    double tradeVolume;
+    double tradePriceVolume;
+
+    //기관 매매량
+    double institution;
+    //외국계 매매량
+    double foreign;
+    //개인 매매량
+    double individual;
+
+    /**
+     * 
+     * @return yyyyMMdd
+     */
+    public String getYmd() {
+        return ymd;
+    }
+
+    /**
+     * 
+     * @return 거래량
+     */
+    public double getTradeVolume() {
+        return tradeVolume;
+    }
+
+    /**
+     * 
+     * @return 거래대금
+     */
+    public double getTradePriceVolume() {
+        return tradePriceVolume;
+    }
+
+    @Override
+    public Double getInstitution() {
+        return institution;
+    }
+
+    @Override
+    public Double getForeign() {
+        return foreign;
+    }
+
+    @Override
+    public Double getIndividual() {
+        return individual;
+    }
 
 
 }

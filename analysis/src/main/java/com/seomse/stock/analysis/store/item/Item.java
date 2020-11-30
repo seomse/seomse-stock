@@ -20,16 +20,15 @@ import com.seomse.jdbc.annotation.DateTime;
 import com.seomse.jdbc.annotation.PrimaryKey;
 import com.seomse.jdbc.annotation.Table;
 import com.seomse.stock.analysis.MarketType;
-import com.seomse.trading.technical.analysis.candle.candles.TradeCandles;
-
-import java.util.Map;
+import com.seomse.stock.analysis.Stock;
+import com.seomse.stock.analysis.StockType;
 
 /**
  * 주식 종목 (개별 종목)
  * @author macle
  */
 @Table(name="T_STOCK_ITEM")
-public class Item {
+public class Item extends ItemCandles implements Stock {
     @PrimaryKey(seq = 1)
     @Column(name = "ITEM_CD")
     private String code;
@@ -51,9 +50,6 @@ public class Item {
     @Column(name = "LISTING_CNT")
     private Long listingCount;
 
-    //캔들정보
-    Map<Long, TradeCandles> timeCandlesMap;
-    
     FinancialStatements[] yearFinancialStatementsArray = null;
     FinancialStatements[] quarterFinancialStatementsArray = null;
 
@@ -69,10 +65,16 @@ public class Item {
     @Column(name = "UPT_DT")
     private long lastUpdateTime;
 
+    @Override
+    public StockType getType() {
+        return StockType.ITEM;
+    }
+
     /**
      *
      * @return 종목코드
      */
+    @Override
     public String getCode() {
         return code;
     }
@@ -148,4 +150,6 @@ public class Item {
     public long getLastUpdateTime() {
         return lastUpdateTime;
     }
+
+
 }

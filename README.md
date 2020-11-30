@@ -27,6 +27,10 @@
 
 
 - 관련 프로젝트가 진행되면서 seomse-trading 도 연관해서 같이 많은 업데이트가 진행되고 있습니다.
+    - https://github.com/seomse/seomse-trading
+    
+- 과거에 만들어논 부분을 오픈소스화 하고, 혹은 새로운 방식을 신규로 개발하고 있습니다.
+    - 아직 오픈소스화 하지 않은 많은 pirvate module 이 존재합니다
 
 # 용어사전
 https://docs.google.com/spreadsheets/d/1ECaUMUoZkb-jMGUS7-9FRQtiiP-Zfa4gvpLZ4WKiHXg/edit#gid=0
@@ -48,10 +52,10 @@ implementation 'com.seomse.stock:data:0.1.0'
 
 # communication
 ### blog, homepage
-- www.seomse.com
-- github.com/seomse/
-- seomse.tistory.com
-- seomse.github.io
+- [www.seomse.com](https://www.seomse.com/)
+- [github.com/seomse](https://github.com/seomse)
+- [seomse.tistory.com](https://seomse.tistory.com/)
+- [seomse.github.io](https://seomse.github.io/)
 - seomse.com
 
 ### 카카오톡 오픈톡
@@ -64,6 +68,6 @@ implementation 'com.seomse.stock:data:0.1.0'
  - comseomse@gmail.com
  
  
-# dev
+# main developer
  - macle
     -  [github.com/macle86](https://github.com/macle86)

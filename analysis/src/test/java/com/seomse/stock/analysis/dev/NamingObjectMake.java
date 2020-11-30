@@ -25,7 +25,7 @@ import com.seomse.jdbc.naming.JdbcNaming;
 public class NamingObjectMake {
 
 	public static void main(String [] args){
-		String tableName = "T_STOCK_MARKET";
+		String tableName = "T_STOCK_MARKET_INDEX_DAILY";
 		System.out.println("@Table(name=\"" +  tableName+ "\")\n");
 		System.out.println(JdbcNaming.makeObjectValue(tableName));
 
