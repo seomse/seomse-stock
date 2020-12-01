@@ -18,6 +18,7 @@ package com.seomse.stock.analysis.model.relative.strength;
 
 import com.seomse.commons.utils.ExceptionUtil;
 import com.seomse.stock.analysis.MarketType;
+import com.seomse.stock.analysis.Stock;
 import com.seomse.stock.analysis.store.item.Item;
 import com.seomse.stock.analysis.store.item.ItemDailyCandle;
 import com.seomse.stock.analysis.store.market.domestic.DomesticMarket;
@@ -97,7 +98,7 @@ public class StrongerThenMarketAnalysis implements Runnable{
         }
 
         ItemDailyCandle[] dailyCandles= item.getDailyCandles();
-        analysis(item.getCode(), domesticMarket, dailyCandles);
+        analysis(item, domesticMarket, dailyCandles);
 
     }
 
@@ -117,10 +118,10 @@ public class StrongerThenMarketAnalysis implements Runnable{
             return;
         }
 
-        analysis(preferred.getCode(), domesticMarket, dailyCandles);
+        analysis(preferred, domesticMarket, dailyCandles);
     }
 
-    private void analysis(String code, DomesticMarket domesticMarket, ItemDailyCandle[] dailyCandles){
+    private void analysis(Stock stock, DomesticMarket domesticMarket, ItemDailyCandle[] dailyCandles){
         if(dailyCandles.length < strongerThenMarket.candleCount){
             return;
         }
@@ -138,13 +139,13 @@ public class StrongerThenMarketAnalysis implements Runnable{
 
             if(dailyCandles[i].getVolume() < 5000.0){
                 //거래량이 없느 종목이면 분석하지 않음
-                logger.debug("trade volume is low " + code + " " + dailyCandles[i].getVolume() );
+                logger.debug("trade volume is low " + stock.getCode() + ", " + stock.getName() +", " + dailyCandles[i].getVolume() );
                 return;
             }
 
             //기준일시가 다르면
             if(!marketDailyCandles[i].getYmd().equals(dailyCandles[i].getYmd())){
-                logger.info("ymd mismatch: " + code);
+                logger.info("ymd mismatch: " + stock.getCode() + ", " + stock.getName());
                 return;
             }
 
@@ -200,14 +201,15 @@ public class StrongerThenMarketAnalysis implements Runnable{
             && upCount >= strongerThenMarket.upCount
             && marketUpCount >= strongerThenMarket.marketUpCount) {
 
-            StrongerThenMarketItem item = new StrongerThenMarketItem();
-            item.code = code;
-            item.upCount = upCount;
-            item.marketUpCount = marketUpCount;
-            item.marketUpPer = marketUpPer;
-            item.rsi = rsi;
+            //점수 계산하기
+            
+            StrongerThenMarketModuleScore moduleScore = new StrongerThenMarketModuleScore(stock, 0);
+            moduleScore.upCount = upCount;
+            moduleScore.marketUpCount = marketUpCount;
+            moduleScore.marketUpPer = marketUpPer;
+            moduleScore.rsi = rsi;
 
-            strongerThenMarket.add(item);
+            strongerThenMarket.add(moduleScore);
         }
     }
 }

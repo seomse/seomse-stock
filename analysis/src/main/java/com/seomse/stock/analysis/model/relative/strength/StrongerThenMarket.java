@@ -18,7 +18,8 @@ package com.seomse.stock.analysis.model.relative.strength;
 
 import com.seomse.commons.callback.ObjCallback;
 import com.seomse.commons.utils.time.Times;
-import com.seomse.stock.analysis.CodeScore;
+import com.seomse.stock.analysis.AnalysisScore;
+import com.seomse.stock.analysis.StockScore;
 import com.seomse.stock.analysis.store.StoreManager;
 import com.seomse.stock.analysis.store.item.Item;
 import com.seomse.stock.analysis.store.item.ItemStore;
@@ -32,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -121,13 +123,13 @@ public class StrongerThenMarket implements PriceChangeAnalysis {
     }
 
 
-    private CodeScore [] codeScores;
+    private StrongerThenMarketModuleScore[] stockScores;
     /**
      * 분석 동기실행
      * @param storeManager 저장소 관리자
      * @return 코드와 점수 배열 score 기준 desc 정렬
      */
-    public CodeScore [] analysisSync(StoreManager storeManager){
+    public StockScore [] analysisSync(StoreManager storeManager){
 
         final Thread t = Thread.currentThread();
         AtomicBoolean isAnalysis = new AtomicBoolean(false);
@@ -149,7 +151,7 @@ public class StrongerThenMarket implements PriceChangeAnalysis {
             }
         }
 
-        return codeScores;
+        return stockScores;
     }
 
     private int analysisThreadCount;
@@ -220,11 +222,11 @@ public class StrongerThenMarket implements PriceChangeAnalysis {
     }
 
     private final Object addLock = new Object();
-    private final List<StrongerThenMarketItem> addList = new ArrayList<>();
+    private final List<StrongerThenMarketModuleScore> addList = new ArrayList<>();
 
-    void add(StrongerThenMarketItem item ){
+    void add(StrongerThenMarketModuleScore moduleScore ){
         synchronized (addLock){
-            addList.add(item);
+            addList.add(moduleScore);
         }
     }
 
@@ -241,19 +243,18 @@ public class StrongerThenMarket implements PriceChangeAnalysis {
                 System.out.println("complete");
                 //분석 완료
 
-                codeScores = new CodeScore[addList.size()];
-                for (int i = 0; i <codeScores.length ; i++) {
-                    StrongerThenMarketItem item = addList.get(i);
-                    System.out.println("search: " + item.code +", " + item.marketUpPer +", " + item.marketUpCount + ", " + item.upCount + ", " + item.rsi);
+                stockScores = addList.toArray(new StrongerThenMarketModuleScore[0]);
+                addList.clear();
 
-                    codeScores[i] = new CodeScore(item.code, item.marketUpPer);
+                for(StrongerThenMarketModuleScore moduleScore :stockScores ){
+                    System.out.println("search: " + "," +moduleScore.getStock().getCode() + ", "+  moduleScore.getStock().getName() +", " + moduleScore.marketUpPer +", " + moduleScore.marketUpCount + ", " + moduleScore.upCount + ", " + moduleScore.rsi);
                 }
 
 
-                addList.clear();
-//                Arrays.sort(codeScores, CodeScore.SORT_DESC);
+
+                Arrays.sort(stockScores, AnalysisScore.SORT_DESC);
                 if(endCallback != null){
-                    endCallback.callback(codeScores);
+                    endCallback.callback(stockScores);
                 }
             }
 

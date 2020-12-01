@@ -21,15 +21,15 @@ package com.seomse.stock.analysis;
  * @author macle
  */
 public class StockScore implements AnalysisScore{
-    private final Stock stock;
-    private final double score;
+    protected final Stock stock;
+    protected final double score;
 
     /**
      * 생성자
      * @param stock 종목
      * @param score 점수
      */
-    public StockScore(Stock stock, long score){
+    public StockScore(Stock stock, double score){
         this.stock = stock;
         this.score = score;
     }
