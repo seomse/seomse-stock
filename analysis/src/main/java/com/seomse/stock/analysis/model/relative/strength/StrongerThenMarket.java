@@ -50,17 +50,17 @@ public class StrongerThenMarket implements PriceChangeAnalysis {
     private final String ymd;
     
     //강해지기 시작한 지점 찾기
-    int candleCount = 14;
+    int candleCount = 15;
 
     // 시장대비 높은 가격 1.0이 최대 전체가 10이면 1
-    double marketUpCountPer = 0.5;
+    double marketUpCountPer = 0.55;
 
     //증시대비 합산 상승률
-    double marketUpPer = 1.0;
+    double marketUpPer = 5.0;
 
 
     //상승 캔들 비율 상승날짜 
-    double minUpPer =  0.5;
+    double minUpPer =  0.55;
 
     /**
      * 캔글 개수 설정
