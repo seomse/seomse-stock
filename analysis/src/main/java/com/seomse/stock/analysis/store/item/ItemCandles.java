@@ -46,6 +46,19 @@ public abstract class ItemCandles {
         return candlesMap.get(standardTime);
     }
 
+    /**
+     * 최종 일별 캔들얻기 
+     * @return 최근 일별 캔들
+     */
+    public ItemDailyCandle getLastCandle(){
+        return dailyCandles[dailyCandles.length -1];
+    }
+    
+    
+    /**
+     * 코드 얻기
+     * @return 종목 코드
+     */
     public abstract String getCode();
 
 }

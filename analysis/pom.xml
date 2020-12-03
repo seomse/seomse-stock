@@ -7,7 +7,7 @@
 
     <groupId>com.seomse.stock</groupId>
     <artifactId>analysis</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <packaging>jar</packaging>
 
     <name>seomse-stock-analysis</name>
@@ -139,7 +139,7 @@
         <dependency>
             <groupId>com.seomse.commons</groupId>
             <artifactId>seomse-commons</artifactId>
-            <version>1.2.2</version>
+            <version>1.2.3</version>
         </dependency>
 
 

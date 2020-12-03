@@ -75,4 +75,12 @@ public class Etf implements Stock {
     public TradeCandles getCandles(long standardTime){
         return candlesMap.get(standardTime);
     }
+
+    /**
+     * 최종 일별 캔들얻기
+     * @return 최근 일별 캔들
+     */
+    public EtfDailyCandle getLastCandle(){
+        return dailyCandles[dailyCandles.length -1];
+    }
 }

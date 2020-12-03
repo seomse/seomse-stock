@@ -18,6 +18,7 @@ package com.seomse.stock.data.sync;
 
 import com.seomse.commons.utils.time.Times;
 import com.seomse.commons.utils.time.YmdUtil;
+import com.seomse.jdbc.JdbcQuery;
 import com.seomse.jdbc.admin.RowDataInOut;
 import com.seomse.jdbc.annotation.Table;
 import com.seomse.jdbc.connection.ConnectionFactory;
@@ -176,11 +177,18 @@ public class CenterDatabaseSync {
             update(insertConn, JdbcNaming.getObjList(selectConn, WicsDailyNo.class, "YMD >= '" + ymd + "'"));
             logger.info("daily tables update complete");
 
-            //분봉
+            //분봉 //느리면 delete insert로 변경예정
             String ymdhm = ymd +"0000";
-            update(insertConn, JdbcNaming.getObjList(selectConn, Market5mNo.class, "YMDHM >= '" + ymdhm + "'"));
-            update(insertConn, JdbcNaming.getObjList(selectConn, Etf5mNo.class, "YMDHM >= '" + ymdhm + "'"));
-            update(insertConn, JdbcNaming.getObjList(selectConn, Item5mNo.class, "YMDHM >= '" + ymdhm + "'"));
+            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_MARKET_5M WHERE YMDHM >= '" + ymdhm + "'");
+            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Market5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
+            logger.info("market 5m complete");
+
+            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_ETF_5M WHERE YMDHM >= '" + ymdhm + "'");
+            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Etf5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
+            logger.info("etf 5m complete");
+
+            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_ITEM_5M WHERE YMDHM >= '" + ymdhm + "'");
+            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Item5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
             logger.info("5 minute tables update complete");
 
         }catch (Exception e){
@@ -211,11 +219,14 @@ public class CenterDatabaseSync {
 
             long startTime = System.currentTimeMillis();
 
-            CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
-            centerDatabaseSync.update(YmdUtil.getYmd(YmdUtil.now(), -3));
-            long useTime = System.currentTimeMillis() - startTime;
-            if(useTime < Times.DAY_1) {
+            String now = YmdUtil.now();
 
+            CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
+            centerDatabaseSync.update(YmdUtil.getYmd(now, -1));
+            long useTime = System.currentTimeMillis() - startTime;
+
+            logger.info(now + " update complete");
+            if(useTime < Times.DAY_1) {
                 Thread.sleep(Times.DAY_1 - useTime);
             }
 
