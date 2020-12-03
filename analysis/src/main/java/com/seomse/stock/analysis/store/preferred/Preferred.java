@@ -16,7 +16,7 @@
 
 package com.seomse.stock.analysis.store.preferred;
 
-import com.seomse.stock.analysis.Stock;
+import com.seomse.stock.analysis.StockPrice;
 import com.seomse.stock.analysis.StockType;
 import com.seomse.stock.analysis.store.item.Item;
 import com.seomse.stock.analysis.store.item.ItemCandles;
@@ -25,7 +25,7 @@ import com.seomse.stock.analysis.store.item.ItemCandles;
  * 우선주
  * @author macle
  */
-public class Preferred extends ItemCandles implements Stock {
+public class Preferred extends ItemCandles implements StockPrice {
 
     String code;
     String name;
@@ -70,5 +70,10 @@ public class Preferred extends ItemCandles implements Stock {
      */
     public Long getListingCount() {
         return listingCount;
+    }
+
+    @Override
+    public double getClose() {
+        return getLastCandle().getClose();
     }
 }

@@ -19,7 +19,7 @@ package com.seomse.stock.analysis.store.etf;
 import com.seomse.jdbc.annotation.Column;
 import com.seomse.jdbc.annotation.PrimaryKey;
 import com.seomse.jdbc.annotation.Table;
-import com.seomse.stock.analysis.Stock;
+import com.seomse.stock.analysis.StockPrice;
 import com.seomse.stock.analysis.StockType;
 import com.seomse.trading.technical.analysis.candle.candles.TradeCandles;
 
@@ -30,7 +30,7 @@ import java.util.Map;
  * @author macle
  */
 @Table(name="T_STOCK_ETF")
-public class Etf implements Stock {
+public class Etf implements StockPrice {
     @PrimaryKey(seq = 1)
     @Column(name = "ETF_CD")
     String code;
@@ -82,5 +82,10 @@ public class Etf implements Stock {
      */
     public EtfDailyCandle getLastCandle(){
         return dailyCandles[dailyCandles.length -1];
+    }
+
+    @Override
+    public double getClose() {
+        return getLastCandle().getClose();
     }
 }

@@ -20,7 +20,7 @@ import com.seomse.jdbc.annotation.DateTime;
 import com.seomse.jdbc.annotation.PrimaryKey;
 import com.seomse.jdbc.annotation.Table;
 import com.seomse.stock.analysis.MarketType;
-import com.seomse.stock.analysis.Stock;
+import com.seomse.stock.analysis.StockPrice;
 import com.seomse.stock.analysis.StockType;
 
 /**
@@ -28,7 +28,7 @@ import com.seomse.stock.analysis.StockType;
  * @author macle
  */
 @Table(name="T_STOCK_ITEM")
-public class Item extends ItemCandles implements Stock {
+public class Item extends ItemCandles implements StockPrice {
     @PrimaryKey(seq = 1)
     @Column(name = "ITEM_CD")
     private String code;
@@ -152,4 +152,8 @@ public class Item extends ItemCandles implements Stock {
     }
 
 
+    @Override
+    public double getClose() {
+        return getLastCandle().getClose();
+    }
 }
