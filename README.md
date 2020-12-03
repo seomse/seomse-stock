@@ -23,8 +23,9 @@
         - 2차 가공 데이터 생성 테마별 동향, WICS별 동향 등. 가치주별 동향 등.
         - 원천 데이터는 stock-crawling 프로젝트에서 관리 (비공개)(문의바람)
     - 거래 (trade)
-        - 분석 결과를 활용한 매매
-
+        - 매매 전략
+        - backtest
+       
 
 - 관련 프로젝트가 진행되면서 seomse-trading 도 연관해서 같이 많은 업데이트가 진행되고 있습니다.
     - https://github.com/seomse/seomse-trading

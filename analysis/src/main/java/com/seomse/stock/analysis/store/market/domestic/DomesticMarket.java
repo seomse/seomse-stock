@@ -42,7 +42,7 @@ public class DomesticMarket extends StockMarket{
     public DomesticMarketDailyCandle[] getCandles() {
         return candles;
     }
-
+    
     /**
      * 증시 일별 캔들배열 설정 (YMD DESC)
      * @param candles 증시 일별 캔들
@@ -50,4 +50,13 @@ public class DomesticMarket extends StockMarket{
     void setCandles(DomesticMarketDailyCandle[] candles) {
         this.candles = candles;
     }
+
+    /**
+     * 최종 코스피 지수
+     * @return 최종
+     */
+    public double getClose(){
+        return candles[candles.length-1].getClose();
+    }
+    
 }
