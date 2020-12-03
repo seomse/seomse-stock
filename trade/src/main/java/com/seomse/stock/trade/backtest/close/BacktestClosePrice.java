@@ -16,15 +16,13 @@
 
 package com.seomse.stock.trade.backtest.close;
 
+import com.seomse.commons.utils.time.YmdUtil;
 import com.seomse.jdbc.JdbcQuery;
-import com.seomse.stock.analysis.StockType;
 import com.seomse.stock.analysis.store.StoreManager;
-import com.seomse.stock.analysis.store.etf.EtfStore;
-import com.seomse.stock.analysis.store.item.ItemStore;
-import com.seomse.stock.analysis.store.preferred.PreferredStore;
+import com.seomse.stock.analysis.store.market.domestic.DomesticMarketStore;
 import com.seomse.stock.trade.AccountStatus;
+import com.seomse.stock.trade.HoldStock;
 import com.seomse.stock.trade.StockCount;
-import com.seomse.stock.trade.strategy.SellStrategy;
 import com.seomse.stock.trade.strategy.StoreBuyStrategy;
 import com.seomse.stock.trade.strategy.StoreSellStrategy;
 import org.slf4j.Logger;
@@ -34,14 +32,7 @@ import java.util.List;
 
 
 /**
- * 개별종목 수수료
- *  매수 수수료 0.015%
- *  매도 수수료 0.015%
- *  매도 세금 0.25%
- *
- *  ETF 수수료
- *  헷지로 사용할 kodex 200선물인버스2x 매수 0.01, 매도 0.01
- *  모든 ETF 매수 0.01, 매도 0.01로 동작하게함
+
  *
  *  종가 매매 벡테스팅이지만 특정 ETF는 리얼타임이 도입될 수 있음
  *
@@ -54,13 +45,11 @@ public class BacktestClosePrice {
     private static final Logger logger = LoggerFactory.getLogger(BacktestClosePrice.class);
 
     private final StoreBuyStrategy buyStrategy;
-    private StoreSellStrategy sellStrategy;
-    private AccountStatus accountStatus;
-    private String beginYmd;
-    private String endYmd;
+    private final StoreSellStrategy sellStrategy;
+    private final AccountStatus accountStatus;
+    private final String beginYmd;
+    private final String endYmd;
     private StoreManager storeManager;
-    //한종목 최대 구매 금액
-    private double itemPrice = 1000000.0;
 
     /**
      * 생성자
@@ -84,69 +73,74 @@ public class BacktestClosePrice {
     }
 
     /**
-     * 데이터 인메모리 저장소 설정정
-    * @param storeManager  in memory store
-     */
-    public void setStoreManager(StoreManager storeManager) {
-        this.storeManager = storeManager;
-    }
-
-    /**
      * 실행
      */
     public void run(){
-        if(storeManager == null){
-            storeManager = new StoreManager();
-        }
 
+        double startAssets = accountStatus.getAssets(storeManager);
 
-
-        //증시 상승률 대비
         //거래일 얻기
         //거래일은 코스피 지수의 거래가 있는날짜로 한다
         List<String> ymdList = JdbcQuery.getStringList("SELECT YMD FROM T_STOCK_MARKET_DAILY WHERE MARKET_CD ='KOSPI' AND YMD >= '" +beginYmd +"' AND YMD <= '" + endYmd +"' ORDER BY YMD ASC");
+        //시작자산
 
+        DomesticMarketStore domesticMarketStore = storeManager.getDomesticMarketStore(ymdList.get(0));
+        double startKospi = domesticMarketStore.getKospiMarket().getClose();
+        double startKosdaq = domesticMarketStore.getKosdaqMarket().getClose();
+
+        logger.info("시작 자산: " + startAssets + " 코스피: " + startKospi + " 코스닥: " + startKosdaq );
+        logger.info("begin: " + ymdList.get(0) +", end: " + ymdList.get(ymdList.size()-1));
+
+        double lastAssets =startAssets;
+        double lastKospi =startKospi;
+        double lastKosdaq =startKosdaq;
 
         for(String ymd: ymdList){
 
-            ItemStore itemStore = storeManager.getItemStore(ymd);
-            PreferredStore preferredStore = storeManager.getPreferredStore(ymd);
-            EtfStore etfStore = storeManager.getEtfStore(ymd);
 
-            StockCount [] holdStocks = accountStatus.getHoldStocks();
+            domesticMarketStore = storeManager.getDomesticMarketStore(ymd);
+            double kospi = domesticMarketStore.getKospiMarket().getClose();
+            double kosdaq = domesticMarketStore.getKospiMarket().getClose();
 
+            accountStatus.setTime(YmdUtil.getTime(ymd));
+
+            //매수전 보유정목 전송
+            HoldStock[] holdStocks = accountStatus.getHoldStocks();
+            
+            //매수
             buyStrategy.setYmd(ymd);
             StockCount[] buyStocks = buyStrategy.getBuyStocks(accountStatus);
-
             for(StockCount stockCount : buyStocks){
-                if(stockCount.getStock().getType() == StockType.ITEM){
-//                    itemStore.
-                }else{
-
-                }
+                accountStatus.buyStock(stockCount);
             }
 
-
-            //종목을 매수하고 현금을 감소시킨다.
-
+            //매도
+            sellStrategy.setYmd(ymd);
             StockCount[] sellStocks = sellStrategy.getSellStocks(holdStocks);
+            for(StockCount stockCount : sellStocks){
+                accountStatus.sellStock(stockCount);
+            }
 
+            logger.info("====================== daily change ====================\n\n");
 
+            double assets =  accountStatus.getAssets(storeManager);
 
+            if(assets < 0){
+                logger.error("strategy fail assets 0");
+                break;
+            }
 
+            logger.info(ymd + " 자산: " + accountStatus.getAssets(storeManager)
+                    + "\n총 자산 변화율: " + Math.round((assets - startAssets)/startAssets* 10000.0)/100.0
+                    + "\n자산 변화율: " + Math.round((assets - lastAssets)/lastAssets* 10000.0)/100.0
+                    + "\n총 코스피 변화율: " + Math.round((kospi - startKospi)/startKospi* 10000.0)/100.0
+                    + "\n코스피 변화율: " + Math.round((kospi - lastKospi)/lastKospi* 10000.0)/100.0
+                    + "\n총 코스닥 변화율: " + Math.round((kosdaq - startKosdaq)/startKosdaq* 10000.0)/100.0
+                    + "\n코스닥 변화율: " + Math.round((kosdaq - lastKosdaq)/lastKosdaq* 10000.0)/100.0
+            );
+            lastAssets = assets;
+            lastKospi = kospi;
+            lastKosdaq = kosdaq;
         }
-
-        
-        
-
     }
-
-
-    public static void main(String[] args) {
-
-
-    }
-
-
-
 }

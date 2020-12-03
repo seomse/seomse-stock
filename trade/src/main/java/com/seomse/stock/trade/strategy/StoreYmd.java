@@ -34,11 +34,9 @@ public class StoreYmd {
     /**
      * 생성자
      * @param storeManager in memory store
-     * @param ymd yyyyMMdd
      */
-    public StoreYmd(StoreManager storeManager, String ymd){
+    public StoreYmd(StoreManager storeManager){
         this.storeManager = storeManager;
-        this.ymd = ymd;
     }
 
     /**

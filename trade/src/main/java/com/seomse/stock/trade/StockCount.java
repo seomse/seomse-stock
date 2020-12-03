@@ -16,14 +16,14 @@
 
 package com.seomse.stock.trade;
 
-import com.seomse.stock.analysis.Stock;
+import com.seomse.stock.analysis.StockPrice;
 
 /**
  * 종목과 수량
  * @author macle
  */
 public class StockCount {
-    private final Stock stock;
+    private final StockPrice stock;
     private long count ;
 
     /**
@@ -31,7 +31,7 @@ public class StockCount {
      * @param stock 종목
      * @param count 수량
      */
-    public StockCount(Stock stock, long count){
+    public StockCount(StockPrice stock, long count){
         this.stock = stock;
         this.count = count;
     }
@@ -40,7 +40,7 @@ public class StockCount {
      * 주식 종목 얻기
      * @return 거래 가능한 주식 종목
      */
-    public Stock getStock() {
+    public StockPrice getStock() {
         return stock;
     }
 

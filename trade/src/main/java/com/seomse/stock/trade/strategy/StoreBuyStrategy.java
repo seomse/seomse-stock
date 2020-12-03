@@ -26,9 +26,8 @@ public abstract class StoreBuyStrategy  extends StoreYmd implements BuyStrategy{
      * 생성자
      *
      * @param storeManager in memory store
-     * @param ymd          yyyyMMdd
      */
-    public StoreBuyStrategy(StoreManager storeManager, String ymd) {
-        super(storeManager, ymd);
+    public StoreBuyStrategy(StoreManager storeManager) {
+        super(storeManager);
     }
 }

@@ -17,25 +17,33 @@
 package com.seomse.stock.trade;
 
 import com.seomse.commons.utils.time.YmdUtil;
-import com.seomse.stock.analysis.Stock;
 import com.seomse.stock.analysis.StockType;
 import com.seomse.stock.analysis.store.StoreManager;
-import com.seomse.stock.analysis.store.preferred.Preferred;
+import com.seomse.stock.analysis.store.item.Item;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
+ *
+ * 개별종목 수수료
+ *  매수 수수료 0.015%
+ *  매도 수수료 0.015%
+ *  매도 세금 0.25%
+ *
+ *  ETF 수수료
+ *  헷지로 사용할 kodex 200선물인버스2x 매수 0.01, 매도 0.01
+ *  모든 ETF 매수 0.01, 매도 0.01로 동작하게함
  * 계좌보유현황 잔고현황등
  * @author macle
  */
 public class AccountStatus {
 
 
-
     private long time;
-    private final Map<String, StockCount> holdStockMap = new HashMap<>();
+    private final Map<String, HoldStock> holdStockMap = new HashMap<>();
     //한국돈은 소수점이 없음 //해외주식까지 연계할때 double 형으로 변경
     private double cash = 0.0;
 
@@ -69,46 +77,20 @@ public class AccountStatus {
      * 현금 변화량 추가
      * @param cash 현금 변화량
      */
-    public void addCash(long cash){
+    public void addCash(double cash){
         synchronized (lock) {
             this.cash += cash;
         }
     }
 
-
     /**
-     * 종목구매 추가 / 변경
-     * @param stockCount 신규 보유종목 또는 변화된 보유종목
-     * @return 매수 종목 기존에 있던 종목이면 수량이 올라감
+     * 보유종목 추가
+     * 관련기능은 있던 종목을 추가할 경우 정보가 교체됨
+     * @param holdStock 보유종목
      */
-    public StockCount buyStock(StockCount stockCount){
+    public void addStock(HoldStock holdStock){
         synchronized (lock){
-
-            StockCount saveStockCount = holdStockMap.get(stockCount.getCode());
-            if(saveStockCount != null){
-                saveStockCount.plus(stockCount.getCount());
-                return saveStockCount;
-            }else{
-
-                return holdStockMap.put(stockCount.getCode(), stockCount);
-            }
-        }
-    }
-
-
-    /**
-     * 종목 매도
-     * @param stockCount 매도 종목과 수량
-     * @return 매도종목 전체매도이면 null
-     */
-    public StockCount sellStock(StockCount stockCount){
-        synchronized (lock){
-            StockCount saveStockCount = holdStockMap.get(stockCount.getCode());
-            if(saveStockCount == null){
-                return null;
-            }
-            saveStockCount.plus(stockCount.getCount()*-1);
-            return saveStockCount;
+            holdStockMap.put(holdStock.getCode(), holdStock);
         }
     }
 
@@ -117,13 +99,76 @@ public class AccountStatus {
      * 보유종목 제거
      * @param stockCode 보유종목 코드
      */
-    public StockCount removeStock(String stockCode){
+    public HoldStock removeStock(String stockCode){
         synchronized (lock){
             return holdStockMap.remove(stockCode);
         }
     }
-    
-    
+
+
+
+    /**
+     * 종목구매
+     * @param stockCount 신규 보유종목 또는 변화된 보유종목
+     */
+    public void buyStock(StockCount stockCount){
+        synchronized (lock){
+
+            HoldStock holdStock = holdStockMap.get(stockCount.getCode());
+
+            if(holdStock == null){
+                holdStock = new HoldStock(stockCount.getStock());
+                holdStockMap.put(stockCount.getCode(), holdStock);
+            }
+
+            // 구매 수수료
+            double fee;
+
+            if(holdStock.getType() == StockType.ITEM){
+                fee = 0.00015;
+            }else{
+                fee = 0.0001;
+            }
+
+            holdStock.buy(stockCount.getCount(), stockCount.getStock().getClose());
+
+            double price = stockCount.getStock().getClose() * stockCount.getCount();
+            cash -= price + price*fee;
+        }
+    }
+
+
+
+
+    /**
+     * 종목 매도
+     * @param stockCount 매도 종목과 수량
+     */
+    public void sellStock(StockCount stockCount){
+        synchronized (lock){
+
+            HoldStock holdStock = holdStockMap.get(stockCount.getCode());
+
+            // 팜매 수수료
+            double fee;
+
+            if(holdStock.getType() == StockType.ITEM){
+                fee = 0.00015 + 0.0025;
+            }else{
+                fee = 0.0001;
+            }
+
+            double price = stockCount.getStock().getClose() * stockCount.getCount();
+            cash += price - price*fee;
+
+            holdStock.sell(stockCount.getCount(),stockCount.getStock().getClose());
+            if(holdStock.getCount() == 0){
+                holdStockMap.remove(holdStock.getCode());
+            }
+        }
+    }
+
+
     /**
      * 자산얻기
      * @param storeManager 데이터 메모리 저장소
@@ -135,30 +180,33 @@ public class AccountStatus {
         synchronized (lock){
 
             double stockPriceSum = 0L;
-            Collection<StockCount> stockCounts = holdStockMap.values();
+            Collection<HoldStock> stockCounts = holdStockMap.values();
 
-            for(StockCount stockCount : stockCounts){
+            double fee;
+
+            for(HoldStock holdStock : stockCounts){
                 double price;
-                Stock stock = stockCount.getStock();
+                fee = 0.00015 + 0.0025;
+                if(holdStock.getType() == StockType.ITEM){
+                    Item item =storeManager.getItemStore(ymd).getItem(holdStock.getCode());
 
-                if(stockCount.getStock().getType() == StockType.ITEM){
-                    if(stock instanceof Preferred){
+                    if(item == null){
                         //우선주이면
-                        price = storeManager.getPreferredStore(ymd).getPreferred(stock.getCode()).getLastCandle().getClose();
-
-
+                        price = storeManager.getPreferredStore(ymd).getPreferred(holdStock.getCode()).getClose();
                     }else{
                         //일반주이면
-                        price = storeManager.getItemStore(ymd).getItem(stock.getCode()).getLastCandle().getClose();}
+                        price = item.getClose();
+                    }
 
                 }else{
                     //etf
-                    price = storeManager.getEtfStore(ymd).getEtf(stock.getCode()).getLastCandle().getClose();
+                    fee = 0.0001;
+                    price = storeManager.getEtfStore(ymd).getEtf(holdStock.getCode()).getLastCandle().getClose();
                 }
-                stockPriceSum += price * stockCount.getCount();
+                stockPriceSum += holdStock.getEvaluationAmount(price, fee);
             }
 
-            return cash + stockPriceSum;
+            return Math.round(cash + stockPriceSum);
         }
         
     }
@@ -170,12 +218,12 @@ public class AccountStatus {
      */
     public long getStockCount(String code){
         synchronized (lock){
-            StockCount stockCount = holdStockMap.get(code);
-            if(stockCount == null){
+            HoldStock holdStock = holdStockMap.get(code);
+            if(holdStock == null){
                 return 0L;
             }
 
-            return stockCount.getCount();
+            return holdStock.getCount();
         }
     }
     
@@ -183,9 +231,9 @@ public class AccountStatus {
      * 보유종목 얻기
      * @return 보유종목 전체
      */
-    public StockCount [] getHoldStocks (){
+    public HoldStock [] getHoldStocks (){
         synchronized (lock){
-            return holdStockMap.values().toArray(new StockCount[0]);
+            return holdStockMap.values().toArray(new HoldStock[0]);
         }
     }
 

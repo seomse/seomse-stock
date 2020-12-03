@@ -27,9 +27,8 @@ public abstract class StoreSellStrategy extends StoreYmd implements SellStrategy
      * 생성자
      *
      * @param storeManager in memory store
-     * @param ymd          yyyyMMdd
      */
-    public StoreSellStrategy(StoreManager storeManager, String ymd) {
-        super(storeManager, ymd);
+    public StoreSellStrategy(StoreManager storeManager) {
+        super(storeManager);
     }
 }
