@@ -38,18 +38,19 @@ https://docs.google.com/spreadsheets/d/1ECaUMUoZkb-jMGUS7-9FRQtiiP-Zfa4gvpLZ4WKi
 
 # gradle
 ### analysis
-implementation 'com.seomse.stock:analysis:0.1.0'
+implementation 'com.seomse.stock:analysis:0.1.3'
 - etc 
-    - https://mvnrepository.com/artifact/com.seomse.stock/analysis/0.1.0
+    - https://mvnrepository.com/artifact/com.seomse.stock/analysis/0.1.3
 
 ### data
 implementation 'com.seomse.stock:data:0.1.0'
-
 - etc 
     - https://mvnrepository.com/artifact/com.seomse.stock/data/0.1.0
 
 ### trade
-지원예정
+implementation 'com.seomse.stock:trade:0.1.0'
+- etc 
+    - https://mvnrepository.com/artifact/com.seomse.stock/trade/0.1.0
 
 # communication
 ### blog, homepage

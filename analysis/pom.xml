@@ -12,7 +12,7 @@
 
     <name>seomse-stock-analysis</name>
     <description>stock analysis</description>
-    <url>https://github.com/seomse/seomse-stock/analysis</url>
+    <url>https://github.com/seomse/seomse-stock</url>
 
     <licenses>
         <license>
@@ -32,7 +32,7 @@
     </developers>
 
     <scm>
-        <url>https://github.com/seomse/seomse-stock/analysis</url>
+        <url>https://github.com/seomse/seomse-stock</url>
     </scm>
 
     <distributionManagement>
