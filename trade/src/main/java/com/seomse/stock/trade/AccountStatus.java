@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.seomse.stock.trade.backtest;
+package com.seomse.stock.trade;
 
 import com.seomse.commons.utils.time.YmdUtil;
 import com.seomse.stock.analysis.Stock;
 import com.seomse.stock.analysis.StockType;
 import com.seomse.stock.analysis.store.StoreManager;
 import com.seomse.stock.analysis.store.preferred.Preferred;
-import com.seomse.stock.trade.StockCount;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -78,12 +77,41 @@ public class AccountStatus {
 
 
     /**
-     * 보유종목 추가 / 변경
+     * 종목구매 추가 / 변경
      * @param stockCount 신규 보유종목 또는 변화된 보유종목
+     * @return 매수 종목 기존에 있던 종목이면 수량이 올라감
      */
-    public void addStock(StockCount stockCount){
-        
+    public StockCount buyStock(StockCount stockCount){
+        synchronized (lock){
+
+            StockCount saveStockCount = holdStockMap.get(stockCount.getCode());
+            if(saveStockCount != null){
+                saveStockCount.plus(stockCount.getCount());
+                return saveStockCount;
+            }else{
+
+                return holdStockMap.put(stockCount.getCode(), stockCount);
+            }
+        }
     }
+
+
+    /**
+     * 종목 매도
+     * @param stockCount 매도 종목과 수량
+     * @return 매도종목 전체매도이면 null
+     */
+    public StockCount sellStock(StockCount stockCount){
+        synchronized (lock){
+            StockCount saveStockCount = holdStockMap.get(stockCount.getCode());
+            if(saveStockCount == null){
+                return null;
+            }
+            saveStockCount.plus(stockCount.getCount()*-1);
+            return saveStockCount;
+        }
+    }
+
 
     /**
      * 보유종목 제거
@@ -135,6 +163,22 @@ public class AccountStatus {
         
     }
 
+    /**
+     * 보유종목 수량 얻기
+     * @param code 종목코드
+     * @return 보유종목 수량
+     */
+    public long getStockCount(String code){
+        synchronized (lock){
+            StockCount stockCount = holdStockMap.get(code);
+            if(stockCount == null){
+                return 0L;
+            }
+
+            return stockCount.getCount();
+        }
+    }
+    
     /**
      * 보유종목 얻기
      * @return 보유종목 전체

@@ -16,26 +16,45 @@
 
 package com.seomse.stock.trade.strategy;
 
-import com.seomse.stock.trade.StockCount;
+import com.seomse.stock.analysis.store.StoreManager;
 
 /**
- * 종가 거래 관련 매수전략
+ * 저장소와 일별정보
  * @author macle
  */
-public interface BuyStrategyClosePrice {
+public class StoreYmd {
+
+
+    protected StoreManager storeManager;
+
+    //현재날짜
+    protected String ymd;
+
 
     /**
-     * 감시 대상 종목 매수종목 과 수량
-     * @return 매수 종목과 수량 배열
-     */ 
-   StockCount[] getBuyObserverStocks();
-
-    /**
-     * 전일 데이터로 감시를 한후에 구매할지에 대한 결정을 한다.
-     * 매수여부
-     * @param stockCount 종목과 수량
-     * @return 구매여부
+     * 생성자
+     * @param storeManager in memory store
+     * @param ymd yyyyMMdd
      */
-   boolean isBuy(StockCount stockCount);
+    public StoreYmd(StoreManager storeManager, String ymd){
+        this.storeManager = storeManager;
+        this.ymd = ymd;
+    }
+
+    /**
+     * ymd 설정
+     * @param ymd yyyyMMdd
+     */
+    public void setYmd(String ymd) {
+        this.ymd = ymd;
+    }
+
+    /**
+     * ymd 얻기
+     * @return yyyyMMdd
+     */
+    public String getYmd() {
+        return ymd;
+    }
 
 }

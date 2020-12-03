@@ -17,10 +17,16 @@
 package com.seomse.stock.trade.backtest.close;
 
 import com.seomse.jdbc.JdbcQuery;
+import com.seomse.stock.analysis.StockType;
 import com.seomse.stock.analysis.store.StoreManager;
-import com.seomse.stock.trade.backtest.AccountStatus;
-import com.seomse.stock.trade.strategy.BuyStrategyClosePrice;
+import com.seomse.stock.analysis.store.etf.EtfStore;
+import com.seomse.stock.analysis.store.item.ItemStore;
+import com.seomse.stock.analysis.store.preferred.PreferredStore;
+import com.seomse.stock.trade.AccountStatus;
+import com.seomse.stock.trade.StockCount;
 import com.seomse.stock.trade.strategy.SellStrategy;
+import com.seomse.stock.trade.strategy.StoreBuyStrategy;
+import com.seomse.stock.trade.strategy.StoreSellStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,24 +53,14 @@ public class BacktestClosePrice {
 
     private static final Logger logger = LoggerFactory.getLogger(BacktestClosePrice.class);
 
-    private final BuyStrategyClosePrice buyStrategy;
-    private SellStrategy sellStrategy;
+    private final StoreBuyStrategy buyStrategy;
+    private StoreSellStrategy sellStrategy;
     private AccountStatus accountStatus;
     private String beginYmd;
     private String endYmd;
-
+    private StoreManager storeManager;
     //한종목 최대 구매 금액
     private double itemPrice = 1000000.0;
-
-    private StoreManager storeManager = null;
-
-    /**
-     * 증시정보 메모리 저장소 설정
-     * @param storeManager 증서정보 메모리 저장소
-     */
-    public void setStoreManager(StoreManager storeManager) {
-        this.storeManager = storeManager;
-    }
 
     /**
      * 생성자
@@ -74,8 +70,8 @@ public class BacktestClosePrice {
      * @param beginYmd 시작 년월일 yyyyMMdd
      * @param endYmd 끝 년월일 yyyyMMdd
      */
-    public BacktestClosePrice(BuyStrategyClosePrice buyStrategy
-            , SellStrategy sellStrategy
+    public BacktestClosePrice(StoreBuyStrategy buyStrategy
+            , StoreSellStrategy sellStrategy
             , AccountStatus accountStatus
             , String beginYmd
             , String endYmd
@@ -87,26 +83,69 @@ public class BacktestClosePrice {
         this.endYmd = endYmd;
     }
 
+    /**
+     * 데이터 인메모리 저장소 설정정
+    * @param storeManager  in memory store
+     */
+    public void setStoreManager(StoreManager storeManager) {
+        this.storeManager = storeManager;
+    }
 
-    public void test(){
+    /**
+     * 실행
+     */
+    public void run(){
+        if(storeManager == null){
+            storeManager = new StoreManager();
+        }
+
+
 
         //증시 상승률 대비
-
-
-
         //거래일 얻기
         //거래일은 코스피 지수의 거래가 있는날짜로 한다
         List<String> ymdList = JdbcQuery.getStringList("SELECT YMD FROM T_STOCK_MARKET_DAILY WHERE MARKET_CD ='KOSPI' AND YMD >= '" +beginYmd +"' AND YMD <= '" + endYmd +"' ORDER BY YMD ASC");
 
 
+        for(String ymd: ymdList){
+
+            ItemStore itemStore = storeManager.getItemStore(ymd);
+            PreferredStore preferredStore = storeManager.getPreferredStore(ymd);
+            EtfStore etfStore = storeManager.getEtfStore(ymd);
+
+            StockCount [] holdStocks = accountStatus.getHoldStocks();
+
+            buyStrategy.setYmd(ymd);
+            StockCount[] buyStocks = buyStrategy.getBuyStocks(accountStatus);
+
+            for(StockCount stockCount : buyStocks){
+                if(stockCount.getStock().getType() == StockType.ITEM){
+//                    itemStore.
+                }else{
+
+                }
+            }
+
+
+            //종목을 매수하고 현금을 감소시킨다.
+
+            StockCount[] sellStocks = sellStrategy.getSellStocks(holdStocks);
 
 
 
 
+        }
 
+        
+        
 
     }
 
+
+    public static void main(String[] args) {
+
+
+    }
 
 
 

@@ -16,19 +16,20 @@
 
 package com.seomse.stock.trade.strategy;
 
-import com.seomse.stock.trade.StockCount;
+import com.seomse.stock.analysis.store.StoreManager;
 
 /**
- * 매도 전략
+ * store 를 사용하는 판매전략
  * @author macle
  */
-public interface SellStrategy {
-
+public abstract class StoreSellStrategy extends StoreYmd implements SellStrategy{
     /**
-     * 매도 종목 얻기
-     * @param holdStocks 보유종목 배열
-     * @return 종목 및 수량 배열
+     * 생성자
+     *
+     * @param storeManager in memory store
+     * @param ymd          yyyyMMdd
      */
-    StockCount[] getSellStocks(StockCount[] holdStocks);
-    
+    public StoreSellStrategy(StoreManager storeManager, String ymd) {
+        super(storeManager, ymd);
+    }
 }

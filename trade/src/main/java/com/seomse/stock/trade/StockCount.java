@@ -24,7 +24,7 @@ import com.seomse.stock.analysis.Stock;
  */
 public class StockCount {
     private final Stock stock;
-    private final long count;
+    private long count ;
 
     /**
      * 생성자
@@ -59,6 +59,22 @@ public class StockCount {
      */
     public double getCountDouble(){
         return (double) count;
+    }
+
+    /**
+     * 주식 코드얻기
+     * @return 주식코드 개별종목, ETF
+     */
+    public String getCode(){
+        return stock.getCode();
+    }
+
+    /**
+     * 주식 수량 증가
+     * @param count 증가수량
+     */
+    public void plus(long count){
+        this.count += count;
     }
 
 }

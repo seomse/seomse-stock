@@ -16,19 +16,21 @@
 
 package com.seomse.stock.trade.strategy;
 
+import com.seomse.stock.trade.AccountStatus;
 import com.seomse.stock.trade.StockCount;
 
 /**
- * 매도 전략
+ * 매수전략
  * @author macle
  */
-public interface SellStrategy {
+public interface BuyStrategy {
+
+
 
     /**
-     * 매도 종목 얻기
-     * @param holdStocks 보유종목 배열
-     * @return 종목 및 수량 배열
+     * 매수 종목 과 수량
+     * @param accountStatus 계좌현황
+     * @return 종목과 수량 배열
      */
-    StockCount[] getSellStocks(StockCount[] holdStocks);
-    
+    StockCount[] getBuyStocks(AccountStatus accountStatus);
 }
