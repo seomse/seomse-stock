@@ -6,10 +6,5 @@ version '0.1.0'
 
 
 dependencies {
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
-
-    implementation 'com.seomse.trading:seomse-trading:0.1.9'
-
-    implementation 'com.seomse.stock:analysis:0.1.2'
-    implementation 'com.seomse.commons:seomse-commons:1.2.3'
+    implementation 'com.seomse.stock:analysis:0.1.3'
 }
