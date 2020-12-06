@@ -94,7 +94,6 @@ public class AccountStatus {
         }
     }
 
-
     /**
      * 보유종목 제거
      * @param stockCode 보유종목 코드
@@ -104,8 +103,6 @@ public class AccountStatus {
             return holdStockMap.remove(stockCode);
         }
     }
-
-
 
     /**
      * 종목구매
@@ -125,19 +122,20 @@ public class AccountStatus {
             double fee;
 
             if(holdStock.getType() == StockType.ITEM){
+                //개별종목
                 fee = 0.00015;
             }else{
+                //etf
                 fee = 0.0001;
             }
 
             holdStock.buy(stockCount.getCount(), stockCount.getStock().getClose());
 
             double price = stockCount.getStock().getClose() * stockCount.getCount();
-            cash -= price + price*fee;
+
+            cash -= (price + price*fee);
         }
     }
-
-
 
 
     /**
@@ -153,13 +151,15 @@ public class AccountStatus {
             double fee;
 
             if(holdStock.getType() == StockType.ITEM){
+                //개별종목
                 fee = 0.00015 + 0.0025;
             }else{
+                //etf
                 fee = 0.0001;
             }
 
             double price = stockCount.getStock().getClose() * stockCount.getCount();
-            cash += price - price*fee;
+            cash += (price - price*fee);
 
             holdStock.sell(stockCount.getCount(),stockCount.getStock().getClose());
             if(holdStock.getCount() == 0){
@@ -186,8 +186,9 @@ public class AccountStatus {
 
             for(HoldStock holdStock : stockCounts){
                 double price;
-                fee = 0.00015 + 0.0025;
+
                 if(holdStock.getType() == StockType.ITEM){
+                    fee = 0.00015 + 0.0025;
                     Item item =storeManager.getItemStore(ymd).getItem(holdStock.getCode());
 
                     if(item == null){
@@ -203,7 +204,10 @@ public class AccountStatus {
                     fee = 0.0001;
                     price = storeManager.getEtfStore(ymd).getEtf(holdStock.getCode()).getLastCandle().getClose();
                 }
+
+
                 stockPriceSum += holdStock.getEvaluationAmount(price, fee);
+
             }
 
             return Math.round(cash + stockPriceSum);
@@ -253,4 +257,11 @@ public class AccountStatus {
         return YmdUtil.getYmd(time);
     }
 
+    /**
+     * 보유 현금 얻기
+     * @return 현금
+     */
+    public double getCash() {
+        return cash;
+    }
 }

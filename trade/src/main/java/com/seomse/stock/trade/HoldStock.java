@@ -50,7 +50,7 @@ public class HoldStock implements Stock {
      * @param price 1개당 가격
      */
     public void buy(long count, double price){
-        count += count;
+        this.count += count;
         buySum += price * count;
     }
 
@@ -60,7 +60,7 @@ public class HoldStock implements Stock {
      * @param price 1개당 가격
      */
     public void sell(long count, double price){
-        count -= count;
+        this.count -= count;
         buySum -= price * count;
     }
 

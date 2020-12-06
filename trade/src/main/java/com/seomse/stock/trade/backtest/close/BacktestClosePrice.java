@@ -73,9 +73,21 @@ public class BacktestClosePrice {
     }
 
     /**
+     * 메모리 데이터 저장소 설정
+     * @param storeManager 메모리 데이터 저장소
+     */
+    public void setStoreManager(StoreManager storeManager) {
+        this.storeManager = storeManager;
+    }
+
+    /**
      * 실행
      */
     public void run(){
+
+        if(storeManager == null){
+            storeManager = new StoreManager();
+        }
 
         double startAssets = accountStatus.getAssets(storeManager);
 
@@ -88,7 +100,7 @@ public class BacktestClosePrice {
         double startKospi = domesticMarketStore.getKospiMarket().getClose();
         double startKosdaq = domesticMarketStore.getKosdaqMarket().getClose();
 
-        logger.info("시작 자산: " + startAssets + " 코스피: " + startKospi + " 코스닥: " + startKosdaq );
+        logger.info("시작 자산: " + (long)startAssets + " 코스피: " + startKospi + " 코스닥: " + startKosdaq );
         logger.info("begin: " + ymdList.get(0) +", end: " + ymdList.get(ymdList.size()-1));
 
         double lastAssets =startAssets;
@@ -97,10 +109,10 @@ public class BacktestClosePrice {
 
         for(String ymd: ymdList){
 
-
+            logger.info("====================== daily change ====================\n\n\n");
             domesticMarketStore = storeManager.getDomesticMarketStore(ymd);
             double kospi = domesticMarketStore.getKospiMarket().getClose();
-            double kosdaq = domesticMarketStore.getKospiMarket().getClose();
+            double kosdaq = domesticMarketStore.getKosdaqMarket().getClose();
 
             accountStatus.setTime(YmdUtil.getTime(ymd));
 
@@ -112,6 +124,7 @@ public class BacktestClosePrice {
             StockCount[] buyStocks = buyStrategy.getBuyStocks(accountStatus);
             for(StockCount stockCount : buyStocks){
                 accountStatus.buyStock(stockCount);
+                logger.info("buy: " + stockCount.getStock().getName());
             }
 
             //매도
@@ -119,9 +132,10 @@ public class BacktestClosePrice {
             StockCount[] sellStocks = sellStrategy.getSellStocks(holdStocks);
             for(StockCount stockCount : sellStocks){
                 accountStatus.sellStock(stockCount);
+                logger.info("sell: " + stockCount.getStock().getName());
             }
 
-            logger.info("====================== daily change ====================\n\n");
+
 
             double assets =  accountStatus.getAssets(storeManager);
 
@@ -130,7 +144,8 @@ public class BacktestClosePrice {
                 break;
             }
 
-            logger.info(ymd + " 자산: " + accountStatus.getAssets(storeManager)
+            logger.info(ymd + " 자산: " + (long)accountStatus.getAssets(storeManager)
+                    + "\n현금: " + (long)accountStatus.getCash()
                     + "\n총 자산 변화율: " + Math.round((assets - startAssets)/startAssets* 10000.0)/100.0
                     + "\n자산 변화율: " + Math.round((assets - lastAssets)/lastAssets* 10000.0)/100.0
                     + "\n총 코스피 변화율: " + Math.round((kospi - startKospi)/startKospi* 10000.0)/100.0
@@ -141,6 +156,8 @@ public class BacktestClosePrice {
             lastAssets = assets;
             lastKospi = kospi;
             lastKosdaq = kosdaq;
+
+            storeManager.remove(ymd);
         }
     }
 }
