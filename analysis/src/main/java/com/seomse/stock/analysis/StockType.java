@@ -23,5 +23,6 @@ package com.seomse.stock.analysis;
 public enum StockType {
 
     ITEM //개별종목
+    , PREFERRED // 우선주
     , ETF //etf
 }

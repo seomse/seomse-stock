@@ -18,7 +18,8 @@ package com.seomse.stock.trade.test;
 
 import com.seomse.stock.analysis.StockPrice;
 import com.seomse.stock.analysis.StockScore;
-import com.seomse.stock.analysis.model.relative.strength.StrongerThenMarket;
+import com.seomse.stock.analysis.model.parallel.ParallelAnalysis;
+import com.seomse.stock.analysis.model.relative.strength.StrongerThenMarketAnalyst;
 import com.seomse.stock.analysis.store.StoreManager;
 import com.seomse.stock.analysis.store.market.domestic.DomesticMarket;
 import com.seomse.stock.trade.AccountStatus;
@@ -29,14 +30,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 샘플용 구매전략
  * @author macle
  */
 public class TestBuyStrategy extends StoreBuyStrategy {
-
-    /**
-     * 종목당 매수금액
-     */
-    private final double buyPrice = 1000000.0;
 
     /**
      * 생성자
@@ -48,9 +45,16 @@ public class TestBuyStrategy extends StoreBuyStrategy {
 
     @Override
     public StockCount[] getBuyStocks(AccountStatus accountStatus) {
-        StrongerThenMarket strongerThenMarket = new StrongerThenMarket(ymd);
-        StockScore[] stocks = strongerThenMarket.analysisSync(storeManager);
-//
+
+        //종목당 매수금액
+        double buyPrice = 1000000.0;
+
+
+        StrongerThenMarketAnalyst strongerThenMarketAnalyst= new StrongerThenMarketAnalyst();
+
+        ParallelAnalysis parallelAnalysis = new ParallelAnalysis(ymd,storeManager,strongerThenMarketAnalyst);
+        StockScore[] stocks = parallelAnalysis.analysisSync();
+
         double hedging = accountStatus.getAssets(storeManager) * 0.25;
 
         double cash = accountStatus.getCash();
@@ -67,13 +71,14 @@ public class TestBuyStrategy extends StoreBuyStrategy {
                 break;
             }
 
+
+            //종목을 소유하고 있으면
             if(accountStatus.getStockCount(stockScore.getStock().getCode()) > 0L ){
                 continue;
             }
 
             StockPrice stock = (StockPrice)stockScore.getStock();
-
-            long count = (long)(buyPrice/stock.getClose());
+        long count = (long)(buyPrice /stock.getClose());
 
             buyList.add(new StockCount(stock, count));
         }
@@ -84,8 +89,6 @@ public class TestBuyStrategy extends StoreBuyStrategy {
         long count = accountStatus.getStockCount(etfCode);
 
         DomesticMarket kospi = storeManager.getDomesticMarketStore(ymd).getKospiMarket();
-
-
 
         if(
                 //기능 테스트용 간단 소스
@@ -99,21 +102,7 @@ public class TestBuyStrategy extends StoreBuyStrategy {
             }
 
         }
-//
-//        final String upCode = "122630";
-//        count = accountStatus.getStockCount(upCode);
-//        //증시가 상승하면
-//        if(count == 0L) {
-//
-//            if(storeManager.getEtfStore(ymd).getEtf(upCode).getLastCandle().getChangeRate() > 0.0){
-//                long etfCount = (long) (hedging / storeManager.getEtfStore(ymd).getEtf(upCode).getLastCandle().getClose());
-//
-//                buyList.add(new StockCount(storeManager.getEtfStore(ymd).getEtf(upCode), etfCount));
-//            }
-//
-//
-//
-//        }
+
 
         return buyList.toArray(new StockCount[0]);
     }

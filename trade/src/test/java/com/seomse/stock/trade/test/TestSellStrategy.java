@@ -17,14 +17,11 @@
 package com.seomse.stock.trade.test;
 
 import com.seomse.stock.analysis.StockPrice;
-import com.seomse.stock.analysis.StockType;
 import com.seomse.stock.analysis.store.StoreManager;
 import com.seomse.stock.analysis.store.item.Item;
 import com.seomse.stock.analysis.store.item.ItemCandles;
 import com.seomse.stock.analysis.store.item.ItemDailyCandle;
 import com.seomse.stock.analysis.store.item.ItemStore;
-import com.seomse.stock.analysis.store.market.domestic.DomesticMarket;
-import com.seomse.stock.analysis.store.market.domestic.DomesticMarketDailyCandle;
 import com.seomse.stock.analysis.store.preferred.PreferredStore;
 import com.seomse.stock.trade.HoldStock;
 import com.seomse.stock.trade.StockCount;
@@ -34,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 샘플용 판매전략
  * @author macle
  */
 public class TestSellStrategy extends StoreSellStrategy {
