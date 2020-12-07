@@ -1,5 +1,5 @@
 # seomse-stock
-- Team 섬세한 사람들의 주식시장 자동 투자 프로젝트
+- Team 섬세한 사람들의 주식시장 자동 투자 프로젝트 
 - [github.com/seomse](https://github.com/seomse)
 # 개발환경
 - open jdk 15
@@ -14,7 +14,7 @@
 - 많은 분들이 이 프로젝트로 수익에 도움이 되었으면 좋겠습니다  
 
 
-- 아래와 같이 2가지 프로젝트로 진행합니다
+- 아래와 같이 3가지 프로젝트로 진행합니다
     - 분석 모듈 (analysis)
         - 증권 시장 분석
         - seomse-trading 프로젝트 분석기능 연동
@@ -29,9 +29,13 @@
 
 - 관련 프로젝트가 진행되면서 seomse-trading 도 연관해서 같이 많은 업데이트가 진행되고 있습니다.
     - https://github.com/seomse/seomse-trading
+    - 이 프로젝트는 비트코인, 해외선물 과 같은 투자 시장에서 같이 사용 될 에정이라 분리하였습니다.
     
-- 과거에 만들어논 부분을 오픈소스화 하고, 혹은 새로운 방식을 신규로 개발하고 있습니다.
-    - 아직 오픈소스화 하지 않은 많은 pirvate module 이 존재합니다
+- 비공개 저장소 관련
+    - 비공개 저장소에는 데이터를 축척하는 API와 크롤링, 수익에 큰 영향을 주는 분석기법과 매매전략, 팀에서 운영하는 자동매매 관련 부분이 있습니다.
+    - 위 내용에 관련된 문의는 메일로 부탁 드립니다.
+    - 아직 오픈소스화 하지 않은 많은 private module 이 존재합니다. 관련부분은 순차적으로 오픈화 될 예정입니다.
+    
 
 # 용어사전
 https://docs.google.com/spreadsheets/d/1ECaUMUoZkb-jMGUS7-9FRQtiiP-Zfa4gvpLZ4WKiHXg/edit#gid=0
