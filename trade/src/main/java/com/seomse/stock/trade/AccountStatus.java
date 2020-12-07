@@ -121,7 +121,7 @@ public class AccountStatus {
             // 구매 수수료
             double fee;
 
-            if(holdStock.getType() == StockType.ITEM){
+            if(holdStock.getType() == StockType.ITEM|| holdStock.getType() == StockType.PREFERRED){
                 //개별종목
                 fee = 0.00015;
             }else{
@@ -150,7 +150,7 @@ public class AccountStatus {
             // 팜매 수수료
             double fee;
 
-            if(holdStock.getType() == StockType.ITEM){
+            if(holdStock.getType() == StockType.ITEM || holdStock.getType() == StockType.PREFERRED){
                 //개별종목
                 fee = 0.00015 + 0.0025;
             }else{
@@ -187,15 +187,16 @@ public class AccountStatus {
             for(HoldStock holdStock : stockCounts){
                 double price;
 
-                if(holdStock.getType() == StockType.ITEM){
+                if(holdStock.getType() == StockType.ITEM || holdStock.getType() == StockType.PREFERRED){
                     fee = 0.00015 + 0.0025;
-                    Item item =storeManager.getItemStore(ymd).getItem(holdStock.getCode());
 
-                    if(item == null){
+
+                    if( holdStock.getType() == StockType.PREFERRED){
                         //우선주이면
                         price = storeManager.getPreferredStore(ymd).getPreferred(holdStock.getCode()).getClose();
                     }else{
                         //일반주이면
+                        Item item = storeManager.getItemStore(ymd).getItem(holdStock.getCode());
                         price = item.getClose();
                     }
 

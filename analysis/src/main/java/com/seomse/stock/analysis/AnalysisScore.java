@@ -23,11 +23,11 @@ import java.util.Comparator;
  * @author macle
  */
 public interface AnalysisScore {
-    // 재무 점수가 좋을때
+    // 점수 최대치
     double MAX_SCORE = 100.0;
-    //재무 점수 측정이 불가능할때
+    // 기본 점수
     double DEFAULT_SCORE = 30.0;
-    //재무 점수가 나쁠대
+    // 점수 최하치
     double MIN_SCORE = 0.0;
 
     //분석 점수 역순 정렬

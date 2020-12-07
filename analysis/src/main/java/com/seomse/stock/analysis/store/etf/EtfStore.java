@@ -90,7 +90,7 @@ public class EtfStore {
             List<EtfDailyNo> dailyNoList = JdbcNaming.getObjList(EtfDailyNo.class, "ETF_CD='" + etf.code +"' AND YMD <= '" + ymd + "' AND CLOSE_PRC IS NOT NULL AND INSTITUTION_TRADE_VOL IS NOT NULL",  "YMD DESC", candleCount);
 
             if(dailyNoList.size() == 0){
-                logger.debug("daily 0 skip: " + etf.getCode() +" " + etf.getName());
+                logger.trace("daily 0 skip: " + etf.getCode() +" " + etf.getName());
                 continue;
             }
 
@@ -148,7 +148,7 @@ public class EtfStore {
         for(Etf etf : addList){
             //데이터 적합성 체크
             if(!etf.dailyCandles[etf.dailyCandles.length-1].getYmd().equals(maxYmd)){
-                logger.debug("skip: " + etf.getCode() +" " + etf.getName()+ " " + etf.dailyCandles[etf.dailyCandles.length-1].getYmd() +" " + maxYmd);
+                logger.trace("skip: " + etf.getCode() +" " + etf.getName()+ " " + etf.dailyCandles[etf.dailyCandles.length-1].getYmd() +" " + maxYmd);
                 continue;
             }
 

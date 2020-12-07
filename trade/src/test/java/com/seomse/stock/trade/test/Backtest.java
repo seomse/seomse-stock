@@ -18,6 +18,8 @@ package com.seomse.stock.trade.test;
 
 import com.seomse.commons.utils.time.YmdUtil;
 import com.seomse.stock.analysis.store.StoreManager;
+import com.seomse.stock.analysis.store.market.domestic.DomesticMarket;
+import com.seomse.stock.analysis.store.market.domestic.DomesticMarketDailyCandle;
 import com.seomse.stock.trade.AccountStatus;
 import com.seomse.stock.trade.backtest.close.BacktestClosePrice;
 
@@ -36,6 +38,14 @@ public class Backtest {
         accountStatus.addCash(100000000.0);
 
         StoreManager storeManager = new StoreManager();
+
+
+//        DomesticMarket domesticMarket = storeManager.getDomesticMarketStore("20200401").getKospiMarket();
+//        DomesticMarketDailyCandle[] candles = domesticMarket.getCandles();
+//        for(DomesticMarketDailyCandle candle :candles){
+//            System.out.println(candle.getYmd());
+//        }
+
 
         TestBuyStrategy testBuyStrategy = new TestBuyStrategy(storeManager);
         TestSellStrategy testSellStrategy = new TestSellStrategy(storeManager);
