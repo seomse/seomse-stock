@@ -4,7 +4,9 @@ plugins {
 
 version '0.1.0'
 
-
+repositories {
+    mavenCentral()
+}
 dependencies {
     //배포용
 //    implementation 'com.seomse.stock:analysis:0.1.3'
@@ -19,6 +21,10 @@ dependencies {
     implementation 'com.seomse.commons:seomse-commons:1.2.3'
     implementation 'com.seomse.jdbc:seomse-jdbc:0.9.6'
     implementation 'com.seomse.trading:seomse-trading:0.1.9'
-    implementation project(path: ':analysis')
 
+
+    implementation 'com.seomse.system:seomse-system:0.9.9'
+
+    implementation project(path: ':analysis')
+    implementation project(path: ':trading')
 }

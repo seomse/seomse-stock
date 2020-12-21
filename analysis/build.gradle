@@ -4,14 +4,23 @@ plugins {
 
 version '0.1.3'
 
+
+repositories {
+    mavenCentral()
+}
+
+
 dependencies {
-    implementation 'com.seomse.commons:seomse-commons:1.2.3'
-    implementation 'com.seomse.trading:seomse-trading:0.1.9'
-    implementation 'com.seomse.system:seomse-system:0.9.9'
 
     //jdbc
     implementation group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
 
 
+    implementation 'com.seomse.commons:seomse-commons:1.2.3'
+//    implementation 'com.seomse.trading:seomse-trading:0.1.9'
+    implementation 'com.seomse.system:seomse-system:0.9.9'
+
+
+    implementation project(path: ':trading')
 
 }
