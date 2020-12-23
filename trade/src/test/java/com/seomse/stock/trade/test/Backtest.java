@@ -40,8 +40,11 @@ public class Backtest {
 
         final StoreManager storeManager = new StoreManager();
         List<String> ymdList = JdbcQuery.getStringList("SELECT YMD FROM T_STOCK_MARKET_DAILY WHERE MARKET_CD ='KOSPI' AND YMD >= '" +beginYmd +"' AND YMD <= '" + endYmd +"' ORDER BY YMD ASC");
-
-        new Thread(() -> {
+        
+        
+        //메모리 상에 올려놓고 여러전략을 한번에 테스트하는게 아니면 의미가 없어서 제외함
+        //하나의 전략 테스트에서는 의미가 없음
+//        new Thread(() -> {
             //분석속도 차이가 클떄만
             //거래일 얻기
             //거래일은 코스피 지수의 거래가 있는날짜로 한다
@@ -58,7 +61,7 @@ public class Backtest {
 //                storeManager.getMarketIndexStore(ymd);
 //                storeManager.getWicsStore(ymd);
             }
-        }).start();
+//        }).start();
 //
 
         TestBuyStrategy testBuyStrategy = new TestBuyStrategy(storeManager);
