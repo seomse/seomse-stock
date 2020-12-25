@@ -114,7 +114,7 @@ public class MarketIndexStore {
             //데이터 적합성 체크
 
             if(Integer.parseInt(marketIndex.dailies[marketIndex.dailies.length-1].getYmd()) < minYmd){
-                logger.debug("skip market: " + marketIndex.getCode() + ", " + marketIndex.getName() +", " + marketIndex.dailies[marketIndex.dailies.length-1].getYmd() + " " + maxYmd);
+                logger.trace("skip market: " + marketIndex.getCode() + ", " + marketIndex.getName() +", " + marketIndex.dailies[marketIndex.dailies.length-1].getYmd() + " " + maxYmd);
                 continue;
             }
 

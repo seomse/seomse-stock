@@ -45,12 +45,6 @@ public class FinancialStatements {
     @Column(name = "SETTLEMENT_TP")
     private Type type = Type.QUARTER;
 
-    //추정여부 (예상 재무 제표)
-    @PrimaryKey(seq = 4)
-    @FlagBoolean
-    @Column(name = "ESTIMATE_FG")
-    private boolean isEstimation = false;
-
     //매출액
     @Column(name = "SALES_PRC")
     private Double sales;
@@ -219,25 +213,6 @@ public class FinancialStatements {
     public void setType(Type type) {
         this.type = type;
     }
-
-    /**
-     * 추정여부
-     * 예상 실적인지 아닌지
-     * @return boolean flag isEstimation
-     */
-    public boolean isEstimation() {
-        return isEstimation;
-    }
-
-    /**
-     * 추정여부 설정
-     * 예상 실적인지 아닌지
-     * @param estimation boolean flag isEstimation
-     */
-    public void setEstimation(boolean estimation) {
-        isEstimation = estimation;
-    }
-
 
     /**
      * 매출액 얻기

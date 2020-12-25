@@ -63,7 +63,7 @@ public class PreferredStore {
         for(PreferredNo preferredNo : preferredNoList){
             Item item = itemStore.getItem(preferredNo.PARENTS_CD);
             if(item == null){
-                logger.error("item null: " + preferredNo.ITEM_CD +", " + preferredNo.PARENTS_CD);
+                logger.trace("item null skip: " + preferredNo.ITEM_CD +", " + preferredNo.PARENTS_CD);
                 continue;
             }
             
@@ -77,7 +77,7 @@ public class PreferredStore {
             ItemStore.setCandles(preferred, ymd, candleCount);
 
             if(preferred.getDailyCandles().length == 0){
-                logger.debug("daily 0 skip: " + preferred.getCode() +" " + preferred.getName());
+                logger.trace("daily 0 skip: " + preferred.getCode() +" " + preferred.getName());
                 continue;
             }
 

@@ -88,15 +88,15 @@ public class ItemStore {
             String minYm = QuantYmd.getMinYm(ymd.substring(0,6));
 
             //지금에는 추정치까지 활용하지는 않음
-            List<FinancialStatements> yearFinancialStatementsList = JdbcObjects.getObjList(FinancialStatements.class, "ITEM_CD ='"+item.getCode() +"'  AND SETTLEMENT_YM <= '" + minYm + "' AND SETTLEMENT_TP='YEAR' AND ESTIMATE_FG='N'" );
+            List<FinancialStatements> yearFinancialStatementsList = JdbcObjects.getObjList(FinancialStatements.class, "ITEM_CD ='"+item.getCode() +"'  AND SETTLEMENT_YM <= '" + minYm + "' AND SETTLEMENT_TP='YEAR'" );
             item.yearFinancialStatementsArray = yearFinancialStatementsList.toArray(new FinancialStatements[0]);
 
-            List<FinancialStatements> quarterFinancialStatementsList = JdbcObjects.getObjList(FinancialStatements.class, "ITEM_CD ='"+item.getCode() +"'  AND SETTLEMENT_YM <= '" + minYm + "' AND SETTLEMENT_TP='QUARTER' AND ESTIMATE_FG='N'" );
+            List<FinancialStatements> quarterFinancialStatementsList = JdbcObjects.getObjList(FinancialStatements.class, "ITEM_CD ='"+item.getCode() +"'  AND SETTLEMENT_YM <= '" + minYm + "' AND SETTLEMENT_TP='QUARTER'" );
             item.quarterFinancialStatementsArray = quarterFinancialStatementsList.toArray(new FinancialStatements[0]);
             setCandles(item, ymd, candleCount);
 
             if(item.dailyCandles.length==0){
-                logger.debug("skip item: " + item.getCode() +" " + item.getName());
+                logger.trace("skip item: " + item.getCode() +" " + item.getName());
                 continue;
             }
 
@@ -116,7 +116,7 @@ public class ItemStore {
 
             //데이터 적합성 체크
             if(!item.dailyCandles[item.dailyCandles.length-1].getYmd().equals(maxYmd)){
-                logger.debug("skip item: " + item.getCode() +" " + item.getName() + " " + item.dailyCandles[item.dailyCandles.length-1].getYmd() + " " + maxYmd) ;
+                logger.trace("skip item: " + item.getCode() +" " + item.getName() + " " + item.dailyCandles[item.dailyCandles.length-1].getYmd() + " " + maxYmd) ;
                 continue;
             }
 

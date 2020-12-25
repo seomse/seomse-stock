@@ -14,13 +14,26 @@
  * limitations under the License.
  */
 
-package com.seomse.stock.analysis;
+package com.seomse.stock.analysis.store.theme;
 
-import com.seomse.trading.Price;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 종목과 가격정보
+ * 테마저장소
  * @author macle
  */
-public interface StockPrice extends Stock, Price {
+public class StockThemeStore {
+
+    private final String ymd;
+
+    private final Map<String, StockTheme> stockThemeMap = new HashMap<>();
+
+    /**
+     * 생성자
+     * @param ymd String yyyyMMdd
+     */
+    public StockThemeStore(String ymd){
+        this.ymd = ymd;
+    }
 }

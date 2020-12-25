@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.seomse.stock.analysis;
-
-import com.seomse.trading.Price;
+package com.seomse.stock.analysis.store.theme;
 
 /**
- * 종목과 가격정보
  * @author macle
  */
-public interface StockPrice extends Stock, Price {
+public class StockTheme {
+    String code;
+    String name;
+
+
 }
