@@ -5,3 +5,5 @@ include 'trade'
 
 include ':trading'
 project(':trading').projectDir = new File(settingsDir,'../seomse-trading')
+include ':kiwoom-api'
+project(':kiwoom-api').projectDir = new File(settingsDir,'../seomse-kiwoom-java-api')
