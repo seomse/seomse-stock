@@ -24,7 +24,7 @@ public enum AnalysisConfig {
 
     
     //주식 분석에 사용하는 기본 캔들 건수
-    CANDLE_COUNT("stock.analysis.candle.count", 200)
+    CANDLE_COUNT("stock.analysis.candle.count", 300)
     ;
 
     private final String key;
