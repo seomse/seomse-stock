@@ -27,5 +27,5 @@ dependencies {
 
     implementation project(path: ':analysis')
     implementation project(path: ':trading')
-    implementation project(path: ':kiwoom-api')
+
 }
