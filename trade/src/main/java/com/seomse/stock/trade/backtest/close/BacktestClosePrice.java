@@ -129,7 +129,7 @@ public class BacktestClosePrice {
 
             //매도
             sellStrategy.setYmd(ymd);
-            StockCount[] sellStocks = sellStrategy.getSellStocks(holdStocks);
+            StockCount[] sellStocks = sellStrategy.getSellStocks(accountStatus);
             for(StockCount stockCount : sellStocks){
                 accountStatus.sellStock(stockCount);
                 logger.info("sell: " + stockCount.getStock().getName());
