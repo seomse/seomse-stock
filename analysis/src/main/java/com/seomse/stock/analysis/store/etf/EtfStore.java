@@ -44,6 +44,9 @@ public class EtfStore {
     private final int candleCount;
 
     private final Map<String, Etf> etfMap = new HashMap<>();
+
+
+
     /**
      * 생성자
      * @param ymd String yyyyMMdd
@@ -52,7 +55,6 @@ public class EtfStore {
 
         this.ymd = ymd;
         this.candleCount = Config.getInteger(AnalysisConfig.CANDLE_COUNT.key(), (int) AnalysisConfig.CANDLE_COUNT.defaultValue());
-        init();
     }
 
 
@@ -65,13 +67,39 @@ public class EtfStore {
 
         this.ymd = ymd;
         this.candleCount = candleCount;
-        init();
     }
 
+    private String [] codeArray = null;
 
-    private void init(){
+    /**
+     * 사용할 코드 배열 설정
+     * 특정 etf 만 사용하는 경우에 설정한다
+     * @param codeArray etf code array
+     */
+    public void setCodeArray(String[] codeArray) {
+        this.codeArray = codeArray;
+    }
+
+    /**
+     * 초기화
+     */
+    public void init(){
         long time = YmdUtil.getTime(ymd);
-        List<Etf> etfList = JdbcObjects.getObjList(Etf.class, "DELISTING_DT < ? OR DELISTING_DT IS NULL", PrepareStatements.newTimeMap(time));
+
+        String where;
+
+        if(codeArray == null || codeArray.length == 0){
+            where = "DELISTING_DT < ? OR DELISTING_DT IS NULL";
+        }else{
+            StringBuilder sb = new StringBuilder();
+            for(String code : codeArray){
+                sb.append(",'").append(code).append("'");
+            }
+
+            where = "ETF_CD IN (" +sb.substring(1) + ") AND (DELISTING_DT < ? OR DELISTING_DT IS NULL)";
+        }
+
+        List<Etf> etfList = JdbcObjects.getObjList(Etf.class, where, PrepareStatements.newTimeMap(time));
 
 
         List<Etf> addList = new ArrayList<>();

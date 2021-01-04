@@ -40,6 +40,8 @@ public class StoreManager {
     private final Map<String, Object> itemYmdLockMap = new HashMap<>();
     private final Object itemLock = new Object();
 
+
+
     /**
      * 개별종목 저장소 얻기
      * @param ymd yyyyMMdd
@@ -106,6 +108,17 @@ public class StoreManager {
 
     private final Object etfLock = new Object();
 
+    private String [] etfCodeArray = null;
+
+    /**
+     * 특정 etf만 사용할때 etf 배열 설정 
+     * 사용할 etf 배열
+     * @param etfCodeArray etf code array
+     */
+    public void setEtfCodeArray(String[] etfCodeArray) {
+        this.etfCodeArray = etfCodeArray;
+    }
+
     /**
      * etf 저장소 얻기
      * @param ymd yyyyMMdd
@@ -125,6 +138,10 @@ public class StoreManager {
                 etfStore= etfStoreMap.get(ymd);
                 if(etfStore == null){
                     etfStore =new EtfStore(ymd);
+                    if(etfCodeArray != null){
+                        etfStore.setCodeArray(etfCodeArray);
+                    }
+                    etfStore.init();
                     etfStoreMap.put(ymd, etfStore);
                 }
             }
