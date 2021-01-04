@@ -169,6 +169,8 @@ public class CenterDatabaseSync {
             logger.info("info tables sync complete");
 
 
+            System.out.println(ymd);
+
             //일봉
             update(insertConn, JdbcNaming.getObjList(selectConn, EtfDailyNo.class, "YMD >= '" + ymd + "'"));
             update(insertConn, JdbcNaming.getObjList(selectConn, ItemDailyNo.class, "YMD >= '" + ymd + "'"));
@@ -201,6 +203,7 @@ public class CenterDatabaseSync {
      * @param list database naming object list
      */
     public static void update(Connection insertConn, @SuppressWarnings("rawtypes") List list){
+
         if(list.size() == 0){
             return;
         }
@@ -214,23 +217,31 @@ public class CenterDatabaseSync {
     }
     
     public static void main(String[] args) throws InterruptedException {
+        //오후 6시에 실행 시켜서 슬립시킴
+//        Thread.sleep(Times.HOUR_1*8L);
 
-        for(;;) {
+//        for(;;) {
+//
+//            long startTime = System.currentTimeMillis();
+//
+//            String now = YmdUtil.now();
+//
+//            CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
+//            centerDatabaseSync.update(YmdUtil.getYmd(now, -5));
+//            long useTime = System.currentTimeMillis() - startTime;
+//
+//            logger.info(now + " update complete");
+//            if(useTime < Times.DAY_1) {
+//                Thread.sleep(Times.DAY_1 - useTime);
+//            }
+//
+//        }
 
-            long startTime = System.currentTimeMillis();
 
-            String now = YmdUtil.now();
+        CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
+        centerDatabaseSync.sync(INFO_TABLES);
+        centerDatabaseSync.sync(DAILY_TABLES);
+        centerDatabaseSync.sync(MINUTE_TABLES);
 
-            CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
-            centerDatabaseSync.update(YmdUtil.getYmd(now, -1));
-            long useTime = System.currentTimeMillis() - startTime;
-
-            logger.info(now + " update complete");
-            if(useTime < Times.DAY_1) {
-                Thread.sleep(Times.DAY_1 - useTime);
-            }
-
-        }
-//        centerDatabaseSync.sync(DAILY_TABLES);
     }
 }
