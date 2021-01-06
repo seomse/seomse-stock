@@ -23,6 +23,7 @@ import com.seomse.stock.analysis.store.item.ItemCandles;
 import com.seomse.stock.analysis.store.item.ItemDailyCandle;
 import com.seomse.stock.analysis.store.item.ItemStore;
 import com.seomse.stock.analysis.store.preferred.PreferredStore;
+import com.seomse.stock.trade.AccountStatus;
 import com.seomse.stock.trade.HoldStock;
 import com.seomse.stock.trade.StockCount;
 import com.seomse.stock.trade.strategy.StoreSellStrategy;
@@ -46,7 +47,10 @@ public class TestSellStrategy extends StoreSellStrategy {
     }
 
     @Override
-    public StockCount[] getSellStocks(HoldStock[] holdStocks) {
+    public StockCount[] getSellStocks(AccountStatus accountStatus) {
+
+        HoldStock [] holdStocks = accountStatus.getHoldStocks();
+
         List<StockCount> sellList = new ArrayList<>();
         String etfCode = "252670";
         final String upCode = "122630";
