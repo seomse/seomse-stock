@@ -2,6 +2,10 @@ rootProject.name = 'seomse-stock'
 include 'analysis'
 include 'data'
 include 'trade'
+include 'kiwoom'
 
 include ':trading'
 project(':trading').projectDir = new File(settingsDir,'../seomse-trading')
+
+
+
