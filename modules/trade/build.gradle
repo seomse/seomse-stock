@@ -9,7 +9,6 @@ repositories {
 }
 dependencies {
     //배포용
-//    implementation 'com.seomse.stock:analysis:0.1.3'
 
 
 
@@ -25,7 +24,7 @@ dependencies {
 
     implementation 'com.seomse.system:seomse-system:0.9.9'
 
-    implementation project(path: ':analysis')
+    implementation project(path: ':modules:analysis')
     implementation project(path: ':technical-analysis')
 
 }

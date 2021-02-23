@@ -45,6 +45,7 @@ public class EtfStore {
 
     private final Map<String, Etf> etfMap = new HashMap<>();
 
+    private long [] minuteArray;
 
 
     /**

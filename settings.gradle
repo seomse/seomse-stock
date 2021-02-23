@@ -1,8 +1,14 @@
 rootProject.name = 'seomse-stock'
-include 'analysis'
-include 'data'
-include 'trade'
-include 'kiwoom'
+include 'modules:analysis'
+findProject(':modules:analysis')?.name = 'analysis'
+include 'modules:data'
+findProject(':modules:data')?.name = 'data'
+include 'modules:trade'
+findProject(':modules:trade')?.name = 'trade'
+include 'modules:kiwoom'
+findProject(':modules:kiwoom')?.name = 'kiwoom'
+
+
 
 include ':technical-analysis'
 project(':technical-analysis').projectDir = new File(settingsDir,'../seomse-trading/modules/technical-analysis')

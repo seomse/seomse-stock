@@ -6,7 +6,7 @@ version '0.1.0'
 
 dependencies {
 
-    implementation 'com.seomse.system:seomse-system:0.9.9'
+    implementation 'com.seomse.system:seomse-system:1.0.0'
 
     implementation group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
 
