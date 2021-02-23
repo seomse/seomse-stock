@@ -24,7 +24,7 @@ dependencies {
 
     implementation 'com.seomse.system:seomse-system:0.9.9'
 
-    implementation project(path: ':modules:analysis')
+    implementation project(path: ':analysis')
     implementation project(path: ':technical-analysis')
 
 }

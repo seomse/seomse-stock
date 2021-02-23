@@ -1,12 +1,12 @@
 rootProject.name = 'seomse-stock'
-include 'modules:analysis'
-findProject(':modules:analysis')?.name = 'analysis'
-include 'modules:data'
-findProject(':modules:data')?.name = 'data'
-include 'modules:trade'
-findProject(':modules:trade')?.name = 'trade'
-include 'modules:kiwoom'
-findProject(':modules:kiwoom')?.name = 'kiwoom'
+include 'analysis'
+project(':analysis').projectDir = new File(settingsDir,'modules/analysis')
+include 'data'
+project(':data').projectDir = new File(settingsDir,'modules/data')
+include ':trade'
+project(':trade').projectDir = new File(settingsDir,'modules/trade')
+include ':kiwoom'
+project(':kiwoom').projectDir = new File(settingsDir,'modules/kiwoom')
 
 
 
