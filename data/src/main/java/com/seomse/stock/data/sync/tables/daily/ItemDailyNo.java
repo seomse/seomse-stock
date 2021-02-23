@@ -46,8 +46,6 @@ public class ItemDailyNo {
     private Double SLB_VOL;
     private Double SLB_REPAY_VOL;
     private Double SLB_BALANCE_VOL;
-    private Double SHORT_SELLING_VOL;
-    private Double SHORT_SELLING_BALANCE_VOL;
     private Double CREDIT_BALANCE_RT;
     private Double CREDIT_TOTAL_VOL;
     private Double CREDIT_NEW_VOL;

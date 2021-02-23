@@ -4,8 +4,8 @@ include 'data'
 include 'trade'
 include 'kiwoom'
 
-include ':trading'
-project(':trading').projectDir = new File(settingsDir,'../seomse-trading')
+include ':technical-analysis'
+project(':technical-analysis').projectDir = new File(settingsDir,'../seomse-trading/modules/technical-analysis')
 
 
 

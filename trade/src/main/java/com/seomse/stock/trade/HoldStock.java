@@ -72,7 +72,7 @@ public class HoldStock implements Stock {
      */
     public double getEvaluationAmount(double price ,double fee){
 
-        double total  = price * count;
+        double total  = price * (double)count;
         total -= total*fee;
         return total;
     }

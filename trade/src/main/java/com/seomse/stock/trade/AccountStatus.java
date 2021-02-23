@@ -204,6 +204,7 @@ public class AccountStatus {
                     //etf
                     fee = 0.0001;
                     price = storeManager.getEtfStore(ymd).getEtf(holdStock.getCode()).getLastCandle().getClose();
+
                 }
 
 

@@ -164,34 +164,33 @@ public class CenterDatabaseSync {
                 Connection selectConn = ConnectionFactory.newConnection(centerDatabaseType, centerUrl, centerId, centerPassword);
                 Connection insertConn = ConnectionFactory.newConnection(syncDatabaseType, syncUrl, syncId, syncPassword)
         ){
-            RowDataInOut dataInOut = new RowDataInOut();
-            dataInOut.tableSync(selectConn, insertConn, INFO_TABLES);
-            logger.info("info tables sync complete");
+//            RowDataInOut dataInOut = new RowDataInOut();
+//            dataInOut.tableSync(selectConn, insertConn, INFO_TABLES);
+//            logger.info("info tables sync complete");
 
 
-            System.out.println(ymd);
 
             //일봉
             update(insertConn, JdbcNaming.getObjList(selectConn, EtfDailyNo.class, "YMD >= '" + ymd + "'"));
-            update(insertConn, JdbcNaming.getObjList(selectConn, ItemDailyNo.class, "YMD >= '" + ymd + "'"));
-            update(insertConn, JdbcNaming.getObjList(selectConn, MarketDailyNo.class, "YMD >= '" + ymd + "'"));
-            update(insertConn, JdbcNaming.getObjList(selectConn, MarketIndexDailyNo.class, "YMD >= '" + ymd + "'"));
-            update(insertConn, JdbcNaming.getObjList(selectConn, WicsDailyNo.class, "YMD >= '" + ymd + "'"));
+//            update(insertConn, JdbcNaming.getObjList(selectConn, ItemDailyNo.class, "YMD >= '" + ymd + "'"));
+//            update(insertConn, JdbcNaming.getObjList(selectConn, MarketDailyNo.class, "YMD >= '" + ymd + "'"));
+//            update(insertConn, JdbcNaming.getObjList(selectConn, MarketIndexDailyNo.class, "YMD >= '" + ymd + "'"));
+//            update(insertConn, JdbcNaming.getObjList(selectConn, WicsDailyNo.class, "YMD >= '" + ymd + "'"));
             logger.info("daily tables update complete");
 
             //분봉 //느리면 delete insert로 변경예정
-            String ymdhm = ymd +"0000";
-            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_MARKET_5M WHERE YMDHM >= '" + ymdhm + "'");
-            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Market5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
-            logger.info("market 5m complete");
-
-            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_ETF_5M WHERE YMDHM >= '" + ymdhm + "'");
-            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Etf5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
-            logger.info("etf 5m complete");
-
-            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_ITEM_5M WHERE YMDHM >= '" + ymdhm + "'");
-            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Item5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
-            logger.info("5 minute tables update complete");
+//            String ymdhm = ymd +"0000";
+//            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_MARKET_5M WHERE YMDHM >= '" + ymdhm + "'");
+//            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Market5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
+//            logger.info("market 5m complete");
+//
+//            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_ETF_5M WHERE YMDHM >= '" + ymdhm + "'");
+//            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Etf5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
+//            logger.info("etf 5m complete");
+//
+//            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_ITEM_5M WHERE YMDHM >= '" + ymdhm + "'");
+//            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Item5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
+//            logger.info("5 minute tables update complete");
 
         }catch (Exception e){
             throw new RuntimeException(e);
@@ -217,31 +216,32 @@ public class CenterDatabaseSync {
     }
     
     public static void main(String[] args) throws InterruptedException {
-        //오후 6시에 실행 시켜서 슬립시킴
+        //오후 9시에 실행 시켜서 슬립시킴
 //        Thread.sleep(Times.HOUR_1*8L);
 
 //        for(;;) {
 //
-//            long startTime = System.currentTimeMillis();
+            long startTime = System.currentTimeMillis();
+
+            String now = YmdUtil.now();
 //
-//            String now = YmdUtil.now();
-//
-//            CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
-//            centerDatabaseSync.update(YmdUtil.getYmd(now, -5));
-//            long useTime = System.currentTimeMillis() - startTime;
-//
-//            logger.info(now + " update complete");
-//            if(useTime < Times.DAY_1) {
-//                Thread.sleep(Times.DAY_1 - useTime);
-//            }
+            CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
+            centerDatabaseSync.update(YmdUtil.getYmd(now, -1));
+            long useTime = System.currentTimeMillis() - startTime;
+
+            logger.info(now + " update complete");
+            if(useTime < Times.DAY_1) {
+                Thread.sleep(Times.DAY_1 - useTime);
+            }
 //
 //        }
 
-
-        CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
-        centerDatabaseSync.sync(INFO_TABLES);
-        centerDatabaseSync.sync(DAILY_TABLES);
-        centerDatabaseSync.sync(MINUTE_TABLES);
+//
+//        CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
+//        centerDatabaseSync.sync();
+//        centerDatabaseSync.sync(INFO_TABLES);
+//        centerDatabaseSync.sync(DAILY_TABLES);
+//        centerDatabaseSync.sync(MINUTE_TABLES);
 
     }
 }

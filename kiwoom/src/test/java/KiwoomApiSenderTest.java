@@ -73,14 +73,14 @@ public class KiwoomApiSenderTest {
                     )
             );
         });
-
-        KiwoomApiCallbackData kiwoomApiCallbackData = KiwoomApiSender.getInstance().sendMarketPriceOrder(
-                "048550", "", "2", 1);
-
-        System.out.println("[1] "+kiwoomApiCallbackData.getCallbackCode() + " : " + kiwoomApiCallbackData.getCallbackData());
-
-        try {Thread.sleep(10000L);} catch (InterruptedException e) {}
-        kiwoomApiCallbackData = KiwoomApiSender.getInstance().getMinuteData("252670",1,0,1);
-        System.out.println("[2] "+kiwoomApiCallbackData.getCallbackCode() + " : " + kiwoomApiCallbackData.getCallbackData());
+//
+//        KiwoomApiCallbackData kiwoomApiCallbackData = KiwoomApiSender.getInstance().sendMarketPriceOrder(
+//                "048550", "", "2", 1);
+//
+//        System.out.println("[1] "+kiwoomApiCallbackData.getCallbackCode() + " : " + kiwoomApiCallbackData.getCallbackData());
+//
+//        try {Thread.sleep(10000L);} catch (InterruptedException e) {}
+//        kiwoomApiCallbackData = KiwoomApiSender.getInstance().getMinuteData("252670",1,0,1);
+//        System.out.println("[2] "+kiwoomApiCallbackData.getCallbackCode() + " : " + kiwoomApiCallbackData.getCallbackData());
     }
 }

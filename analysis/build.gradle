@@ -21,6 +21,6 @@ dependencies {
     implementation 'com.seomse.system:seomse-system:0.9.9'
 
 
-    implementation project(path: ':trading')
+    implementation project(path: ':technical-analysis')
 
 }
