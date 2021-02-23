@@ -7,6 +7,12 @@ version '0.1.0'
 repositories {
     mavenCentral()
 }
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 dependencies {
     implementation group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
     compile group: 'org.json', name: 'json', version: '20201115'

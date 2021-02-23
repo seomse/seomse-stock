@@ -2,7 +2,11 @@ plugins {
     id 'java'
 }
 
+compileJava.options.encoding = 'UTF-8'
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 description = "stock auto trading build"
 
 allprojects {
