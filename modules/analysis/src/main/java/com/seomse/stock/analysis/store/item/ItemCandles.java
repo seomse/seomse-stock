@@ -28,7 +28,7 @@ public abstract class ItemCandles {
 
     protected ItemDailyCandle [] dailyCandles;
 
-    protected Map<Long, TradeCandles> candlesMap;
+    protected Map<Integer, TradeCandles> minuteCandlesMap;
     /**
      *
      * @return 일봉 얻기
@@ -37,14 +37,15 @@ public abstract class ItemCandles {
         return dailyCandles;
     }
 
+
     /**
-     *
-     * @param standardTime 기준시간 5분 15분 읿 등
+     * @param minute 분봉
      * @return TradeCandles
      */
-    public TradeCandles getCandles(long standardTime){
-        return candlesMap.get(standardTime);
+    public TradeCandles getMinuteCandles(int minute){
+        return minuteCandlesMap.get(minute);
     }
+
 
     /**
      * 최종 일별 캔들얻기 

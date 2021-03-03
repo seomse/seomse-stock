@@ -37,7 +37,8 @@ public class Etf implements StockPrice {
     @Column(name = "ETF_NM")
     String name;
 
-    Map<Long, TradeCandles> candlesMap;
+    //분봉
+    Map<Integer, TradeCandles> minuteCandlesMap;
     EtfDailyCandle[] dailyCandles;
 
     @Override
@@ -69,11 +70,11 @@ public class Etf implements StockPrice {
     }
 
     /**
-     * @param standardTime 기준시간 5분 15분 읿 등
+     * @param minute 분봉
      * @return TradeCandles
      */
-    public TradeCandles getCandles(long standardTime){
-        return candlesMap.get(standardTime);
+    public TradeCandles getMinuteCandles(int minute){
+        return minuteCandlesMap.get(minute);
     }
 
     /**

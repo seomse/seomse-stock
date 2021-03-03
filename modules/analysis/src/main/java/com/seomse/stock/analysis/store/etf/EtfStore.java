@@ -45,7 +45,17 @@ public class EtfStore {
 
     private final Map<String, Etf> etfMap = new HashMap<>();
 
-    private long [] minuteArray;
+
+
+    //기준이 되는 1분봉과 5분봉 개수 설정
+
+    //봉 시간 배열 설정
+    //5분으로 나누어 지는 값은 5분봉을 기준으로 만들고
+    //그외 값들은 1분봉을 기준으로 만든다
+    //1분방으로 나누지 못하는 값은 만들지 못한다
+    private long [] candleRealTimeArray;
+
+
 
 
     /**
@@ -57,6 +67,8 @@ public class EtfStore {
         this.ymd = ymd;
         this.candleCount = Config.getInteger(AnalysisConfig.CANDLE_COUNT.key(), (int) AnalysisConfig.CANDLE_COUNT.defaultValue());
     }
+
+
 
 
     /**
@@ -163,8 +175,6 @@ public class EtfStore {
                 maxYmdInt = ymdInt;
             }
 
-            etf.candlesMap = new HashMap<>();
-            etf.candlesMap.put(Times.DAY_1, tradeCandles);
             etf.dailyCandles = dailyCandles;
 
             addList.add(etf);
