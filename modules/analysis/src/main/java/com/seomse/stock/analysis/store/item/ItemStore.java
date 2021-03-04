@@ -232,8 +232,7 @@ public class ItemStore {
 
         }
 
-        itemCandles.candlesMap = new HashMap<>();
-        itemCandles.candlesMap.put(Times.DAY_1, tradeCandles);
+        itemCandles.minuteCandlesMap = new HashMap<>();
         itemCandles.dailyCandles = dailyCandles;
         tradeCandles.addCandle(dailyCandles);
     }
