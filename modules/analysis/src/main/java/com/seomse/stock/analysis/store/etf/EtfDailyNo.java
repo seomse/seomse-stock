@@ -43,4 +43,69 @@ public class EtfDailyNo {
     Double INDIVIDUAL_TRADE_VOL;
     Double FOREIGN_BALANCE_VOL;
     Double FOREIGN_RT;
+
+
+    public String getETF_CD() {
+        return ETF_CD;
+    }
+
+    public String getYMD() {
+        return YMD;
+    }
+
+    public Double getCLOSE_PRC() {
+        return CLOSE_PRC;
+    }
+
+    public Double getCHANGE_RT() {
+        return CHANGE_RT;
+    }
+
+    public Double getCHANGE_PRC() {
+        return CHANGE_PRC;
+    }
+
+    public Double getPREVIOUS_PRC() {
+        return PREVIOUS_PRC;
+    }
+
+    public Double getOPEN_PRC() {
+        return OPEN_PRC;
+    }
+
+    public Double getHIGH_PRC() {
+        return HIGH_PRC;
+    }
+
+    public Double getLOW_PRC() {
+        return LOW_PRC;
+    }
+
+    public Double getTRADE_VOL() {
+        return TRADE_VOL;
+    }
+
+    public Double getSTRENGTH_RT() {
+        return STRENGTH_RT;
+    }
+
+    public Double getINSTITUTION_TRADE_VOL() {
+        return INSTITUTION_TRADE_VOL;
+    }
+
+    public Double getFOREIGN_TRADE_VOL() {
+        return FOREIGN_TRADE_VOL;
+    }
+
+    public Double getINDIVIDUAL_TRADE_VOL() {
+        return INDIVIDUAL_TRADE_VOL;
+    }
+
+    public Double getFOREIGN_BALANCE_VOL() {
+        return FOREIGN_BALANCE_VOL;
+    }
+
+    public Double getFOREIGN_RT() {
+        return FOREIGN_RT;
+    }
 }

@@ -24,6 +24,7 @@ import com.seomse.jdbc.annotation.Table;
 import com.seomse.jdbc.connection.ConnectionFactory;
 import com.seomse.jdbc.naming.JdbcNaming;
 import com.seomse.stock.data.sync.tables.daily.*;
+import com.seomse.stock.data.sync.tables.minute.Etf1mNo;
 import com.seomse.stock.data.sync.tables.minute.Etf5mNo;
 import com.seomse.stock.data.sync.tables.minute.Item5mNo;
 import com.seomse.stock.data.sync.tables.minute.Market5mNo;
@@ -52,6 +53,7 @@ public class CenterDatabaseSync {
     public static String [] INFO_TABLES = """
             T_STOCK_ETF
             T_STOCK_FSMT
+            T_STOCK_FSMT_ESTIMATE
             T_STOCK_ITEM
             T_STOCK_ITEM_HOLDER
             T_STOCK_ITEM_PREFERRED
@@ -71,6 +73,7 @@ public class CenterDatabaseSync {
 
     public static String [] MINUTE_TABLES = """
             T_STOCK_ETF_5M
+            T_STOCK_ETF_1M
             T_STOCK_MARKET_5M
             T_STOCK_ITEM_5M
             """.split("\n");
@@ -164,33 +167,40 @@ public class CenterDatabaseSync {
                 Connection selectConn = ConnectionFactory.newConnection(centerDatabaseType, centerUrl, centerId, centerPassword);
                 Connection insertConn = ConnectionFactory.newConnection(syncDatabaseType, syncUrl, syncId, syncPassword)
         ){
-//            RowDataInOut dataInOut = new RowDataInOut();
-//            dataInOut.tableSync(selectConn, insertConn, INFO_TABLES);
-//            logger.info("info tables sync complete");
+            RowDataInOut dataInOut = new RowDataInOut();
+            dataInOut.tableSync(selectConn, insertConn, INFO_TABLES);
+            logger.info("info tables sync complete");
 
 
 
             //일봉
             update(insertConn, JdbcNaming.getObjList(selectConn, EtfDailyNo.class, "YMD >= '" + ymd + "'"));
-//            update(insertConn, JdbcNaming.getObjList(selectConn, ItemDailyNo.class, "YMD >= '" + ymd + "'"));
-//            update(insertConn, JdbcNaming.getObjList(selectConn, MarketDailyNo.class, "YMD >= '" + ymd + "'"));
-//            update(insertConn, JdbcNaming.getObjList(selectConn, MarketIndexDailyNo.class, "YMD >= '" + ymd + "'"));
-//            update(insertConn, JdbcNaming.getObjList(selectConn, WicsDailyNo.class, "YMD >= '" + ymd + "'"));
+            update(insertConn, JdbcNaming.getObjList(selectConn, ItemDailyNo.class, "YMD >= '" + ymd + "'"));
+            update(insertConn, JdbcNaming.getObjList(selectConn, MarketDailyNo.class, "YMD >= '" + ymd + "'"));
+            update(insertConn, JdbcNaming.getObjList(selectConn, MarketIndexDailyNo.class, "YMD >= '" + ymd + "'"));
+            update(insertConn, JdbcNaming.getObjList(selectConn, WicsDailyNo.class, "YMD >= '" + ymd + "'"));
             logger.info("daily tables update complete");
 
             //분봉 //느리면 delete insert로 변경예정
-//            String ymdhm = ymd +"0000";
-//            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_MARKET_5M WHERE YMDHM >= '" + ymdhm + "'");
-//            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Market5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
-//            logger.info("market 5m complete");
-//
-//            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_ETF_5M WHERE YMDHM >= '" + ymdhm + "'");
-//            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Etf5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
-//            logger.info("etf 5m complete");
-//
-//            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_ITEM_5M WHERE YMDHM >= '" + ymdhm + "'");
-//            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Item5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
-//            logger.info("5 minute tables update complete");
+            String ymdhm = ymd +"0000";
+            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_MARKET_5M WHERE YMDHM >= '" + ymdhm + "'");
+            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Market5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
+            logger.info("market 5m complete");
+
+            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_ETF_5M WHERE YMDHM >= '" + ymdhm + "'");
+            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Etf5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
+            logger.info("etf 5m complete");
+
+            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_ETF_1M WHERE YMDHM >= '" + ymdhm + "'");
+            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Etf1mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
+            logger.info("etf 1m complete");
+
+
+            JdbcQuery.execute(insertConn, "DELETE FROM T_STOCK_ITEM_5M WHERE YMDHM >= '" + ymdhm + "'");
+            JdbcNaming.insert(insertConn, JdbcNaming.getObjList(selectConn, Item5mNo.class, "YMDHM >= '" + ymdhm + "'"),true);
+            logger.info("5 minute tables update complete");
+
+
 
         }catch (Exception e){
             throw new RuntimeException(e);
@@ -219,12 +229,12 @@ public class CenterDatabaseSync {
         //오후 9시에 실행 시켜서 슬립시킴
 //        Thread.sleep(Times.HOUR_1*8L);
 
-//        for(;;) {
-//
+        for(;;) {
+
             long startTime = System.currentTimeMillis();
 
             String now = YmdUtil.now();
-//
+
             CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
             centerDatabaseSync.update(YmdUtil.getYmd(now, -1));
             long useTime = System.currentTimeMillis() - startTime;
@@ -233,12 +243,11 @@ public class CenterDatabaseSync {
             if(useTime < Times.DAY_1) {
                 Thread.sleep(Times.DAY_1 - useTime);
             }
-//
-//        }
+
+        }
 
 //
 //        CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
-//        centerDatabaseSync.sync();
 //        centerDatabaseSync.sync(INFO_TABLES);
 //        centerDatabaseSync.sync(DAILY_TABLES);
 //        centerDatabaseSync.sync(MINUTE_TABLES);

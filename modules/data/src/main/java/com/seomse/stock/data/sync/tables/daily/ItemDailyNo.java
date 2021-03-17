@@ -29,9 +29,14 @@ public class ItemDailyNo {
     private String ITEM_CD;
     @PrimaryKey(seq = 2)
     private String YMD;
+    private Double CHART_OPEN_PRC;
+    private Double CHART_CLOSE_PRC;
+    private Double CHART_LOW_PRC;
+    private Double CHART_HIGH_PRC;
+    private Double CHART_TRADE_VOL;
+    private Double CHART_TRADE_PRC_VOL;
+    private Double CHART_PREVIOUS_PRC;
     private Double CLOSE_PRC;
-    private Double CHANGE_RT;
-    private Double CHANGE_PRC;
     private Double PREVIOUS_PRC;
     private Double OPEN_PRC;
     private Double HIGH_PRC;
@@ -41,12 +46,15 @@ public class ItemDailyNo {
     private Double INSTITUTION_TRADE_VOL;
     private Double FOREIGN_TRADE_VOL;
     private Double INDIVIDUAL_TRADE_VOL;
-    private Double FOREIGN_BALANCE_VOL;
-    private Double FOREIGN_RT;
     private Double SLB_VOL;
     private Double SLB_REPAY_VOL;
     private Double SLB_BALANCE_VOL;
+    private Double SHORT_SELLING_BALANCE_VOL;
     private Double CREDIT_BALANCE_RT;
+    private Double CHANGE_RT;
+    private Double CHANGE_PRC;
+    private Double FOREIGN_BALANCE_VOL;
+    private Double FOREIGN_RT;
     private Double CREDIT_TOTAL_VOL;
     private Double CREDIT_NEW_VOL;
     private Double CREDIT_REPAY_VOL;
@@ -54,4 +62,10 @@ public class ItemDailyNo {
     private Double CREDIT_PRC_VOL;
     private Double CREDIT_CHANGE_VOL;
     private Double CREDIT_EXPOSURE_RT;
+    private Long LIST_STOCK_CNT;
+    private Double AVOL_STOCK_VOL;
+    private Double SHORT_SELLING_TRADE_VOL;
+    private Double SHORT_SELLING_TRADE_PRC_VOL;
+    private Double SHORT_SELLING_BALANCE_RT;
+    private Double CHART_DAILY_PREVIOUS_PRC;
 }

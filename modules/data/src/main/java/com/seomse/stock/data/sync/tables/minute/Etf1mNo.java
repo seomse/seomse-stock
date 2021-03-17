@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Seomse Inc.
+ * Copyright (C) 2021 Seomse Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,23 +14,26 @@
  * limitations under the License.
  */
 
-package com.seomse.stock.data.dev;
+package com.seomse.stock.data.sync.tables.minute;
 
-import com.seomse.jdbc.naming.JdbcNaming;
+import com.seomse.jdbc.annotation.PrimaryKey;
+import com.seomse.jdbc.annotation.Table;
 
 /**
- * jdbc 네이밍 객체 생성기
+ * etf 1분봉
  * @author macle
  */
-public class NamingObjectMake {
+@Table(name="T_STOCK_ETF_1M")
+public class Etf1mNo {
+    @PrimaryKey(seq = 1)
+    private String ETF_CD;
+    @PrimaryKey(seq = 2)
+    private String YMDHM;
+    private Double CLOSE_PRC;
+    private Double PREVIOUS_PRC;
+    private Double OPEN_PRC;
+    private Double HIGH_PRC;
+    private Double LOW_PRC;
+    private Double TRADE_VOL;
 
-	public static void main(String [] args){
-
-
-		String tableName = "T_STOCK_ETF_1M";
-		System.out.println("@Table(name=\"" +  tableName+ "\")\n");
-		System.out.println(JdbcNaming.makeObjectValue(tableName));
-
-	}
-	
 }

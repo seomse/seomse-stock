@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Seomse Inc.
+ * Copyright (C) 2021 Seomse Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,24 @@
 
 package com.seomse.stock.data.dev;
 
-import com.seomse.jdbc.naming.JdbcNaming;
+import com.seomse.stock.data.sync.CenterDatabaseSync;
 
 /**
- * jdbc 네이밍 객체 생성기
+ * 특정 테이블 복사
  * @author macle
  */
-public class NamingObjectMake {
+public class TableSync {
 
-	public static void main(String [] args){
+    public static void main(String[] args) {
+
+        String [] tables = """
+           T_STOCK_ETF_1M
+           T_STOCK_ITEM_5M
+            """.split("\n");
 
 
-		String tableName = "T_STOCK_ETF_1M";
-		System.out.println("@Table(name=\"" +  tableName+ "\")\n");
-		System.out.println(JdbcNaming.makeObjectValue(tableName));
+        CenterDatabaseSync centerDatabaseSync = new CenterDatabaseSync();
+        centerDatabaseSync.sync(tables);
+    }
 
-	}
-	
 }
