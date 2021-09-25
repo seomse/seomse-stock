@@ -82,10 +82,9 @@ implementation 'com.seomse.stock:trade:0.1.0'
 # communication
 ### blog, homepage
 - [www.seomse.com](https://www.seomse.com/)
+- [runon.io](https://runon.io)
 - [github.com/seomse](https://github.com/seomse)
-- [seomse.tistory.com](https://seomse.tistory.com/)
-- [seomse.github.io](https://seomse.github.io/)
-- seomse.com
+- [github.com/runonio](https://github.com/runonio)
 
 ### 카카오톡 오픈톡
  - https://open.kakao.com/o/g6vzOKqb
