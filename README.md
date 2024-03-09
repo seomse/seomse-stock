@@ -78,7 +78,7 @@ implementation 'com.seomse.stock:data:0.1.0'
 implementation 'com.seomse.stock:trade:0.1.0'
 - etc 
     - https://mvnrepository.com/artifact/com.seomse.stock/trade/0.1.0
-## communication
+# communication
 ### blog, homepage
 - [github.com/runonio](https://github.com/runonio)
 - [runon.io](https://runon.io)
